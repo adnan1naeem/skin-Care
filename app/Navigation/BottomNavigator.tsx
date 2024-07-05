@@ -41,26 +41,27 @@ export default function TrackingBottomTabNavigator() {
   return (
     <>
       <BottomTab.Navigator
-    sceneContainerStyle={{backgroundColor:"green"}}
         initialRouteName="Home"
-        head
         screenOptions={{
           lazy: false,
-          headerShown: false,
           tabBarStyle: {
-            backgroundColor:"red",
-           
+            backgroundColor:Colors.light.background,
+            height: 62 + insets.bottom,
+            borderTopWidth: 0.5,
+            borderTopColor: "#3C3C432B",
+            paddingBottom: insets.bottom > 4 ? insets.bottom - 4 : 5,
           },
+          tabBarIconStyle: { flex: undefined, height: 37 },
         }}
       >
         <BottomTab.Screen
           name="Home"
           component={HomeNavigator}
           options={{
-            headerShown: false,
             tabBarLabel: ({ focused }) => (
               <Text style={focused?styles.markedtext:styles.text}>Home</Text>
               ),
+              headerShown:false,
             tabBarIcon: ({ focused }) =>
               focused ? <MarkedHome /> : <Home />,
           }}
