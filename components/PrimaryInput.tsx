@@ -1,5 +1,5 @@
-import { Colors } from "@/constants/Colors";
-import Typography from "@/constants/Typography";
+import { Colors } from "../constants/Colors";
+import Typography from "../constants/Typography";
 import { useState } from "react";
 import { TextInput, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 

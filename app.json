@@ -4,41 +4,26 @@
     "slug": "EstheMate",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+      "backgroundColor": "#f5fafa"
+    },   
     "ios": {
+      "buildNumber": "2",
       "supportsTablet": true,
-    
       "bundleIdentifier": "com.skincare.EstheMate"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#f5fafa"
       },
-      "package": "com.adnan1naeem.EstheMate"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "experiments": {
-      "typedRoutes": true
+       "package": "com.adnan1naeem.EstheMate"
     },
     "extra": {
-      "router": {
-        "origin": false
-      },
       "eas": {
         "projectId": "915a5310-84e4-4cee-b154-33c7533d1261"
       },
@@ -48,7 +33,6 @@
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 0,
-      "checkAutomatically": "ON_LOAD",
       "url": "https://u.expo.dev/915a5310-84e4-4cee-b154-33c7533d1261"
     },
     "runtimeVersion": "1.0.0"

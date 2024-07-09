@@ -10,7 +10,7 @@ const Screen: React.FC<ViewProps> = ({ children, style, ...props }) => (
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Colors.light.icon,
+    backgroundColor: Colors.light.background,
     flex: 1,
   },
 });

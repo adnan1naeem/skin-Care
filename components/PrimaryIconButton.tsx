@@ -1,4 +1,4 @@
-import { Colors } from "@/constants/Colors";
+import { Colors } from "../constants/Colors";
 import React, { FC } from "react";
 import { TouchableOpacity, Text, View, StyleSheet } from "react-native";
 
