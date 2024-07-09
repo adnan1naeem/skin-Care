@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Colors } from '../../../constants/Colors';
 import Typography from '../../../constants/Typography';
 import Personal from '../../../assets/svg/Personal.svg'
@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 const ProfileSettings = () => {
     const navigation=useNavigation();
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.optionsContainer}>
                 <TouchableOpacity style={styles.option}>
                     <Personal/>
@@ -45,13 +45,13 @@ const ProfileSettings = () => {
                     <Icon name="chevron-forward" size={20} color={Colors.light.green} />
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         backgroundColor: '#f5fafa',
         padding: 16,
         paddingTop:40,

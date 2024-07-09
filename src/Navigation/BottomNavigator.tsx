@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import { Colors } from "../../constants/Colors";
 import Home from "../../assets/svg/Home.svg";
 import MarkedHome from "../../assets/svg/MarkedHome.svg";
@@ -120,7 +120,21 @@ export default function TrackingBottomTabNavigator() {
                   style={focused?styles.markedtext:styles.text}
                 >Setting</Text>
               ),
-              headerShown:false,
+              headerBackground: () => <View style={styles.headerBackground} />,
+              headerTitleContainerStyle: styles.headerTitle,
+              headerTitle: () => (
+                <View style={styles.profileContainer}>
+                    <Image
+                        source={require('../../assets/images/Notification.png')}
+                        style={styles.profileImage}
+                    />
+                    <View style={styles.profileDetails}>
+                        <Text style={styles.profileName}>Anabia</Text>
+                        <Text style={styles.profileEmail}>youremail@gmail.com</Text>
+                    </View>
+                </View>
+              ),
+              headerLeft: () => null,
             tabBarIcon: ({ focused }) =>
                 focused ? <MarkedSetting /> : <Setting />,
             }}
@@ -132,6 +146,24 @@ export default function TrackingBottomTabNavigator() {
 }
 
 const styles = StyleSheet.create({
+  profileEmail: {
+    ...Typography.Regular10_20
+},
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+},
+profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+},
+profileDetails: {
+    marginLeft: 16,
+},
+profileName: {
+    ...Typography.SemiBold16_20,
+},
   text:{
     ...Typography.SemiBold10_15,
     color:Colors.light.icon

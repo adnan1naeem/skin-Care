@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5fafa',
     },
     title: {
-        marginTop:Platform?.OS==="android"?20:'17%',
+        marginTop:Platform?.OS==="android"?60:'17%',
         ...Typography.SemiBold24_47,
          textAlign: 'center',
          color:Colors.light.green,
