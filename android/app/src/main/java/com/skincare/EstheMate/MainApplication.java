@@ -1,4 +1,4 @@
-package com.adnan1naeem.EstheMate;
+package com.skincare.EstheMate;
 
 import android.app.Application;
 import android.content.res.Configuration;

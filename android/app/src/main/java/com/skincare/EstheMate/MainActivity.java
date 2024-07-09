@@ -1,4 +1,4 @@
-package com.adnan1naeem.EstheMate;
+package com.skincare.EstheMate;
 
 import android.os.Build;
 import android.os.Bundle;

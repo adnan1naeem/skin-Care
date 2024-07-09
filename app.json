@@ -4,7 +4,7 @@
     "slug": "EstheMate",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/iconsss.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -12,6 +12,8 @@
       "backgroundColor": "#f5fafa"
     },   
     "ios": {
+      "foregroundImage":"./assets/adaptive-icon.png",
+      "backgroundColor":"#f5fafa",
       "buildNumber": "2",
       "supportsTablet": true,
       "bundleIdentifier": "com.skincare.EstheMate"
@@ -21,7 +23,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#f5fafa"
       },
-       "package": "com.adnan1naeem.EstheMate"
+       "package": "com.skincare.EstheMate"
     },
     "extra": {
       "eas": {
