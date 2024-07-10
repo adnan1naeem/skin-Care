@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, BackHandler, Platform } from 'react-native';
 import { ProgressBar, Provider as PaperProvider } from 'react-native-paper';
 import { Colors } from '../../../constants/Colors';
 import Typography from '../../../constants/Typography';
 import { getColor, getColorValue } from '../../../utils/ProgressBarColor';
-
+import { useFocusEffect } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 const SkinDetail = ({ navigation, route }) => {
   const value = route.params || route?.params;
   const tintColor = getColor(value?.progress);
@@ -12,22 +13,37 @@ const SkinDetail = ({ navigation, route }) => {
   const progressvalueInPercentage = value?.item?.progress / 100;
   const progressPercentage = value?.progress * 100;
   const colors = value?.item?.progress ? tinitColorwithvalue : tintColor;
+  const handleNavigation = () => {
+    if (value?.screen) {
+      navigation.replace('Home');
+    } else {
+      navigation.goBack();
+    }
+  };
+  
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        return true; // Returning true means we are handling the back press
+      };
 
-  useEffect(() => {
-    const onBackPress = () => {
-      return true;
-    };
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-    BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    };
-  }, []);
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
+    }, [])
+  );
 
   return (
-    <PaperProvider>
+    <PaperProvider >
       <ScrollView style={styles.container}>
+      <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18 }}>
+                <TouchableOpacity onPress={ handleNavigation} style={styles.backButton}>
+                    <Icon name="arrow-back" size={20} color="#000" />
+                </TouchableOpacity>
+                <Text style={styles.backButtonText}>Back</Text>
+            </View>
         <View style={styles.analysisContainer}>
           <View style={styles.header}>
             <Image source={value?.item?.image1 || value?.image1} style={styles.icon} />
@@ -53,6 +69,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FAFA',
     padding: 18,
+    paddingTop:Platform?.OS==="android"?10:'11%',
   },
   backButton: {
     alignItems: 'center',

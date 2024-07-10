@@ -32,7 +32,8 @@ const HomeScreen = () => {
     navigation.navigate('Analysis', {
       screen: 'SkinTypeScreen',
       params:{
-        item
+        item,
+        screen:"Home"
       }
     });
   };

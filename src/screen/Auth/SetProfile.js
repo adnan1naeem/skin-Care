@@ -113,7 +113,7 @@ const SetProfile = ({ navigation }) => {
                 )}
               />
               <View style={styles.button}>
-                <PrimaryButton text={"Save Profile"} onPress={() => { navigation.navigate("Home") }} />
+                <PrimaryButton text={"Save Profile"} onPress={() => { navigation.replace("Home") }} />
               </View>
             </View>
           </View>

@@ -16,7 +16,6 @@ import ProductNavigator from "./ProductStack/ProductNavigator";
 import SmileIcon from '../../assets/svg/SimpleIcon.svg'
 import MarkedSetting from '../../assets/svg/Markedsettings.svg'
 import Typography from "../../constants/Typography";
-import ProfileSettings from "../screen/Setting/ProfileSettings";
 import CustomModal from "../screen/Home/Component/CustomModal";
 import { useNavigation } from "@react-navigation/native";
 import global from '../../utils/global'
@@ -31,7 +30,7 @@ type BottomTabParamList = {
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function TrackingBottomTabNavigator() {
+export default function TrackingBottomTabNavigator({route}) {
   const navigation=useNavigation();
   const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(false);

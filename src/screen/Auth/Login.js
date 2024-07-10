@@ -74,7 +74,7 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
             <Text style={styles.Forget}> Remember Me</Text>
             </View>
-              <PrimaryButton text={"Login"} onPress={()=>{navigation.navigate("Home")}}/>
+              <PrimaryButton text={"Login"} onPress={()=>{navigation.replace("Home")}}/>
               <View style={styles.button}>
                 <PrimaryIconButton
                   disable={false}

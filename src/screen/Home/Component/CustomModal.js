@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
 import { Colors } from '../../../../constants/Colors';
 import AnalysisInput from './AnalysisInput';
 import Typography from '../../../../constants/Typography';
@@ -18,24 +18,31 @@ const CustomModal = ({ visible, onClose, onAnalyze }) => {
             animationType="slide"
             onRequestClose={onClose}
         >
-            <View style={modalStyles.modalBackground}>
-                <View style={modalStyles.modalContainer}>
-                <ThemedText type="title" style={{ color: Colors.light.green }}>Input Analysis</ThemedText>
-                <ThemedText type="default" style={{ color: Colors.light.greyText, marginBottom: 20 }}>Enter values displayed on your device. Don’t have a device? Get yours now!</ThemedText>
-                    <AnalysisInput value={inputValue} onChange={setInputValue} icon={require('../../../../assets/images/HydrationIcon.png')} title={"Hydration"} />
-                    <AnalysisInput value={inputValue2} onChange={setInputValue2} icon={require('../../../../assets/images/OilLevelIcon.png')} title={"Oiliness"} />
-                    <AnalysisInput value={inputValue3} onChange={setInputValue3} icon={require('../../../../assets/images/ElasticityIcon.png')} title={"Elasticity"} />
-                    <AnalysisInput value={inputValue4} onChange={setInputValue4} icon={require('../../../../assets/images/Recycle.png')} title={"Skin Age"} />
-                    <View style={{ flexDirection: 'row', justifyContent: "flex-end" }}>
-                        <TouchableOpacity onPress={onClose} style={[modalStyles.closeButton, { marginRight: 10 }]}>
-                            <Text style={modalStyles.closeButtonText}>Cancel</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={onAnalyze} style={modalStyles.AnalyzeButon}>
-                            <Text style={modalStyles.AnalyzeButtonText}>Analyze</Text>
-                        </TouchableOpacity>
-                    </View>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <View style={modalStyles.modalBackground}>
+                    <KeyboardAvoidingView
+                        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                        style={modalStyles.modalContainer}
+                    >
+                        <View style={modalStyles.modalContainer2}>
+                            <ThemedText type="title" style={{ color: Colors.light.green }}>Input Analysis</ThemedText>
+                            <ThemedText type="default" style={{ color: Colors.light.greyText, marginBottom: 20 }}>Enter values displayed on your device. Don’t have a device? Get yours now!</ThemedText>
+                            <AnalysisInput value={inputValue} onChange={setInputValue} icon={require('../../../../assets/images/HydrationIcon.png')} title={"Hydration"} />
+                            <AnalysisInput value={inputValue2} onChange={setInputValue2} icon={require('../../../../assets/images/OilLevelIcon.png')} title={"Oiliness"} />
+                            <AnalysisInput value={inputValue3} onChange={setInputValue3} icon={require('../../../../assets/images/ElasticityIcon.png')} title={"Elasticity"} />
+                            <AnalysisInput value={inputValue4} onChange={setInputValue4} icon={require('../../../../assets/images/Recycle.png')} title={"Skin Age"} />
+                            <View style={{ flexDirection: 'row', justifyContent: "flex-end" }}>
+                                <TouchableOpacity onPress={onClose} style={[modalStyles.closeButton, { marginRight: 10 }]}>
+                                    <Text style={modalStyles.closeButtonText}>Cancel</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={onAnalyze} style={modalStyles.AnalyzeButon}>
+                                    <Text style={modalStyles.AnalyzeButtonText}>Analyze</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </KeyboardAvoidingView>
                 </View>
-            </View>
+            </TouchableWithoutFeedback>
         </Modal>
     );
 };
@@ -48,6 +55,12 @@ const modalStyles = StyleSheet.create({
         backgroundColor: '#DFE0E099',
     },
     modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'transparent',
+    },
+    modalContainer2: {
         width: '83%',
         paddingVertical: 20,
         paddingHorizontal: 25,
