@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "EstheMate",
-    "slug": "EstheMate",
+    "slug": "esthemate",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/iconsss.png",
@@ -10,11 +10,11 @@
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#f5fafa"
-    },   
+    },
     "ios": {
-      "foregroundImage":"./assets/adaptive-icon.png",
-      "backgroundColor":"#f5fafa",
-      "buildNumber": "2",
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#f5fafa",
+      "buildNumber": "3",
       "supportsTablet": true,
       "bundleIdentifier": "com.skincare.EstheMate"
     },
@@ -23,11 +23,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#f5fafa"
       },
-       "package": "com.skincare.EstheMate"
+      "package": "com.skincare.EstheMate"
     },
     "extra": {
       "eas": {
-        "projectId": "915a5310-84e4-4cee-b154-33c7533d1261"
+        "projectId": "1507bffe-0e1e-4f4c-9102-459a30103aae"
       },
       "appleId": "6505109083",
       "sku": "com.skincare.EstheMate"
@@ -35,8 +35,9 @@
     "updates": {
       "enabled": true,
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/915a5310-84e4-4cee-b154-33c7533d1261"
+      "url": "https://u.expo.dev/1507bffe-0e1e-4f4c-9102-459a30103aae"
     },
-    "runtimeVersion": "1.0.0"
+    "runtimeVersion": "1.0.0",
+    "owner": "amir_ali_1"
   }
 }
