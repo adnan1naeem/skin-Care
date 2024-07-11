@@ -62,14 +62,7 @@ export default function TrackingBottomTabNavigator({route}) {
             tabBarLabel: ({ focused }) => (
               <Text style={focused?styles.markedtext:styles.text}>Home</Text>
               ),
-              headerBackground: () => <View style={styles.headerBackground} />,
-              headerTitleContainerStyle: styles.headerTitle,
-              headerTitle: () => (
-                <Header
-                  title={"Hello,"}
-                  subtitle={" Anabia"}
-                />
-              ),
+             headerShown:false,
             tabBarIcon: ({ focused }) =>
               focused ? <MarkedHome /> : <Home />,
           }}

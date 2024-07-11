@@ -1,7 +1,8 @@
 import { registerRootComponent } from 'expo';
-
+import { Settings } from "react-native-fbsdk-next";
 import App from './App';
-
+Settings.setAppID("1004342497528759");
+Settings.initializeSDK();
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately

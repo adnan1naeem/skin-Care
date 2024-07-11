@@ -11,29 +11,67 @@
       "resizeMode": "contain",
       "backgroundColor": "#f5fafa"
     },
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "13.4"
+          }
+        }
+      ],
+      [
+        "react-native-fbsdk-next",
+        {
+          "appID": "1004342497528759",
+          "clientToken": "e314628b2098115fc47bc8fa83333bca",
+          "displayName": "EstheMate",
+          "scheme": "fb1004342497528759",
+          "advertiserIDCollectionEnabled": false,
+          "autoLogAppEventsEnabled": false,
+          "isAutoInitEnabled": true,
+          "iosUserTrackingPermission": "This identifier will be used to deliver personalized ads to you."
+
+        }
+      ],
+      "expo-tracking-transparency"
+    ],
     "ios": {
       "foregroundImage": "./assets/adaptive-icon.png",
       "backgroundColor": "#f5fafa",
       "buildNumber": "3",
       "supportsTablet": true,
+      "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.skincare.EstheMate",
       "infoPlist": {
-        "UIStatusBarStyle": "UIStatusBarStyleLightContent"
+        "UIStatusBarStyle": "UIStatusBarStyleLightContent",
+        "FacebookAppID": "1004342497528759",
+        "FacebookDisplayName": "EstheMate",
+        "facebookScheme":"fb1004342497528759"
       }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#f5fafa"
-      },"statusBar": {
+      },
+      "statusBar": {
         "backgroundColor": "#f5fafa",
         "barStyle": "light-content"
       },
-      "package": "com.skincare.EstheMate"
+      "package": "com.skincare.EstheMate",
+      "googleServicesFile": "./google-services.json"
     },
     "extra": {
+      "plugins":[],
       "eas": {
-        "projectId": "1507bffe-0e1e-4f4c-9102-459a30103aae"
+        "projectId": "044832bb-b97b-4f8b-b2e7-a101c913d488"
       },
       "appleId": "6505109083",
       "sku": "com.skincare.EstheMate"
@@ -44,6 +82,9 @@
       "url": "https://u.expo.dev/1507bffe-0e1e-4f4c-9102-459a30103aae"
     },
     "runtimeVersion": "1.0.0",
-    "owner": "amir_ali_1"
+    "owner": "adnan1naeem",
+    "facebookAppId": "1004342497528759",
+    "facebookDisplayName": "EstheMate",
+    "facebookScheme": "fb1004342497528759"
   }
 }

@@ -29,8 +29,7 @@ const HomeScreen = () => {
     <ProductItem image1={item.image1} description={item.desciption} text={item.text} icons={item?.icons} onPress={() => handleProductDeatil(item)} />
   );
   const handleSkinDetail = (item) => {
-    navigation.navigate('Analysis', {
-      screen: 'SkinTypeScreen',
+    navigation.navigate('SkinTypeScreen', {
       params:{
         item,
         screen:"Home"

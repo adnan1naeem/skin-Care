@@ -9,8 +9,6 @@ import { Colors } from '../../../constants/Colors';
 const AnalysisStack = createStackNavigator<ProfileTabParamList>();
 
 const AnalysisNavigator = ({ route }) => {
-  const value = route.params || route?.params;
-
   return (
     <AnalysisStack.Navigator initialRouteName="Analysis">
       <AnalysisStack.Screen

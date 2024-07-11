@@ -11,15 +11,55 @@ import { styles } from './styles';
 import Screen from '../../../components/Screen';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '../../../components/ThemedText';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-
+  const[error,setError]=useState();
+  const[UserInfo,setUserInfo]=useState();
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
   };
+  const handleFacebookLogin = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+      if (result.isCancelled) {
+        alert('Login cancelled');
+      } else {
+        const data = await AccessToken.getCurrentAccessToken();
+        alert(data.accessToken.toString());
+      }
+    } catch (error) {
+      console.log('Login fail with error: ' + error);
+    }
+  };
+  useEffect(()=>{
+    GoogleSignin.configure(
+      {
+        webClientId: '563051675973-2sufs5cdd2icqvq7sp45ultimqpdp3e2.apps.googleusercontent.com',
+       }
+    );
+  },[])
+  const signin = async () => {
+    try {
+    await GoogleSignin.hasPlayServices();
+    const user = await GoogleSignin.signIn();
+    setUserInfo (user) ;
+    alert(JSON?.stringify(user))
+    setError ();
+    } catch (e) {
+      alert(JSON?.stringify(error,null,2))
+    setError (e) ;
+    }
+  }
+  const logout = () => {
+    setUserInfo();
+    GoogleSignin.revokeAccess();
+    GoogleSignin.signOut();
+  }
   return (
     <Screen style={styles.mainContainer}>
       <KeyboardAvoidingView
@@ -79,7 +119,7 @@ const Login = ({ navigation }) => {
                 <PrimaryIconButton
                   disable={false}
                   titleText={"Login with Google"}
-                  onPress={() => { }}
+                  onPress={signin}
                   icon={<Google2 />}
                 />
               </View>
@@ -87,7 +127,7 @@ const Login = ({ navigation }) => {
                 <PrimaryIconButton
                   disable={false}
                   titleText={"Login with Facebook"}
-                  onPress={() => { navigation.navigate("Home")}}
+                  onPress={handleFacebookLogin}
                   icon={<Facebook2 />}
                 />
               </View>

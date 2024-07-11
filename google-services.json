@@ -1,0 +1,71 @@
+{
+  "project_info": {
+    "project_number": "563051675973",
+    "project_id": "esthemate-7ed0a",
+    "storage_bucket": "esthemate-7ed0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563051675973:android:646bbb6532b53d15e1be2c",
+        "android_client_info": {
+          "package_name": "com.skincare.EstheMate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563051675973-dm0uf8ta4ffqev3480eovp394fnjbdni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skincare.EstheMate",
+            "certificate_hash": "672e46045fc5d6fd1cf698e44aa6406a81e46b9c"
+          }
+        },
+        {
+          "client_id": "563051675973-jfqrqv14d4caajd359t5onm8mt519ilt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skincare.EstheMate",
+            "certificate_hash": "3f96995039dba6d69e4ccff7bc384d3b8336affa"
+          }
+        },
+        {
+          "client_id": "563051675973-s3hi4lm8s8j4opgfa8tmn3ia776s90q9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skincare.EstheMate",
+            "certificate_hash": "17fd589a77330f3ca428699b6aca1101025e9de3"
+          }
+        },
+        {
+          "client_id": "563051675973-at507f1n2bmos7s0a3kp6d5b3jvnj2in.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0BjtEotzufDVehtsecwD0a6QEegRiCHo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563051675973-at507f1n2bmos7s0a3kp6d5b3jvnj2in.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "563051675973-2sufs5cdd2icqvq7sp45ultimqpdp3e2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.skincare.EstheMate",
+                "app_store_id": "6505109083"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
