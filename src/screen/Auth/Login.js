@@ -39,7 +39,7 @@ const Login = ({ navigation }) => {
   useEffect(()=>{
     GoogleSignin.configure(
       {
-        webClientId: '563051675973-2sufs5cdd2icqvq7sp45ultimqpdp3e2.apps.googleusercontent.com',
+        webClientId: '563051675973-at507f1n2bmos7s0a3kp6d5b3jvnj2in.apps.googleusercontent.com',
        }
     );
   },[])
@@ -48,10 +48,10 @@ const Login = ({ navigation }) => {
     await GoogleSignin.hasPlayServices();
     const user = await GoogleSignin.signIn();
     setUserInfo (user) ;
-    alert(JSON?.stringify(user))
+    navigation.replace("Home")
+    // alert(JSON?.stringify(user))
     setError ();
     } catch (e) {
-      alert(JSON?.stringify(error,null,2))
     setError (e) ;
     }
   }
@@ -123,14 +123,14 @@ const Login = ({ navigation }) => {
                   icon={<Google2 />}
                 />
               </View>
-              <View style={styles.button}>
+              {/* <View style={styles.button}>
                 <PrimaryIconButton
                   disable={false}
                   titleText={"Login with Facebook"}
                   onPress={handleFacebookLogin}
                   icon={<Facebook2 />}
                 />
-              </View>
+              </View> */}
               <View>
                 <View style={styles.separator}>
                   <View style={styles.SeparatorLine}></View>

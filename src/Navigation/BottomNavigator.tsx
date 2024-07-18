@@ -19,7 +19,6 @@ import Typography from "../../constants/Typography";
 import CustomModal from "../screen/Home/Component/CustomModal";
 import { useNavigation } from "@react-navigation/native";
 import global from '../../utils/global'
-import Header from "../../components/HomeHeader";
 import SettingNavigator from "./SettingStack/SettingNavigator";
 type BottomTabParamList = {
   Track: undefined;
@@ -166,8 +165,8 @@ profileName: {
   },
   SmileIcon:{
     backgroundColor:'#FFFFFF',
-    height:'100%',
-    width:40,
+    height:42,
+    width:42,
     alignItems:'center',
     justifyContent:'center',
     borderRadius:50,
@@ -175,7 +174,8 @@ profileName: {
     shadowOpacity: 0.1,
     shadowOffset: { width: 1, height: 2 },
     shadowRadius: 4,
-    elevation: 5,},
+    elevation: 5,
+  },
     headerBackground: { flex: 1, backgroundColor: Colors.light.background },
     headerTitle: {
       width: "100%",

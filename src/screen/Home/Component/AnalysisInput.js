@@ -7,11 +7,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const AnalysisInput = ({ value, onChange,title,icon }) => {
     const handleChange = (text) => {
         const numericValue = parseFloat(text);
-        if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 100) {
+        if(title=="Skin Age"){
             onChange(text);
-        } else if (text === '') {
-            onChange('');
-        }
+        }else{
+            if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 100) {
+                onChange(text);
+            } else if (text === '') {
+                onChange('');
+            }
+        } 
     };
     return (
         <View style={styles.container}>

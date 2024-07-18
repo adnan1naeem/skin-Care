@@ -7,6 +7,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Screen from '../../../components/Screen';
 import { ThemedText } from '../../../components/ThemedText';
+import { CommonActions } from '@react-navigation/native';
 const SetProfile = ({ navigation }) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
@@ -101,7 +102,7 @@ const SetProfile = ({ navigation }) => {
                 onChange={item => {
                   setValue(item.value);
                   setIsFocus(false);
-                  
+
                 }}
                 renderRightIcon={() => (
                   <MaterialCommunityIcons
@@ -113,7 +114,14 @@ const SetProfile = ({ navigation }) => {
                 )}
               />
               <View style={styles.button}>
-                <PrimaryButton text={"Save Profile"} onPress={() => { navigation.replace("Home") }} />
+                <PrimaryButton text={"Save Profile"} onPress={() => {
+                  navigation.dispatch(
+                    CommonActions.reset({
+                      index: 0,
+                      routes: [{ name: 'Home' }],
+                    })
+                  );
+                }} />
               </View>
             </View>
           </View>

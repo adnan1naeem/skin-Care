@@ -2,15 +2,34 @@ import PrimaryButton from '../../../../components/PrimaryButton';
 import { Colors } from '../../../../constants/Colors';
 import Typography from '../../../../constants/Typography';
 import { useNavigation } from "@react-navigation/native";
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import PaymentBottomSheet from './Payment';
 const ProductDetails = ({ product }) => {
-    const navigation=useNavigation()
+    const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
+    const [saveCardChecked, setSaveCardChecked] = useState(false);
+
+    const toggleBottomSheet = () => {
+        setBottomSheetVisible(!isBottomSheetVisible);
+    };
+
+    const handleSaveCardToggle = () => {
+        setSaveCardChecked(!saveCardChecked);
+    };
+
+    const handlePay = () => {
+        // Handle payment logic here
+        console.log('Payment initiated');
+        toggleBottomSheet();
+        navigation.goBack();
+    };
+    const navigation = useNavigation()
+
     return (
         <ScrollView style={styles.container}>
             <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18, paddingHorizontal: 16, }}>
-                <TouchableOpacity onPress={() => { navigation.goBack()}} style={styles.backButton}>
+                <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backButton}>
                     <Icon name="arrow-back" size={20} color="#000" />
                 </TouchableOpacity>
                 <Text style={styles.backButtonText}>Back</Text>
@@ -19,18 +38,29 @@ const ProductDetails = ({ product }) => {
                 <Image source={product.image} style={styles.image} />
             </View>
             <View style={styles.detailsContainer}>
-                <View style={{ flexDirection: 'row',alignItems:'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={styles.productName}>{product.name}</Text>
                     <Text style={styles.originalPrice}>{product.originalPrice}</Text>
                     <Text style={styles.price}>${product.price}</Text>
                 </View>
                 <Text style={styles.descriptionTitle}>Description</Text>
                 <Text style={styles.description}>{product.detail}</Text>
-               <View style={{marginTop:'12%'}}>
-               <PrimaryButton text={"Buy Now"} onPress={()=>{navigation.navigate("Home")}}/>
-               </View>
+                <View style={{ marginTop: '12%' }}>
+                    <PrimaryButton
+                        text="Buy Now"
+                        onPress={toggleBottomSheet}
+                    />
+                </View>
             </View>
-        </ScrollView>
+            <PaymentBottomSheet
+                isVisible={isBottomSheetVisible}
+                onClose={toggleBottomSheet}
+                onSaveCardToggle={handleSaveCardToggle}
+                onPay={handlePay}
+                saveCardChecked={saveCardChecked}
+                payAmount={product.price}
+            />
+        </ScrollView >
     );
 };
 
@@ -84,18 +114,18 @@ const styles = StyleSheet.create({
     },
     price: {
         paddingLeft: 10,
-        paddingTop:12,
+        paddingTop: 12,
         ...Typography.SemiBold28_20,
         color: Colors.light.green,
     },
     descriptionTitle: {
-        marginTop:'3%',
-       ...Typography.Medium16_20,
+        marginTop: '3%',
+        ...Typography.Medium16_20,
         marginBottom: 8,
     },
     description: {
         ...Typography.Light12_25,
-        marginBottom:30,
+        marginBottom: 30,
     },
 });
 
