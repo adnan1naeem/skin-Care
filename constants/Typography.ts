@@ -34,6 +34,11 @@ export default {
     fontSize: 12,
     lineHeight: 20.6,
   },
+  Semi14_19:{
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 14,
+    lineHeight: 19.6
+  },
   Regular10_20:{
     fontFamily: 'Poppins-Regular',
     fontSize: 10,
@@ -77,6 +82,11 @@ export default {
   Light10_14:{
     fontSize: 10,
     lineHeight: 14,
+    fontFamily: 'Poppins-Light',
+  },
+  Light12_15:{
+    fontSize: 12,
+    lineHeight: 15.6,
     fontFamily: 'Poppins-Light',
   },
   Light16_16:{

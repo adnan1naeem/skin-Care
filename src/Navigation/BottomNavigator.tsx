@@ -111,21 +111,7 @@ export default function TrackingBottomTabNavigator({route}) {
                   style={focused?styles.markedtext:styles.text}
                 >Setting</Text>
               ),
-              headerBackground: () => <View style={styles.headerBackground} />,
-              headerTitleContainerStyle: styles.headerTitle,
-              headerTitle: () => (
-                <View style={styles.profileContainer}>
-                    <Image
-                        source={require('../../assets/images/Notification.png')}
-                        style={styles.profileImage}
-                    />
-                    <View style={styles.profileDetails}>
-                        <Text style={styles.profileName}>Anabia</Text>
-                        <Text style={styles.profileEmail}>youremail@gmail.com</Text>
-                    </View>
-                </View>
-              ),
-              headerLeft: () => null,
+              headerShown:false,
             tabBarIcon: ({ focused }) =>
                 focused ? <MarkedSetting /> : <Setting />,
             }}

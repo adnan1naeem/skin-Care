@@ -14,34 +14,19 @@ const ProfileSettings = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.optionsContainer}>
-                <TouchableOpacity style={styles.option}>
+                <TouchableOpacity style={styles.option} onPress={()=>{navigation.navigate("AccountDetail")}}>
                     <Personal/>
                     <Text style={styles.optionText}>Personal details</Text>
                     <Icon name="chevron-forward" size={20} color={Colors.light.green} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.option}>
+                <TouchableOpacity style={styles.option} onPress={()=>{navigation.navigate("Logout")}}>
                 <SignOut/>
-                    <Text style={styles.optionText}>Sign in and Security</Text>
+                    <Text style={styles.optionText} >Account</Text>
                     <Icon name="chevron-forward" size={20} color={Colors.light.green} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.option}>
-                <AboutUs/>
-                    <Text style={styles.optionText}>About us</Text>
-                    <Icon name="chevron-forward" size={20} color={Colors.light.green} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.option}>
+                <TouchableOpacity style={styles.option} onPress={()=>{navigation.navigate("Support")}}>
                 <Support/>
                     <Text style={styles.optionText}>Support</Text>
-                    <Icon name="chevron-forward" size={20} color={Colors.light.green} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.option}>
-                <Feedback/>
-                    <Text style={styles.optionText}>Feedback</Text>
-                    <Icon name="chevron-forward" size={20} color={Colors.light.green} />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.option} onPress={()=>{navigation.replace("Login")}}>
-                <SignOut/>
-                    <Text style={styles.optionText}>Sign Out</Text>
                     <Icon name="chevron-forward" size={20} color={Colors.light.green} />
                 </TouchableOpacity>
             </View>

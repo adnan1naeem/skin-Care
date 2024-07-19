@@ -6,6 +6,7 @@ import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from "../../../components/ThemedText";
+import BackButton from "../../../components/BackButton";
 const Password = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -50,12 +51,7 @@ const Password = ({ navigation }) => {
               <View style={styles.button}>
               <PrimaryButton text={"Save Password"} onPress={()=>{navigation.navigate("SetProfile")}}/>
               </View>
-            <View style={{flexDirection:'row',marginTop:20,alignContent:'center'}}>
-            <TouchableOpacity onPress={()=>{navigation.navigate("SignUp")}}>
-            <Ionicons name="arrow-back" size={24} color="#707070" />
-            </TouchableOpacity> 
-               <Text style={[styles.newaccount,{marginTop:1,marginLeft:7}]}>Back</Text>
-              </View>
+              <BackButton text="Back" onPress={()=>{navigation.navigate("SignUp")}}/>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

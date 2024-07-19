@@ -7,6 +7,7 @@ import { styles } from './styles';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from "../../../components/ThemedText";
 import { isEmailValid } from "../../Auth/helpers";
+import BackButton from "../../../components/BackButton";
 const ResetCode = ({ navigation }) => {
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
@@ -52,12 +53,7 @@ const ResetCode = ({ navigation }) => {
             <View style={styles.button}>
               <PrimaryButton text={"Verify"} onPress={() => { navigation.navigate("ConfirmPassword") }} />
             </View>
-            <View style={{ flexDirection: 'row', marginTop: 20, alignContent: 'center' }}>
-              <TouchableOpacity onPress={() => { navigation.goBack() }}>
-                <Ionicons name="arrow-back" size={24} color="#707070" />
-              </TouchableOpacity>
-              <Text style={[styles.newaccount, { marginTop: 1, marginLeft: 7 }]}>Back</Text>
-            </View>
+            <BackButton text="Back" onPress={()=>{navigation.goBack() }}/>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
