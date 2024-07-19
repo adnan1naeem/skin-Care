@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
   agreementText: {
     ...Typography.Light10_14,
     color: '#666874',
-    marginLeft: 10,
+    marginLeft: 3,
   },
   linkText: {
     ...Typography.Light10_14,

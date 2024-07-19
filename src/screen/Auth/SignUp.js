@@ -41,11 +41,11 @@ const SignUp = ({ navigation }) => {
   //   }
   // }
   const handleTermsPress = () => {
-    navigation.navigate('TermsOfService');
+    // navigation.navigate('TermsOfService');
   };
 
   const handlePrivacyPress = () => {
-    navigation.navigate('PrivacyPolicy');
+    // navigation.navigate('PrivacyPolicy');
   };
 
   return (
@@ -107,17 +107,17 @@ const SignUp = ({ navigation }) => {
               <TouchableOpacity onPress={toggleRememberMe}>
                 <Ionicons
                   name={AgreeTC ? "checkbox-outline" : "square-outline"}
-                  size={24}
+                  size={20}
                   color="#666874"
                 />
               </TouchableOpacity>
               <Text style={styles.agreementText}>
                 I have read and agree to the{' '}
-                <Pressable onPress={handleTermsPress} style={{justifyContent:"center",paddingTop:1}}>
+                <Pressable onPress={handleTermsPress} style={{ paddingVertical: 1 }}>
                   <Text style={styles.linkText}>Terms of Service</Text>
                 </Pressable>
                 {" "}and{" "}
-                <Pressable onPress={handlePrivacyPress} style={{justifyContent:"flex-end",paddingTop:1}}>
+                <Pressable onPress={handlePrivacyPress} style={{ paddingVertical: 1 }}>
                   <Text style={styles.linkText}>Privacy Policy</Text>
                 </Pressable>.
               </Text>

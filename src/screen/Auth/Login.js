@@ -109,7 +109,7 @@ const Login = ({ navigation }) => {
             <TouchableOpacity onPress={toggleRememberMe} style={{}}>
               <Ionicons
                 name={rememberMe ? "checkbox-outline" : "square-outline"}
-                size={24}
+                size={20}
                 color="#666874"
               />
             </TouchableOpacity>
