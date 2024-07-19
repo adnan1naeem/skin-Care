@@ -11,8 +11,8 @@ import { styles } from './styles';
 import Screen from '../../../components/Screen';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '../../../components/ThemedText';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
+// import { GoogleSignin } from '@react-native-google-signin/google-signin';
+// import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,43 +23,43 @@ const Login = ({ navigation }) => {
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
   };
-  const handleFacebookLogin = async () => {
-    try {
-      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
-      if (result.isCancelled) {
-        alert('Login cancelled');
-      } else {
-        const data = await AccessToken.getCurrentAccessToken();
-        alert(data.accessToken.toString());
-      }
-    } catch (error) {
-      console.log('Login fail with error: ' + error);
-    }
-  };
-  useEffect(()=>{
-    GoogleSignin.configure(
-      {
-        webClientId: '563051675973-at507f1n2bmos7s0a3kp6d5b3jvnj2in.apps.googleusercontent.com',
-       }
-    );
-  },[])
-  const signin = async () => {
-    try {
-    await GoogleSignin.hasPlayServices();
-    const user = await GoogleSignin.signIn();
-    setUserInfo (user) ;
-    navigation.replace("Home")
-    // alert(JSON?.stringify(user))
-    setError ();
-    } catch (e) {
-    setError (e) ;
-    }
-  }
-  const logout = () => {
-    setUserInfo();
-    GoogleSignin.revokeAccess();
-    GoogleSignin.signOut();
-  }
+  // const handleFacebookLogin = async () => {
+  //   try {
+  //     const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+  //     if (result.isCancelled) {
+  //       alert('Login cancelled');
+  //     } else {
+  //       const data = await AccessToken.getCurrentAccessToken();
+  //       alert(data.accessToken.toString());
+  //     }
+  //   } catch (error) {
+  //     console.log('Login fail with error: ' + error);
+  //   }
+  // };
+  // useEffect(()=>{
+  //   GoogleSignin.configure(
+  //     {
+  //       webClientId: '563051675973-at507f1n2bmos7s0a3kp6d5b3jvnj2in.apps.googleusercontent.com',
+  //      }
+  //   );
+  // },[])
+  // const signin = async () => {
+  //   try {
+  //   await GoogleSignin.hasPlayServices();
+  //   const user = await GoogleSignin.signIn();
+  //   setUserInfo (user) ;
+  //   navigation.replace("Home")
+  //   // alert(JSON?.stringify(user))
+  //   setError ();
+  //   } catch (e) {
+  //   setError (e) ;
+  //   }
+  // }
+  // const logout = () => {
+  //   setUserInfo();
+  //   GoogleSignin.revokeAccess();
+  //   GoogleSignin.signOut();
+  // }
   return (
     <Screen style={styles.mainContainer}>
       <KeyboardAvoidingView
@@ -72,7 +72,7 @@ const Login = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           bounces={false}
         >
-          <ThemedText type="title" style={{ color: Colors.light.green, }}>Login</ThemedText>
+          <ThemedText type="title" style={{ color: Colors.light.green, }}>Log In</ThemedText>
           <ThemedText type="default" style={{ color: Colors.light.greyText, }}>Welcome to EstheMate</ThemedText>
           <View style={styles.topSection}>
             <View style={[styles.input, { marginTop: 35 }]}>
@@ -97,6 +97,7 @@ const Login = ({ navigation }) => {
                 Heading={"Enter your Passoword"}
                 ForgotPassword={"Forget Password"}
                 value={password}
+                OnPress={()=>{navigation.navigate("ResetPassword")}}
                 onChangeText={setPassword}
                 isError={false}
                 placeholderText='********'
@@ -114,15 +115,15 @@ const Login = ({ navigation }) => {
             </TouchableOpacity>
             <Text style={styles.Forget}> Remember Me</Text>
             </View>
-              <PrimaryButton text={"Login"} onPress={()=>{navigation.replace("Home")}}/>
-              <View style={styles.button}>
+              <PrimaryButton text={"Log in"} onPress={()=>{navigation.replace("Home")}}/>
+              {/* <View style={styles.button}>
                 <PrimaryIconButton
                   disable={false}
                   titleText={"Login with Google"}
                   onPress={signin}
                   icon={<Google2 />}
                 />
-              </View>
+              </View> */}
               {/* <View style={styles.button}>
                 <PrimaryIconButton
                   disable={false}

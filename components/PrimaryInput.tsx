@@ -15,6 +15,7 @@ interface Props {
   onValidate?: (text: string) => void;
   Heading?: string;
   ForgotPassword?:String;
+  OnPress:()=>void;
 }
 
 const PrimaryInput = ({
@@ -28,13 +29,14 @@ const PrimaryInput = ({
   autoCapitalize,
   onValidate,
   Heading,
-  ForgotPassword
+  ForgotPassword,
+  OnPress,
 }: Props) => {
   const [inputSelected, setInputSelected] = useState(false);
 
   let inputStyle = {};
   if (isError) {
-    inputStyle = { borderColor: Colors.light.green, color: Colors.light.green };
+    inputStyle = { borderColor: "red", color: "red" };
   } else if (inputSelected) {
     inputStyle = { borderColor: Colors.light.green };
 
@@ -43,7 +45,7 @@ const PrimaryInput = ({
     <View>
       <View style={{flex:1,flexDirection:'row',justifyContent:'space-between'}}>
       <Text style={styles.heading}>{Heading}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={OnPress}>
       <Text style={styles.Forget}>{ForgotPassword}</Text>
       </TouchableOpacity>
       </View>
@@ -76,6 +78,7 @@ const styles = StyleSheet.create({
     borderColor: "#D3D3D3",
     paddingHorizontal: 16,
     color: Colors.light.greyText,
+    backgroundColor:Colors.light.white
   },
   heading:{
     ...Typography.Medium14_18,

@@ -3,16 +3,27 @@ import Typography from "../../../constants/Typography";
 import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  mainContainer:{ flex: 1, paddingHorizontal: 16 ,paddingTop:Platform?.OS==="ios"?"15%":60},
+  mainContainer:{ flex: 1, paddingHorizontal: 16 ,paddingTop:Platform?.OS==="ios"?"15%":60,backgroundColor:Colors.light.background},
   wrapper: {
     width: "100%",
     height: 50,
     backgroundColor: Colors.light.background
   },
+  InvalidText: { color: 'red',marginTop:5,paddingLeft:5 },
   buttonsWrapper: {
     height: 50,
     flexDirection: "row",
     justifyContent: 'space-between',
+  },
+  agreementText: {
+    ...Typography.Light10_14,
+    color: '#666874',
+    marginLeft: 10,
+  },
+  linkText: {
+    ...Typography.Light10_14,
+    color: '#666874',
+    textDecorationLine: 'underline', // Underline text
   },
   SeparatorLine:{borderWidth:0.6,height:1,width:'47%',borderColor:'#D3D3D3'},
   containerScreen: {
@@ -68,7 +79,7 @@ export const styles = StyleSheet.create({
     flexDirection:'row',alignItems:'center'
   },
   button: {
-    marginTop: 17,
+    marginTop: 25,
   },
   subTitleText: {
     fontFamily: "gilroy-semibold",

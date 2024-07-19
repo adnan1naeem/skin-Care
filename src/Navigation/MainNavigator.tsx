@@ -7,15 +7,20 @@ import Password from '../screen/Auth/Password';
 import SetProfile from '../screen/Auth/SetProfile';
 import TrackingBottomTabNavigator from './BottomNavigator';
 import ProductDetailScreen from '../screen/Product/ProductDetailScreen';
+import ResetPassword from '../screen/Auth/ResetPassword';
+import ResetCode from '../screen/Auth/ResetCode';
+import ConfirmPassword from '../screen/Auth/ConfirmPassword';
 
 const Stack = createStackNavigator();
 
 function MainNavigator() {
-
   return (
       <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
         <Stack.Screen options={{header:()=>null}} name="Login" component={Login}  />
         <Stack.Screen name="Password" component={Password}  />
+        <Stack.Screen name="ConfirmPassword" component={ConfirmPassword} options={{gestureEnabled:false}} />
+        <Stack.Screen name="ResetCode" component={ResetCode}  />
+        <Stack.Screen name="ResetPassword" component={ResetPassword}  />
         <Stack.Screen name="Home" component={TrackingBottomTabNavigator}/>
         <Stack.Screen name="SignUp" component={SignUp}  />
         <Stack.Screen name="SetProfile" component={SetProfile}  />

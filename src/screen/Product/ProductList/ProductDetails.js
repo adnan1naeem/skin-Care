@@ -52,14 +52,14 @@ const ProductDetails = ({ product }) => {
                     />
                 </View>
             </View>
-            <PaymentBottomSheet
+            {/* <PaymentBottomSheet
                 isVisible={isBottomSheetVisible}
                 onClose={toggleBottomSheet}
                 onSaveCardToggle={handleSaveCardToggle}
                 onPay={handlePay}
                 saveCardChecked={saveCardChecked}
                 payAmount={product.price}
-            />
+            /> */}
         </ScrollView >
     );
 };

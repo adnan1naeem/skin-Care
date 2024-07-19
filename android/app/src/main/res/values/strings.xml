@@ -2,7 +2,6 @@
   <string name="app_name">EstheMate</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
-  <string name="expo_runtime_version">1.0.0</string>
   <string name="facebook_app_id">1004342497528759</string>
   <string name="facebook_client_token">e314628b2098115fc47bc8fa83333bca</string>
   <string name="fb_login_protocol_scheme">fb1004342497528759</string>

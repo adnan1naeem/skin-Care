@@ -17,6 +17,7 @@ export const Colors = {
     green:'#008080',
     greyText:'#708090',
     HeadingText:'#2F4F4F',
+    white:"#FFFFFF"
   },
   dark: {
     text: '#ECEDEE',

@@ -8,11 +8,14 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Screen from '../../../components/Screen';
 import { ThemedText } from '../../../components/ThemedText';
 import { CommonActions } from '@react-navigation/native';
+import countries from './CountryData'
 const SetProfile = ({ navigation }) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
+  const [isCountryFocus, setIsCountryFocus] = useState(false);
+  const [countryValue, setCountryValue] = useState(null);
   const handleDayChange = (text) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 31) {
@@ -108,6 +111,35 @@ const SetProfile = ({ navigation }) => {
                   <MaterialCommunityIcons
                     style={styles.icon}
                     color={isFocus ? 'black' : '#708090'}
+                    name="unfold-more-horizontal"
+                    size={20}
+                  />
+                )}
+              />
+              <Text style={[styles.heading, { marginTop: 10 }]}>Country of Residence</Text>
+              <Dropdown
+                style={[styles.dropdown, isCountryFocus && { borderColor: Colors.light.green }]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                iconStyle={styles.iconStyle}
+                data={countries}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={!isCountryFocus ? 'Select' : '...'}
+                searchPlaceholder="Search..."
+                value={countryValue}
+                onFocus={() => setIsCountryFocus(true)}
+                onBlur={() => setIsCountryFocus(false)}
+                onChange={item => {
+                  setCountryValue(item.value);
+                  setIsCountryFocus(false);
+                }}
+                renderRightIcon={() => (
+                  <MaterialCommunityIcons
+                    style={styles.icon}
+                    color={isCountryFocus ? 'black' : '#708090'}
                     name="unfold-more-horizontal"
                     size={20}
                   />
