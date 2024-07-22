@@ -1,12 +1,34 @@
 import { Colors } from '../../../constants/Colors';
 import Typography from '../../../constants/Typography';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import ProgressComponent from '../Anylysis/Component/ProgressBar';
 import { data } from './AnalysisData';
 import { useNavigation } from '@react-navigation/native';
 
 const SkinAnalysis = () => {
+    const [AnalysisData, setAnalysisData] = useState("");
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        const checkUserInfo = async () => {
+          try {
+            const AnalysisData = await getRequest('api/user/skinnalysis/skinanalysisbydate');
+            if (AnalysisData && AnalysisData.length > 0) {
+              const sortedData = AnalysisData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+              const SkinAnalysisData=dataFunction(sortedData[0]);
+              // setSkinAnalysisDataRecoil(AnalysisData)
+              setAnalysisData(SkinAnalysisData)
+            }
+            
+          } catch (error) {
+            console.error("Failed to fetch user info from AsyncStorage", error);
+          }
+          setLoading(false);
+        };
+        if (loading) {
+          checkUserInfo();
+        }
+      }, [loading]);
     const navigation=useNavigation();
     const [selectedDate, setSelectedDate] = useState(3);
 
@@ -22,7 +44,6 @@ const SkinAnalysis = () => {
     
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            {/* <Text style={styles.title}>Skin Analysis</Text> */}
             <View style={styles.dateContainer}>
                 <TouchableOpacity 
                     style={[styles.dateBox, selectedDate === 2 && styles.selectedDateBox]} 

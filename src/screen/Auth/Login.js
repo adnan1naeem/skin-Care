@@ -1,4 +1,3 @@
-import PrimaryIconButton from '../../../components/PrimaryIconButton';
 import { Colors } from "../../../constants/Colors";
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
@@ -11,15 +10,59 @@ import { styles } from './styles';
 import Screen from '../../../components/Screen';
 import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from '../../../components/ThemedText';
+import { postRequest } from '../../../components/ApiHandler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSetRecoilState } from "recoil";
+import { userInfo } from "../../../utils/State";
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 // import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("aali@techtiz.co");
+  const [password, setPassword] = useState("Test@123");
   const [emailError, setEmailError] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const[error,setError]=useState();
-  const[UserInfo,setUserInfo]=useState();
+  const [passwordError, setPasswordError] = useState(false);
+  const [response, setResponse] = useState(null);
+  const userInfoValues=useSetRecoilState(userInfo)
+  const handleLogin = async () => {
+    let valid = true;
+  
+    if (!email) {
+      setEmailError(true);
+      valid = false;
+    } else if (!isEmailValid(email)) {
+      setEmailError(true);
+      valid = false;
+    } else {
+      setEmailError(false);
+    }
+  
+    if (!password) {
+      setPasswordError(true);
+      valid = false;
+    } else {
+      setPasswordError(false);
+    }
+  
+    if (valid) {
+      const endpoint = 'api/auth/login';
+      const body = {
+        email: email,
+        password: password,
+      };
+      try {
+        const jsonResponse = await postRequest(endpoint, body);
+        setResponse(jsonResponse);
+        await AsyncStorage.setItem('token', jsonResponse.token);
+        await AsyncStorage.setItem('userInfo', JSON.stringify(jsonResponse.userWithoutPassword));
+        userInfoValues(jsonResponse?.userWithoutPassword)
+        navigation.replace("Home");
+      } catch (error) {
+        alert(error?.message);
+      }
+    }
+  };
+  
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
   };
@@ -92,31 +135,36 @@ const Login = ({ navigation }) => {
                 autoCapitalize={"none"}
               />
             </View>
+            {emailError && <Text style={styles.InvalidText}>Email Format is not Correct</Text>}
             <View style={styles.input}>
               <PrimaryInput
                 Heading={"Enter your Passoword"}
                 ForgotPassword={"Forget Password"}
                 value={password}
-                OnPress={()=>{navigation.navigate("ResetPassword")}}
-                onChangeText={setPassword}
+                OnPress={() => { navigation.navigate("ResetPassword") }}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  setPasswordError(false);
+                }}
                 isError={false}
                 placeholderText='********'
                 textContentType="password"
                 secureTextEntry={true}
               />
             </View>
-            <View style={{flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
-            <TouchableOpacity onPress={toggleRememberMe} style={{}}>
-              <Ionicons
-                name={rememberMe ? "checkbox-outline" : "square-outline"}
-                size={20}
-                color="#666874"
-              />
-            </TouchableOpacity>
-            <Text style={styles.Forget}> Remember Me</Text>
+            {passwordError && <Text style={styles.InvalidText}>Password cannot be empty</Text>}
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
+              <TouchableOpacity onPress={toggleRememberMe} style={{}}>
+                <Ionicons
+                  name={rememberMe ? "checkbox-outline" : "square-outline"}
+                  size={20}
+                  color="#666874"
+                />
+              </TouchableOpacity>
+              <Text style={styles.Forget}> Remember Me</Text>
             </View>
-              <PrimaryButton text={"Log in"} onPress={()=>{navigation.replace("Home")}}/>
-              {/* <View style={styles.button}>
+            <PrimaryButton text={"Log in"} onPress={handleLogin} />
+            {/* <View style={styles.button}>
                 <PrimaryIconButton
                   disable={false}
                   titleText={"Login with Google"}
@@ -124,7 +172,7 @@ const Login = ({ navigation }) => {
                   icon={<Google2 />}
                 />
               </View> */}
-              {/* <View style={styles.button}>
+            {/* <View style={styles.button}>
                 <PrimaryIconButton
                   disable={false}
                   titleText={"Login with Facebook"}
@@ -132,19 +180,19 @@ const Login = ({ navigation }) => {
                   icon={<Facebook2 />}
                 />
               </View> */}
-              <View>
-                <View style={styles.separator}>
-                  <View style={styles.SeparatorLine}></View>
+            <View>
+              <View style={styles.separator}>
+                <View style={styles.SeparatorLine}></View>
                 <Text style={styles.separatorOrText}>or</Text>
                 <View style={styles.separatorLine}></View>
-                </View>
               </View>
-            <View style={{flexDirection:'row',justifyContent:'center'}}>
-                <Text style={styles.newaccount}>Don’t have an account?</Text>
-               <TouchableOpacity onPress={()=>{navigation.navigate("SignUp")}}>
-               <Text style={[styles.newaccount,{color:'#010317',fontFamily:'Poppins-SemiBold',}]}> Sign Up</Text>
-               </TouchableOpacity>
-              </View>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <Text style={styles.newaccount}>Don’t have an account?</Text>
+              <TouchableOpacity onPress={() => { navigation.navigate("SignUp") }}>
+                <Text style={[styles.newaccount, { color: '#010317', fontFamily: 'Poppins-SemiBold', }]}> Sign Up</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

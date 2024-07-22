@@ -13,19 +13,19 @@ import ConfirmPassword from '../screen/Auth/ConfirmPassword';
 
 const Stack = createStackNavigator();
 
-function MainNavigator() {
+function MainNavigator({ isLoggedIn }) {
   return (
-      <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}} >
-        <Stack.Screen options={{header:()=>null}} name="Login" component={Login}  />
-        <Stack.Screen name="Password" component={Password}  />
-        <Stack.Screen name="ConfirmPassword" component={ConfirmPassword} options={{gestureEnabled:false}} />
-        <Stack.Screen name="ResetCode" component={ResetCode}  />
-        <Stack.Screen name="ResetPassword" component={ResetPassword}  />
-        <Stack.Screen name="Home" component={TrackingBottomTabNavigator}/>
-        <Stack.Screen name="SignUp" component={SignUp}  />
-        <Stack.Screen name="SetProfile" component={SetProfile}  />
-        <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen}  />
-      </Stack.Navigator>
+    <Stack.Navigator initialRouteName={isLoggedIn ? "Home" : "Login"} screenOptions={{headerShown: false}}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="Password" component={Password} />
+          <Stack.Screen name="ConfirmPassword" component={ConfirmPassword} options={{gestureEnabled:false}} />
+          <Stack.Screen name="ResetCode" component={ResetCode} />
+          <Stack.Screen name="ResetPassword" component={ResetPassword} />
+          <Stack.Screen name="SetProfile" component={SetProfile} />
+          <Stack.Screen name="Home" component={TrackingBottomTabNavigator}/>
+          <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
+    </Stack.Navigator>
   );
 }
 

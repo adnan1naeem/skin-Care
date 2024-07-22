@@ -1,23 +1,22 @@
 import { Colors } from "../../../constants/Colors";
-import React, { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, ScrollView, KeyboardAvoidingView, Platform, } from 'react-native';
 import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles';
-import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from "../../../components/ThemedText";
 import TextWithLabel from "./Component/TextwithLabel";
 import BackButton from "../../../components/BackButton";
-const AccountDetail = ({ navigation }) => {
-  const handleNavigation=()=>{
-      navigation.navigate("EditProfile")
-  }
+import { formatDate } from "../../../utils/DateConverstion";
+const AccountDetail = ({ navigation,route }) => {
+  const data=route?.params?.userInfoData
+  const handleNavigation=()=>{navigation.navigate("EditProfile",data)}
+
   return (
     <View style={[styles.mainContainer,{backgroundColor:Colors.light.background}]}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardView}
       >
-
         <ScrollView
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}
@@ -25,11 +24,11 @@ const AccountDetail = ({ navigation }) => {
         >
           <ThemedText type="title" style={{ color: Colors.light.green, }}>Account</ThemedText>
           <View style={{marginTop:40}}>
-          <TextWithLabel heading="First Name" data="Adnan" />
-          <TextWithLabel heading="Last Name" data="Naeem" />
-          <TextWithLabel heading="Date of Birth" data="01 Jul 1980" />
-          <TextWithLabel heading="Gender" data="Male" />
-          <TextWithLabel heading="Country of Residence" data="United States" />
+          <TextWithLabel heading="First Name" data={data?.firstName} />
+          <TextWithLabel heading="Last Name" data={data?.lastName} />
+          <TextWithLabel heading="Date of Birth" data={formatDate(data?.dob)} />
+          <TextWithLabel heading="Gender" data={data?.gender} />
+          <TextWithLabel heading="Country of Residence" data={data?.country} />
           </View>
               <View style={styles.button}>
               <PrimaryButton text={"Edit"} onPress={handleNavigation}/>

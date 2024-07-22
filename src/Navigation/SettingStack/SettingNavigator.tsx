@@ -9,28 +9,39 @@ import { Colors } from '../../../constants/Colors';
 import AccountDetail from '../../screen/Setting/AccountDetail';
 import EditProfile from '../../screen/Setting/EditProfile';
 import Support from '../../screen/Setting/Support';
+import { useRecoilValue } from 'recoil';
+import { userInfo } from '../../../utils/State';
 const SettingStack = createStackNavigator<ProfileTabParamList>();
 
 const SettingNavigator = () => {
-
+  const userInfoData = useRecoilValue(userInfo);
+  const userName = userInfoData?.firstName;
+  const userInitial = userName ? userName.charAt(0).toUpperCase() : '';
   return (
     <SettingStack.Navigator initialRouteName="ProfileSettings">
       <SettingStack.Screen
         name="ProfileSettings"
         component={ProfileSettings}
         options={{
-          gestureEnabled:false,
+          gestureEnabled: false,
           headerBackground: () => <View style={styles.headerBackground} />,
           headerTitleContainerStyle: styles.headerTitle,
           headerTitle: () => (
             <View style={styles.profileContainer}>
-              <Image
-                source={require('../../../assets/images/Notification.png')}
-                style={styles.profileImage}
-              />
+              {!userName ? (
+                <Image
+                  source={require('../../../assets/images/Notification.png')}
+                  style={styles.profileImage}
+                />
+              ) : (
+                <View style={styles.InitialContainer}>
+                  <Text style={styles.InitialText}>{userInitial}</Text>
+                </View>
+              )}
+
               <View style={styles.profileDetails}>
-                <Text style={styles.profileName}>Anabia</Text>
-                <Text style={styles.profileEmail}>youremail@gmail.com</Text>
+                <Text style={styles.profileName}>{userInfoData?.firstName}</Text>
+                <Text style={styles.profileEmail}>{userInfoData?.email}</Text>
               </View>
             </View>
           ),
@@ -43,6 +54,7 @@ const SettingNavigator = () => {
         options={{
           headerShown: false,
         }}
+        initialParams={{userInfoData}}
       />
       <SettingStack.Screen
         name="AccountDetail"
@@ -50,6 +62,7 @@ const SettingNavigator = () => {
         options={{
           headerShown: false,
         }}
+        initialParams={{userInfoData}}
       />
       <SettingStack.Screen
         name="EditProfile"
@@ -118,6 +131,18 @@ const styles = StyleSheet.create({
     ...Typography.SemiBold24_47,
     textAlign: 'center',
     color: Colors.light.green,
+  },
+  InitialContainer: {
+    height: 40,
+    width: 40,
+    borderRadius: 20,
+    backgroundColor: '#d3d3d3',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  InitialText: {
+    ...Typography.SemiBold20_30,
+    color: '#2F4F4F',
   },
 });
 export default SettingNavigator;

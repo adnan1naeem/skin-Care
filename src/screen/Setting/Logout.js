@@ -1,24 +1,30 @@
 import { Colors } from "../../../constants/Colors";
-import React, { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles';
-import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from "../../../components/ThemedText";
-import { CommonActions } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import TextWithLabel from "./Component/TextwithLabel";
 import BackButton from "../../../components/BackButton";
-const Logout = ({ navigation }) => {
-  const handleNavigation=()=>{
-    navigation.dispatch(
-      CommonActions.reset({
+import AsyncStorage from "@react-native-async-storage/async-storage";
+const Logout = ({route}) => {
+  const navigation=useNavigation()
+  const handleNavigation = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('userInfo');
+      navigation.reset({
         index: 0,
         routes: [{ name: 'Login' }],
-      })
-    );
+      });
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+
   }
   return (
-    <View style={[styles.mainContainer,{backgroundColor:Colors.light.background}]}>
+    <View style={[styles.mainContainer, { backgroundColor: Colors.light.background }]}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardView}
@@ -29,13 +35,13 @@ const Logout = ({ navigation }) => {
           bounces={false}
         >
           <ThemedText type="title" style={{ color: Colors.light.green, }}>Account</ThemedText>
-          <View style={{marginTop:40}}>
-          <TextWithLabel heading="Email" data="Emailhere@gmail.com" />
+          <View style={{ marginTop: 40 }}>
+            <TextWithLabel heading="Email" data={route?.params?.userInfoData?.email} />
           </View>
-              <View style={styles.button}>
-              <PrimaryButton text={"Log Out"} onPress={handleNavigation}/>
-              </View>
-              <BackButton text="Back" onPress={()=>{navigation.goBack()}}/>
+          <View style={styles.button}>
+            <PrimaryButton text={"Log Out"} onPress={handleNavigation} />
+          </View>
+          <BackButton text="Back" onPress={() => { navigation.goBack() }} />
         </ScrollView>
       </KeyboardAvoidingView>
     </View>

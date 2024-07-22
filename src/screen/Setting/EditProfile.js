@@ -1,15 +1,22 @@
-import { Colors } from '../../../constants/Colors';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity } from 'react-native';
-import { styles } from './styles'
+import { styles } from './styles';
 import { Dropdown } from 'react-native-element-dropdown';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Screen from '../../../components/Screen';
 import { ThemedText } from '../../../components/ThemedText';
 import { CommonActions } from '@react-navigation/native';
-import countries from './../Auth/CountryData'
+import countries from './../Auth/CountryData';
 import PrimaryInput from '../../../components/PrimaryInput';
-const EditProfile = ({ navigation }) => {
+import { Colors } from '../../../constants/Colors';
+import { convertToISODateString } from '../../../utils/DateConverstion';
+import { putRequest } from '../../../components/ApiHandler';
+import { useSetRecoilState } from 'recoil';
+import { userInfo } from '../../../utils/State';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const EditProfile = ({ navigation, route }) => {
+  // State variables
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
@@ -17,19 +24,61 @@ const EditProfile = ({ navigation }) => {
   const [countryValue, setCountryValue] = useState(null);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
+  const [value, setValue] = useState(null);
+  const [isFocus, setIsFocus] = useState(false);
+  const userInfoData = useSetRecoilState(userInfo)
+  const endpoint = `api/user/${route.params?._id}`;
+  const updateProfile = async () => {
+    try {
+      const NewDate = convertToISODateString(day, month, year);
+  
+      const response = await putRequest(endpoint, {
+        firstName: firstname,
+        lastName: lastname,
+        dob: NewDate,
+        country: countryValue,
+        gender: value,
+      });
+  
+      alert(JSON?.stringify(response))
+      userInfoData(response);
+      await AsyncStorage.setItem('userInfo', JSON?.stringify(response));
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'ProfileSettings' }],
+        })
+      );
+  
+
+    } catch (error) {
+      console.error('Failed to update profile:', error);
+    }
+  };
+  useEffect(() => {
+    const { firstName, lastName, gender, country, dob } = route.params;
+    if (route.params) {
+      setFirstname(firstName || "");
+      setLastname(lastName || "");
+      setValue(gender || null);
+      setCountryValue(country || null);
+    }
+    if (dob) {
+      const date = new Date(dob);
+      setDay(date.getDate().toString().padStart(2, '0')); // Ensuring two-digit format
+      setMonth((date.getMonth() + 1).toString().padStart(2, '0')); // Months are zero-indexed
+      setYear(date.getFullYear().toString());
+    }
+  }, [route.params]);
+
+  // Handlers for input changes
   const handleDayChange = (text) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 31) {
       setDay(numericValue);
     }
   };
-  const data = [
-    { label: 'Male', value: '1' },
-    { label: 'Female', value: '2' },
-    { label: 'Other', value: '3' },
-  ];
-  const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+
   const handleMonthChange = (text) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 12) {
@@ -43,6 +92,7 @@ const EditProfile = ({ navigation }) => {
       setYear(numericValue);
     }
   };
+
   const handleNavigation = () => {
     navigation.dispatch(
       CommonActions.reset({
@@ -50,29 +100,35 @@ const EditProfile = ({ navigation }) => {
         routes: [{ name: 'ProfileSettings' }],
       })
     );
-  }
+  };
+
+  const data = [
+    { label: 'male', value: '1' },
+    { label: 'female', value: '2' },
+    { label: 'other', value: '3' },
+  ];
+
   return (
     <Screen style={styles.mainContainer}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardView}
       >
-
         <ScrollView
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}
         >
-          <ThemedText type="title" style={{ color: Colors.light.green, }}>Setup Your Profile</ThemedText>
+          <ThemedText type="title" style={{ color: Colors.light.green }}>
+            Setup Your Profile
+          </ThemedText>
           <View style={[styles.input, { marginTop: 35 }]}>
             <PrimaryInput
               Heading={"First Name"}
               value={firstname}
-              onChangeText={(text) => {
-                setFirstname(text)
-              }}
+              onChangeText={(text) => setFirstname(text)}
               placeholderText={"First Name"}
               isError={""}
-              textContentType="emailAddress"
+              textContentType="givenName"
               autoCapitalize={"none"}
             />
           </View>
@@ -80,12 +136,10 @@ const EditProfile = ({ navigation }) => {
             <PrimaryInput
               Heading={"Last Name"}
               value={lastname}
-              onChangeText={(text) => {
-                setLastname(text)
-              }}
+              onChangeText={(text) => setLastname(text)}
               placeholderText={"Last Name"}
               isError={""}
-              textContentType="emailAddress"
+              textContentType="familyName"
               autoCapitalize={"none"}
             />
           </View>
@@ -100,7 +154,6 @@ const EditProfile = ({ navigation }) => {
                   placeholder="Day"
                   keyboardType="numeric"
                   maxLength={2}
-
                 />
                 <TextInput
                   style={styles.Dateinput}
@@ -124,7 +177,6 @@ const EditProfile = ({ navigation }) => {
                 style={[styles.dropdown, isFocus && { borderColor: Colors.light.green }]}
                 placeholderStyle={styles.placeholderStyle}
                 selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
                 iconStyle={styles.iconStyle}
                 data={data}
                 search
@@ -137,9 +189,8 @@ const EditProfile = ({ navigation }) => {
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={item => {
-                  setValue(item.value);
+                  setValue(item.label);
                   setIsFocus(false);
-
                 }}
                 renderRightIcon={() => (
                   <MaterialCommunityIcons
@@ -167,7 +218,7 @@ const EditProfile = ({ navigation }) => {
                 onFocus={() => setIsCountryFocus(true)}
                 onBlur={() => setIsCountryFocus(false)}
                 onChange={item => {
-                  setCountryValue(item.value);
+                  setCountryValue(item.label);
                   setIsCountryFocus(false);
                 }}
                 renderRightIcon={() => (
@@ -181,10 +232,10 @@ const EditProfile = ({ navigation }) => {
               />
               <View style={[styles.button, { marginBottom: 50 }]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <TouchableOpacity onPress={() => { navigation.goBack() }} style={[styles.closeButton]}>
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeButton}>
                     <Text style={styles.closeButtonText}>Cancel</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={handleNavigation} style={styles.AnalyzeButon}>
+                  <TouchableOpacity onPress={updateProfile} style={styles.AnalyzeButon}>
                     <Text style={styles.AnalyzeButtonText}>Analyze</Text>
                   </TouchableOpacity>
                 </View>

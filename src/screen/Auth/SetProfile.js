@@ -7,15 +7,19 @@ import { Dropdown } from 'react-native-element-dropdown';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Screen from '../../../components/Screen';
 import { ThemedText } from '../../../components/ThemedText';
-import { CommonActions } from '@react-navigation/native';
 import countries from './CountryData'
-const SetProfile = ({ navigation }) => {
+import { convertToISODateString } from '../../../utils/DateConverstion';
+import { postRequest } from '../../../components/ApiHandler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const SetProfile = ({ navigation,route }) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
   const [isCountryFocus, setIsCountryFocus] = useState(false);
   const [countryValue, setCountryValue] = useState(null);
+  const [validationError, setValidationError] = useState("");
+
   const handleDayChange = (text) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 31) {
@@ -23,9 +27,9 @@ const SetProfile = ({ navigation }) => {
     }
   };
   const data = [
-    { label: 'Male', value: '1' },
-    { label: 'Female', value: '2' },
-    { label: 'Other', value: '3' },
+    { label: 'male', value: '1' },
+    { label: 'female', value: '2' },
+    { label: 'other', value: '3' },
   ];
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -42,19 +46,61 @@ const SetProfile = ({ navigation }) => {
       setYear(numericValue);
     }
   };
+
+  const validateForm = () => {
+    if (!day || !month || !year) {
+      setValidationError("Please enter a valid date of birth.");
+      return false;
+    }
+
+    if (!value) {
+      setValidationError("Please select your gender.");
+      return false;
+    }
+
+    if (!countryValue) {
+      setValidationError("Please select your country of residence.");
+      return false;
+    }
+
+    setValidationError("");
+    return true;
+  };
+
+  const handleSaveProfile =async () => {
+    if (validateForm()) {
+      const NewDate = convertToISODateString(day, month, year);
+      const profileData = {
+        ...route.params,
+        dob:NewDate,
+        gender: value,
+        country: countryValue,
+      };
+      alert(JSON?.stringify(profileData))
+      const endpoint = 'api/auth/register';
+      const jsonResponse = await postRequest(endpoint, profileData);
+      alert(JSON?.stringify(jsonResponse?.token))
+      await AsyncStorage.setItem('token', jsonResponse?.token);
+      await AsyncStorage.setItem('userInfo', JSON.stringify(jsonResponse?.userWithoutPassword));
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Home" }],
+      });
+    }
+  };
+
   return (
     <Screen style={styles.mainContainer}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.keyboardView}
       >
-
         <ScrollView
           contentContainerStyle={styles.scroll}
           showsVerticalScrollIndicator={false}
           bounces={false}
         >
-          <ThemedText type="title" style={{ color: Colors.light.green, }}>Setup Your Profile</ThemedText>
+          <ThemedText type="title" style={{ color: Colors.light.green }}>Setup Your Profile</ThemedText>
           <View style={styles.topSection}>
             <View style={[styles.input, { marginTop: 25 }]}>
               <Text style={styles.heading}>Date of Birth</Text>
@@ -66,7 +112,6 @@ const SetProfile = ({ navigation }) => {
                   placeholder="Day"
                   keyboardType="numeric"
                   maxLength={2}
-
                 />
                 <TextInput
                   style={styles.Dateinput}
@@ -96,16 +141,15 @@ const SetProfile = ({ navigation }) => {
                 search
                 maxHeight={300}
                 labelField="label"
-                valueField="value"
+                valueField="label"
                 placeholder={!isFocus ? 'Select item' : '...'}
                 searchPlaceholder="Search..."
                 value={value}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={item => {
-                  setValue(item.value);
+                  setValue(item?.label);
                   setIsFocus(false);
-
                 }}
                 renderRightIcon={() => (
                   <MaterialCommunityIcons
@@ -126,14 +170,14 @@ const SetProfile = ({ navigation }) => {
                 search
                 maxHeight={300}
                 labelField="label"
-                valueField="value"
+                valueField="label"
                 placeholder={!isCountryFocus ? 'Select' : '...'}
                 searchPlaceholder="Search..."
                 value={countryValue}
                 onFocus={() => setIsCountryFocus(true)}
                 onBlur={() => setIsCountryFocus(false)}
                 onChange={item => {
-                  setCountryValue(item.value);
+                  setCountryValue(item?.label);
                   setIsCountryFocus(false);
                 }}
                 renderRightIcon={() => (
@@ -145,15 +189,9 @@ const SetProfile = ({ navigation }) => {
                   />
                 )}
               />
+              {validationError ? <Text style={{ color: 'red', textAlign: 'center' }}>{validationError}</Text> : null}
               <View style={styles.button}>
-                <PrimaryButton text={"Save Profile"} onPress={() => {
-                  navigation.dispatch(
-                    CommonActions.reset({
-                      index: 0,
-                      routes: [{ name: 'Home' }],
-                    })
-                  );
-                }} />
+                <PrimaryButton text={"Save Profile"} onPress={handleSaveProfile} />
               </View>
             </View>
           </View>

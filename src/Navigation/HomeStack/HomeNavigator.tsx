@@ -5,10 +5,14 @@ import SkinDetail from '../../screen/Anylysis/SkinDetail';
 import { StyleSheet, View } from 'react-native';
 import Header from '../../../components/HomeHeader';
 import { Colors } from '../../../constants/Colors';
+import { useRecoilValue } from 'recoil';
+import { userInfo } from '../../../utils/State';
 
 const Stack = createStackNavigator();
 
 function HomeNavigator({}) {
+  const userInfovalue=useRecoilValue(userInfo);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -20,7 +24,7 @@ function HomeNavigator({}) {
           headerTitle: () => (
             <Header
               title={"Hello,"}
-              subtitle={" Anabia"}
+              subtitle={userInfovalue}
             />
           ),
         }}

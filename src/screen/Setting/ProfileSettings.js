@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Colors } from '../../../constants/Colors';
 import Typography from '../../../constants/Typography';
 import Personal from '../../../assets/svg/Personal.svg'
 import SignOut from '../../../assets/svg/Sign-in icon.svg';
-import AboutUs from '../../../assets/svg/Aboutus.svg';
 import Support from '../../../assets/svg/Support Icon.svg';
-import Feedback from '../../../assets/svg/Feedback.svg'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
 const ProfileSettings = () => {
