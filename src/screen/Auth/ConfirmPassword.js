@@ -5,18 +5,29 @@ import PrimaryInput from '../../../components/PrimaryInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles';
 import { ThemedText } from "../../../components/ThemedText";
-const ConfirmPassword = ({ navigation }) => {
+import { postRequest } from "../../../components/ApiHandler";
+const ConfirmPassword = ({ navigation,route }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const validatePasswords = () => {
+  const validatePasswords = async() => {
     if (!password || !confirmPassword) {
       setPasswordError(true);
     } else if (password !== confirmPassword) {
       setPasswordError(true);
     } else {
       setPasswordError(false);
+      const endpoint = 'api/auth/reset-password';
+      const data = {
+      ...route.params,
+      password:password
+    };
+     await postRequest(endpoint, data).then((res)=>{
       navigation.navigate("Login");
+     }).catch((error)=>{
+      alert(JSON?.stringify(error))
+     });
+     
     }
   };
 

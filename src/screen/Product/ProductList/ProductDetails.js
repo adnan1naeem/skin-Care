@@ -3,9 +3,8 @@ import { Colors } from '../../../../constants/Colors';
 import Typography from '../../../../constants/Typography';
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import PaymentBottomSheet from './Payment';
 const ProductDetails = ({ product }) => {
     const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
     const [saveCardChecked, setSaveCardChecked] = useState(false);
@@ -19,13 +18,17 @@ const ProductDetails = ({ product }) => {
     };
 
     const handlePay = () => {
-        // Handle payment logic here
-        console.log('Payment initiated');
-        toggleBottomSheet();
-        navigation.goBack();
+        if (product?.amazonUrl) {
+            Linking.openURL(product.amazonUrl).catch(err => 
+                console.error('An error occurred', err)
+            );
+        }else{
+            navigation.goBack()
+        }
     };
     const navigation = useNavigation()
-
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+    const imageUrl = `${apiUrl}${product?.productImage}`; 
     return (
         <ScrollView style={styles.container}>
             <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18, paddingHorizontal: 16, }}>
@@ -35,11 +38,11 @@ const ProductDetails = ({ product }) => {
                 <Text style={styles.backButtonText}>Back</Text>
             </View>
             <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <Image source={product.image} style={styles.image} />
+                <Image source={{ uri: imageUrl }} style={styles.image} />
             </View>
             <View style={styles.detailsContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.productName}>{product.name}</Text>
+                    <Text style={styles.productName}>{product.title}</Text>
                     <Text style={styles.originalPrice}>{product.originalPrice}</Text>
                     <Text style={styles.price}>${product.price}</Text>
                 </View>
@@ -48,7 +51,7 @@ const ProductDetails = ({ product }) => {
                 <View style={{ marginTop: '12%' }}>
                     <PrimaryButton
                         text="Buy Now"
-                        onPress={toggleBottomSheet}
+                        onPress={handlePay}
                     />
                 </View>
             </View>
@@ -128,5 +131,4 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
 });
-
 export default ProductDetails;

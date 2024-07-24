@@ -1,26 +1,36 @@
-import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform } from 'react-native';
+import React from 'react';
+import { View, Text,  TouchableOpacity, Image, ScrollView } from 'react-native';
 import { ProgressBar, Provider as PaperProvider } from 'react-native-paper';
-import { Colors } from '../../../constants/Colors';
-import Typography from '../../../constants/Typography';
-import { getColor, getColorValue } from '../../../utils/ProgressBarColor';
+import {  getColorCode } from '../../../utils/ProgressBarColor';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { styles } from './styles';
 const SkinDetail = ({ navigation, route }) => {
   const value = route.params || route?.params;
-  const value2=value?.params;
-  const tintColor = getColor(value?.progress);
-  const tinitColorwithvalue = getColorValue(value?.item?.progress);
+  const value2 = value?.params;
+  const progress = value2?.values
   const progressvalueInPercentage = value2?.item?.progress / 100;
-  const progressPercentage = value?.progress * 100;
-  const colors = value2?.item?.progress ? tinitColorwithvalue : tintColor;
+  const progressvalueInPercentage1 = progress / 100
+
 
   const handleNavigation = () => {
-      navigation.goBack();
+    navigation.goBack();
   };
-  
+  const getImageSource = (title) => {
+    switch (title) {
+      case 'hydration':
+        return require('../../../assets/images/HydrationIcon.png');
+      case 'oilness':
+        return require('../../../assets/images/OilLevelIcon.png');
+      case 'elasticity':
+        return require('../../../assets/images/ElasticityIcon.png');
+      default:
+        return require('../../../assets/images/HydrationIcon.png');
+    }
+  };
+
   return (
     <PaperProvider >
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container1}>
         <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18 }}>
           <TouchableOpacity onPress={handleNavigation} style={styles.backButton}>
             <Icon name="arrow-back" size={20} color="#000" />
@@ -29,96 +39,22 @@ const SkinDetail = ({ navigation, route }) => {
         </View>
         <View style={styles.analysisContainer}>
           <View style={styles.header}>
-            <Image source={value2?.item?.image1 || value?.image1} style={styles.icon} />
-            <Text style={styles.headerText}>{value2?.item?.text || value?.text}</Text>
-            <Text style={[styles.percentageText, { color: colors }]}>{progressPercentage || value2?.item?.progress}%</Text>
+            {!value2?.item?.image1 ? <Image source={getImageSource('hydration')} style={styles.icon} />
+              : <Image source={value2?.item?.image1} style={styles.icon} />}
+            <Text style={styles.headerText}>{value2?.item?.text||value2?.title}</Text>
+            <Text style={[styles.percentageText, { color: getColorCode(value2?.item?.level) }]}>{value2?.item?.progress || progress}%</Text>
           </View>
-          <ProgressBar progress={progressvalueInPercentage || value?.progress} fillStyle={{ borderRadius: 20 }} color={colors} style={styles.progressBar} />
+          <ProgressBar progress={progressvalueInPercentage || progressvalueInPercentage1} fillStyle={{ borderRadius: 20 }} color={getColorCode(value2?.item?.level)} style={styles.progressBar} />
           <Text style={styles.description}>
-            {value2?.item?.Desciption || value?.Desciption}
+            {value2?.item?.Desciption || value2?.item?.description}
           </Text>
         </View>
-        <Text style={styles.sectionTitle}>{value2?.item?.Header || value?.Header}</Text>
-        <Text style={styles.overviewText}>
-          {value2?.item?.Deatil || value?.Deatil}
+        <Text style={styles.sectionTitle}>{"Your"} {value2?.item?.Header || value2?.item?.parameter}</Text>
+        <Text style={styles.overviewText2}>
+          {value2?.item?.Deatil||value2?.item?.detail}
         </Text>
       </ScrollView>
     </PaperProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FAFA',
-    padding: 18,
-    paddingTop: Platform?.OS === "android" ? 10 : '11%',
-  },
-  backButton: {
-    alignItems: 'center',
-    marginBottom: 16,
-    height: 40,
-    width: 40,
-    justifyContent: 'center',
-    borderRadius: 27,
-    backgroundColor: Colors.light.background,
-    borderWidth: 1,
-    borderColor: '#E6E8FE',
-  },
-  backButtonText: {
-    fontSize: 16,
-    marginLeft: 8,
-    height: 40,
-    paddingTop: 2,
-    alignSelf: 'center',
-    ...Typography.SemiBold16_20,
-  },
-  analysisContainer: {
-    backgroundColor: '#FFF',
-    borderRadius: 10,
-    paddingHorizontal: 20,
-    paddingVertical: 40,
-    marginBottom: 24,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-    height: 30,
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    marginRight: 8,
-  },
-  headerText: {
-    flex: 1,
-    ...Typography.Medium12_20,
-  },
-  percentageText: {
-    paddingTop: 10,
-    ...Typography.Medium22_20,
-  },
-  progressBar: {
-    height: 10,
-    borderRadius: 5,
-    marginBottom: 16,
-    backgroundColor: '#d4dcdc',
-  },
-  description: {
-    ...Typography.Light12_18,
-    color: '#707070',
-  },
-  sectionTitle: {
-    paddingHorizontal: 18,
-    ...Typography.SemiBold16_20,
-    marginBottom: 8,
-  },
-  overviewText: {
-    paddingHorizontal: 18,
-    ...Typography.Light12_18,
-    color: '#707070',
-  },
-});
-
 export default SkinDetail;

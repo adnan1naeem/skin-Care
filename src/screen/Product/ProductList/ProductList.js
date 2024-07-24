@@ -21,7 +21,7 @@ const ProductList = ({ products }) => {
                 data={products}
                 renderItem={renderItem}
                 scrollEnabled={false}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item._id.toString()}
                 numColumns={2}
                 columnWrapperStyle={styles.row}
                 contentContainerStyle={styles.list}

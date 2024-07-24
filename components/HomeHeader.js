@@ -8,18 +8,9 @@ const Header = ({ title, subtitle }) => {
   const userInitial = userName ? userName.charAt(0).toUpperCase() : '';
   return (
     <View style={styles.HeaderContainer}>
-      {!userName ? (
-        <Image
-          source={require('../assets/images/Notification.png')}
-          style={{ height: 40, width: 40 }}
-          resizeMode="contain"
-        />
-      ) : (
         <View style={styles.InitialContainer}>
           <Text style={styles.InitialText}>{userInitial}</Text>
         </View>
-      )}
-
       <View style={styles.HeadingContainer}>
         <Text style={styles.Hello}>{title}</Text>
         <Text style={styles.HomeText}>{userName}</Text>

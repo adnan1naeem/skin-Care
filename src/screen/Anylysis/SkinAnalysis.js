@@ -1,147 +1,112 @@
-import { Colors } from '../../../constants/Colors';
-import Typography from '../../../constants/Typography';
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, Text, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import ProgressComponent from '../Anylysis/Component/ProgressBar';
-import { data } from './AnalysisData';
-import { useNavigation } from '@react-navigation/native';
+import { Colors } from '../../../constants/Colors';
+import { getRequest } from '../../../components/ApiHandler';
+import { ActivityIndicator } from 'react-native-paper';
+import { styles } from './styles';
 
 const SkinAnalysis = () => {
-    const [AnalysisData, setAnalysisData] = useState("");
+    const [analysisData, setAnalysisData] = useState([]);
     const [loading, setLoading] = useState(true);
-    useEffect(() => {
-        const checkUserInfo = async () => {
-          try {
-            const AnalysisData = await getRequest('api/user/skinnalysis/skinanalysisbydate');
-            if (AnalysisData && AnalysisData.length > 0) {
-              const sortedData = AnalysisData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-              const SkinAnalysisData=dataFunction(sortedData[0]);
-              // setSkinAnalysisDataRecoil(AnalysisData)
-              setAnalysisData(SkinAnalysisData)
+    const navigation = useNavigation();
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [initialLoad, setInitialLoad] = useState(true)
+
+    const fetchAnalysisData = useCallback(async () => {
+        try {
+            const data = await getRequest('api/user/skinnalysis/skinanalysisbydate');
+            if (data && data.length > 0) {
+                const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                setAnalysisData(sortedData);
+                if (initialLoad) {
+                    setSelectedDate(sortedData[0].createdAt);
+                    setInitialLoad(false);
+                }
             }
-            
-          } catch (error) {
-            console.error("Failed to fetch user info from AsyncStorage", error);
-          }
-          setLoading(false);
-        };
-        if (loading) {
-          checkUserInfo();
+        } catch (error) {
+            console.error("Failed to fetch analysis data", error);
+        } finally {
+            setLoading(false);
         }
-      }, [loading]);
-    const navigation=useNavigation();
-    const [selectedDate, setSelectedDate] = useState(3);
+    }, [initialLoad]);
+
+    useFocusEffect(
+        useCallback(() => {
+            setLoading(true);
+            fetchAnalysisData();
+        }, [fetchAnalysisData])
+    );
 
     const handleDatePress = (date) => {
         setSelectedDate(date);
     };
+
     const renderProgressItem = ({ item }) => (
-        <ProgressComponent label={item.text} value={item.progress} progress={item.progress}  onPress={() => handleSkinDeatil(item)}/>
+        <ProgressComponent
+            data={item}
+            onPressOilness={() => handleSkinDetail(item?.descriptions?.oilness, item?.oilness, "oilness")}
+            onPressElastcity={() => handleSkinDetail(item?.descriptions?.elasticity, item?.elastcity, "elastcity")}
+            onPress={() => handleSkinDetail(item?.descriptions?.hydration, item?.hydration, "hydration")}
+        />
     );
-    const handleSkinDeatil = (item) => {
-       navigation.navigate("SkinTypeScreen",item)
-      };
-    
+    const handleSkinDetail = (item, values, title) => {
+        navigation.navigate('SkinTypeScreen', {
+            params: {
+                item,
+                values,
+                title
+            }
+        });
+    };
+
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <View style={styles.dateContainer}>
-                <TouchableOpacity 
-                    style={[styles.dateBox, selectedDate === 2 && styles.selectedDateBox]} 
-                    onPress={() => handleDatePress(2)}
-                >
-                    <Text style={[styles.dateText, selectedDate === 2 && styles.selectedDateText]}>2</Text>
-                    <Text style={[styles.dateLabel, selectedDate === 2 && styles.selectedDateLabel]}>JUL</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    style={[styles.dateBox, selectedDate === 3 && styles.selectedDateBox]} 
-                    onPress={() => handleDatePress(3)}
-                >
-                    <Text style={[styles.dateText, selectedDate === 3 && styles.selectedDateText]}>3</Text>
-                    <Text style={[styles.dateLabel, selectedDate === 3 && styles.selectedDateLabel]}>JUL</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    style={[styles.dateBox, selectedDate === 4 && styles.selectedDateBox]} 
-                    onPress={() => handleDatePress(4)}
-                >
-                    <Text style={[styles.dateText, selectedDate === 4 && styles.selectedDateText]}>4</Text>
-                    <Text style={[styles.dateLabel, selectedDate === 4 && styles.selectedDateLabel]}>JUL</Text>
-                </TouchableOpacity>
-            </View>
-            <FlatList
-                data={data}
-                renderItem={renderProgressItem}
-                keyExtractor={(item, index) => index.toString()}
-                contentContainerStyle={styles.flatListContainer}
-            />
-            <Text style={styles.overviewTitle}>Overview Of Your Skin</Text>
-            <Text style={styles.overviewText}>
-                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose.
-            </Text>
-        </ScrollView>
+        loading ?
+            <View style={styles.LoadingView}>
+                <ActivityIndicator
+                    color={Colors.light?.green}
+                    size="small"
+                    style={{ flex: 1 }}
+                />
+            </View> :
+            (<ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+                <View style={styles.dateContainer}>
+                    {analysisData.map((data, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            style={[styles.dateBox, selectedDate === data.createdAt && styles.selectedDateBox]}
+                            onPress={() => handleDatePress(data.createdAt)}
+                        >
+                            <Text style={[styles.dateText, selectedDate === data.createdAt && styles.selectedDateText]}>
+                                {new Date(data.createdAt).getDate()}
+                            </Text>
+                            <Text style={[styles.dateLabel, selectedDate === data.createdAt && styles.selectedDateLabel]}>
+                                {new Date(data.createdAt).toLocaleString('default', { month: 'short' }).toUpperCase()}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+                {selectedDate && (
+                    <FlatList
+                        data={analysisData.filter(data => data.createdAt === selectedDate)}
+                        renderItem={renderProgressItem}
+                        keyExtractor={(item, index) => index.toString()}
+                        contentContainerStyle={styles.flatListContainer}
+                    />
+                )}
+                <Text style={styles.overviewTitle}>Overview Of Your Skin</Text>
+                {analysisData
+                    .filter(data => new Date(data.createdAt).toDateString() === new Date(selectedDate).toDateString())
+                    .map((data, index) => (
+                      <Text key={index} style={styles.overviewText}>
+                        {data?.mainDescription}
+                      </Text>
+                    ))}
+               
+            </ScrollView>)
     );
 };
 
-const styles = StyleSheet.create({
-    flatListContainer: {
-        paddingBottom: 16,
-        paddingHorizontal:16,
-        flex:1
-    },
-    container: {
-        flex: 1,
-        backgroundColor:"#f5fafa",
-    },
-    title: {
-       ...Typography.SemiBold24_47,
-        textAlign: 'center',
-        color:Colors.light.green,
-        marginBottom: 16,
-    },
-    dateContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginBottom: 16,
-        paddingHorizontal:16,
-        marginTop:50,
-    },
-    dateBox: {
-        width: 80,
-        height: 100,
-        backgroundColor: '#FFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 8,
-        shadowColor: '#000',
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 1, height: 2 },
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    selectedDateBox: {
-        backgroundColor: Colors.light.green,
-    },
-    dateText: {
-       ...Typography.SemiBold16_20,
-    },
-    selectedDateText: {
-        color: '#FFF',
-    },
-    dateLabel: {
-        ...Typography.Light12_20,
-    },
-    selectedDateLabel: {
-        color: '#FFF',
-    },
-    overviewTitle: {
-        paddingHorizontal:22,
-        ...Typography.SemiBold16_20,
-        marginBottom: 8,
-    },
-    overviewText: {
-        paddingHorizontal:24,
-        ...Typography.Light12_18,
-        marginBottom:10,
-    },
-});
 
 export default SkinAnalysis;

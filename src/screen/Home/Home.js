@@ -1,83 +1,97 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, ScrollView, Image, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, FlatList, Alert } from 'react-native';
 import HomeHeading from './Component/HomeHeadingComponent';
 import { styles } from './styles';
 import GridItem from './Component/GridItem';
 import ProductItem from './Component/ProductlComponent';
-import { DailyRoutine, data, productList } from './HomeDummyData';
+import { DailyRoutine } from './HomeDummyData';
 import DailyRecommand from './Component/DailyRecommand';
 import CustomModal from './Component/CustomModal';
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import global from '../../../utils/global'
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { SkinAnalysisData, userInfo } from '../../../utils/State';
+import { useNavigation } from "@react-navigation/native";
+import { useRecoilState } from 'recoil';
+import { userInfo } from '../../../utils/State';
 import { ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Colors } from '../../../constants/Colors';
 import { getRequest } from '../../../components/ApiHandler';
-import { dataFunction } from '../../../hooks/SkinAnalysis';
+import { dataFunction, EmyptyStatedata } from '../../../hooks/SkinAnalysis';
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const [Button, setButton] = useState(false);
   const [Analyze, setAnalyze] = useState(false);
+  const [SkinDetailData, setSkinDetailData] = useState("");
   const [AnalysisData, setAnalysisData] = useState("");
   const [userInfovalue, setUserInfo] = useRecoilState(userInfo);
   const [loading, setLoading] = useState(true);
-  const setSkinAnalysisDataRecoil=useRecoilState(SkinAnalysisData)
+  const [releventData, setReleventData] = useState(null)
+  const [DailyRoutineAnalyze,setDailyRoutineAnalyze]=useState(false)
+  
   useEffect(() => {
-    const checkUserInfo = async () => {
-      try {
-        const AnalysisData = await getRequest('api/user/skinnalysis/skinanalysisbydate');
-        if (AnalysisData && AnalysisData.length > 0) {
-          const sortedData = AnalysisData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          const SkinAnalysisData=dataFunction(sortedData[0]);
-          // setSkinAnalysisDataRecoil(AnalysisData)
-          setAnalysisData(SkinAnalysisData)
-        }
-        
-        const userInfoData = await AsyncStorage.getItem('userInfo');
-        
-        if (userInfoData) {
-          const parsedUserInfo = JSON.parse(userInfoData);
-          setUserInfo(parsedUserInfo);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user info from AsyncStorage", error);
-      }
-      setLoading(false);
-    };
     if (loading) {
       checkUserInfo();
     }
   }, [loading]);
-  
+  const checkUserInfo = async () => {
+    try {
+      const userInfoData = await AsyncStorage.getItem('userInfo');
+      if (userInfoData) {
+        const parsedUserInfo = JSON?.parse(userInfoData);
+        setUserInfo(parsedUserInfo);
+      }
+      const AnalysisData = await getRequest('api/user/skinnalysis/skinanalysisbydate');
+      if (AnalysisData && AnalysisData.length > 0) {
+        setSkinDetailData(AnalysisData)
+        const sortedData = AnalysisData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        const SkinAnalysisData = dataFunction(sortedData[0]);
+        setAnalysisData(SkinAnalysisData)
+      }
+      else {
+        setAnalysisData(EmyptyStatedata)
+      }
+      await getRequest('api/user/products/relevant').then((res) => {
+        setReleventData(res?.products)
+      }).catch((error) => {
+        console.log(JSON?.stringify(error))
+      });
+    } catch (error) {
+      console.log("Failed to fetch user info from AsyncStorage", error);
+    }
+    setLoading(false);
+  };
+
   const renderItem = ({ item }) => (
     <GridItem image1={item.image1} progress={item.progress} text={item.text} id={item?.id} year={item?.Year} onPress={() => handleSkinDetail(item)} />
   );
 
-  useFocusEffect(
-    useCallback(() => {
-      if(global.DailyRoutine===true){
-        setAnalyze(global.DailyRoutine);
-      }
-    }, [global.DailyRoutine])
-  );
   const renderItem2 = ({ item }) => (
-    <ProductItem image1={item.image1} description={item.desciption} text={item.text} icons={item?.icons} onPress={() => handleProductDeatil(item)} />
+    <ProductItem image1={item.productImage} description={item.description} text={item.title} icons={item?.featureImages} onPress={() => handleProductDeatil(item)} />
   );
   const handleSkinDetail = (item) => {
-    navigation.navigate('SkinTypeScreen', {
-      params:{
-        item,
-        screen:"Home"
-      }
-    });
+    if (item?.progress === 0) {
+      Alert.alert(
+        "Analysis Required",
+        "You should do your analysis first",
+        [
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ],
+        { cancelable: false }
+      );
+    
+    }
+    else {
+      navigation.navigate('SkinTypeScreen', {
+        params: {
+          item,
+          screen: "Home"
+        }
+      });
+    }
   };
   const handleProductDeatil = (item) => {
     navigation.navigate('ProductDetailScreen', item);
   };
-  
+
   const renderItem3 = ({ item }) => (
     <DailyRecommand
       image1={item.image1}
@@ -86,7 +100,7 @@ const HomeScreen = () => {
       Id={item?.id}
       DailyRoutine={Button}
       ButtonText={item?.buttonText}
-      AnalyzeButton={Analyze}
+      AnalyzeButton={DailyRoutineAnalyze}
       OnPress={() => handleRoutine(item)}
     />
   );
@@ -98,7 +112,8 @@ const HomeScreen = () => {
       setModalVisible(true);
     }
   };
-  const handleModalNavgation =()=>{
+  const handleModalNavgation = () => {
+    checkUserInfo()
     setAnalyze(true);
     setModalVisible(false);
     navigation.navigate("Analysis")
@@ -123,7 +138,7 @@ const HomeScreen = () => {
               />
               <HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />
               <FlatList
-                data={productList}
+                data={releventData}
                 renderItem={renderItem2}
                 keyExtractor={item => item.id}
                 horizontal

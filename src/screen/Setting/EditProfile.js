@@ -40,7 +40,6 @@ const EditProfile = ({ navigation, route }) => {
         gender: value,
       });
   
-      alert(JSON?.stringify(response))
       userInfoData(response);
       await AsyncStorage.setItem('userInfo', JSON?.stringify(response));
       navigation.dispatch(
@@ -121,7 +120,7 @@ const EditProfile = ({ navigation, route }) => {
           <ThemedText type="title" style={{ color: Colors.light.green }}>
             Setup Your Profile
           </ThemedText>
-          <View style={[styles.input, { marginTop: 35 }]}>
+          <View style={[styles.input, { marginTop: 25 }]}>
             <PrimaryInput
               Heading={"First Name"}
               value={firstname}
@@ -182,7 +181,7 @@ const EditProfile = ({ navigation, route }) => {
                 search
                 maxHeight={300}
                 labelField="label"
-                valueField="value"
+                valueField="label"
                 placeholder={!isFocus ? 'Select item' : '...'}
                 searchPlaceholder="Search..."
                 value={value}
@@ -209,9 +208,9 @@ const EditProfile = ({ navigation, route }) => {
                 iconStyle={styles.iconStyle}
                 data={countries}
                 search
-                maxHeight={150}
+                maxHeight={180}
                 labelField="label"
-                valueField="value"
+                valueField="label"
                 placeholder={!isCountryFocus ? 'Select' : '...'}
                 searchPlaceholder="Search..."
                 value={countryValue}

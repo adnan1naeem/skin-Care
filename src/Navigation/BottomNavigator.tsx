@@ -80,7 +80,7 @@ export default function TrackingBottomTabNavigator({route}) {
         />
        <BottomTab.Screen
           name=" "
-          component={HomeNavigator}
+          component={AnalysisNavigator}
           options={{
             headerShown: false,
             tabBarIcon: () => (

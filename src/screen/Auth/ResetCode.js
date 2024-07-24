@@ -1,14 +1,12 @@
 import { Colors } from "../../../constants/Colors";
 import React, { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import PrimaryInput from '../../../components/PrimaryInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles';
-import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from "../../../components/ThemedText";
-import { isEmailValid } from "../../Auth/helpers";
 import BackButton from "../../../components/BackButton";
-const ResetCode = ({ navigation }) => {
+const ResetCode = ({ navigation,route }) => {
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
   const isCodeValid = (text) => {
@@ -16,6 +14,9 @@ const ResetCode = ({ navigation }) => {
     const regex = /^[0-9]{6}$/; // Adjust regex to match your code requirements
     return regex.test(text);
   };
+  const handleNavigation=()=>{
+    navigation.navigate("ConfirmPassword",{...route?.params,token:code})
+  }
   return (
     <View style={[styles.mainContainer, { backgroundColor: Colors.light.background }]}>
       <KeyboardAvoidingView
@@ -51,7 +52,7 @@ const ResetCode = ({ navigation }) => {
             </View>
 
             <View style={styles.button}>
-              <PrimaryButton text={"Verify"} onPress={() => { navigation.navigate("ConfirmPassword") }} />
+              <PrimaryButton text={"Verify"} onPress={handleNavigation} />
             </View>
             <BackButton text="Back" onPress={()=>{navigation.goBack() }}/>
           </View>

@@ -8,14 +8,22 @@ import { Ionicons } from '@expo/vector-icons';
 import { ThemedText } from "../../../components/ThemedText";
 import { isEmailValid } from "../../Auth/helpers";
 import BackButton from "../../../components/BackButton";
+import { postRequest } from "../../../components/ApiHandler";
 const ResetPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const handleNavigation=()=>{
+  const handleNavigation=async()=>{
     if(emailError){
       return true;
     }else{
-      navigation.navigate("ResetCode")
+      const endpoint = 'api/auth/forget-password';
+      const body={email:email}
+      await postRequest(endpoint, body).then((res)=>{
+        navigation.navigate("ResetCode",{email})
+      }).catch((error)=>{
+        alert(JSON?.stringify(error))
+      });
+      
     }
   }
   return (

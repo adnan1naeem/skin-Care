@@ -1,15 +1,46 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Alert } from 'react-native';
 import { Colors } from '../../../../constants/Colors';
 import AnalysisInput from './AnalysisInput';
 import Typography from '../../../../constants/Typography';
 import { ThemedText } from '../../../../components/ThemedText';
+import { postRequest, postRequestToken } from '../../../../components/ApiHandler';
 
 const CustomModal = ({ visible, onClose, onAnalyze }) => {
-    const [inputValue, setInputValue] = useState('');
-    const [inputValue2, setInputValue2] = useState('');
-    const [inputValue3, setInputValue3] = useState('');
-    const [inputValue4, setInputValue4] = useState('');
+    const [inputValue, setInputValue] = useState(0);
+    const [inputValue2, setInputValue2] = useState(0);
+    const [inputValue3, setInputValue3] = useState(0);
+    const [inputValue4, setInputValue4] = useState(0);
+
+    const handleAnalyze = async () => {
+        const hydration = Number(inputValue);
+        const oilness = Number(inputValue2);
+        const elasticity = Number(inputValue3);
+        const skinAge = Number(inputValue4);
+        if ([hydration, oilness, elasticity, skinAge].some(value => isNaN(value) || value <= 0)) {
+            Alert.alert(
+                "Invalid Input",
+                "All fields must be filled with numbers greater than zero.",
+                [{ text: "OK" }]
+            );
+            return;
+        }
+        try {
+            const analysisData = {
+                hydration:hydration,
+                oilness:oilness,
+                elastcity:elasticity,
+                skinAge:skinAge,
+            };
+            const response = await postRequestToken('api/user/skinnalysis', analysisData);
+            if (response) {
+                alert('Analysis successful:', JSON?.stringify(response));
+                onAnalyze();
+            }
+        } catch (error) {
+            alert('Error during analysis:', error);
+        }
+    };
 
     return (
         <Modal
@@ -35,7 +66,7 @@ const CustomModal = ({ visible, onClose, onAnalyze }) => {
                                 <TouchableOpacity onPress={onClose} style={[modalStyles.closeButton, { marginRight: 10 }]}>
                                     <Text style={modalStyles.closeButtonText}>Cancel</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={onAnalyze} style={modalStyles.AnalyzeButon}>
+                                <TouchableOpacity onPress={handleAnalyze} style={modalStyles.AnalyzeButon}>
                                     <Text style={modalStyles.AnalyzeButtonText}>Analyze</Text>
                                 </TouchableOpacity>
                             </View>

@@ -8,12 +8,16 @@ import { useNavigation } from '@react-navigation/native';
 import TextWithLabel from "./Component/TextwithLabel";
 import BackButton from "../../../components/BackButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useResetRecoilState } from "recoil";
+import { userInfo } from "../../../utils/State";
 const Logout = ({route}) => {
   const navigation=useNavigation()
+  const resetUserInfo = useResetRecoilState(userInfo);
   const handleNavigation = async () => {
     try {
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('userInfo');
+      resetUserInfo();
       navigation.reset({
         index: 0,
         routes: [{ name: 'Login' }],

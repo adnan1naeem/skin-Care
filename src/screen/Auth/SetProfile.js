@@ -11,6 +11,8 @@ import countries from './CountryData'
 import { convertToISODateString } from '../../../utils/DateConverstion';
 import { postRequest } from '../../../components/ApiHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSetRecoilState } from 'recoil';
+import { userInfo } from '../../../utils/State';
 const SetProfile = ({ navigation,route }) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
@@ -19,7 +21,7 @@ const SetProfile = ({ navigation,route }) => {
   const [isCountryFocus, setIsCountryFocus] = useState(false);
   const [countryValue, setCountryValue] = useState(null);
   const [validationError, setValidationError] = useState("");
-
+  const userInfoValues = useSetRecoilState(userInfo);
   const handleDayChange = (text) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 31) {
@@ -76,12 +78,11 @@ const SetProfile = ({ navigation,route }) => {
         gender: value,
         country: countryValue,
       };
-      alert(JSON?.stringify(profileData))
       const endpoint = 'api/auth/register';
       const jsonResponse = await postRequest(endpoint, profileData);
-      alert(JSON?.stringify(jsonResponse?.token))
       await AsyncStorage.setItem('token', jsonResponse?.token);
       await AsyncStorage.setItem('userInfo', JSON.stringify(jsonResponse?.userWithoutPassword));
+      userInfoValues(jsonResponse?.userWithoutPassword);
       navigation.reset({
         index: 0,
         routes: [{ name: "Home" }],

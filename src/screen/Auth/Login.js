@@ -17,13 +17,29 @@ import { userInfo } from "../../../utils/State";
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 // import { AccessToken, LoginManager } from 'react-native-fbsdk-next';
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState("aali@techtiz.co");
-  const [password, setPassword] = useState("Test@123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [response, setResponse] = useState(null);
-  const userInfoValues=useSetRecoilState(userInfo)
+  const userInfoValues = useSetRecoilState(userInfo);
+
+  useEffect(() => {
+    const loadRememberedCredentials = async () => {
+      const savedEmail = await AsyncStorage.getItem('email');
+      const savedPassword = await AsyncStorage.getItem('password');
+
+      if (savedEmail && savedPassword) {
+        setEmail(savedEmail);
+        setPassword(savedPassword);
+        setRememberMe(true);
+      }
+    };
+
+    loadRememberedCredentials();
+  }, []);
+
   const handleLogin = async () => {
     let valid = true;
   
@@ -55,7 +71,16 @@ const Login = ({ navigation }) => {
         setResponse(jsonResponse);
         await AsyncStorage.setItem('token', jsonResponse.token);
         await AsyncStorage.setItem('userInfo', JSON.stringify(jsonResponse.userWithoutPassword));
-        userInfoValues(jsonResponse?.userWithoutPassword)
+        userInfoValues(jsonResponse?.userWithoutPassword);
+        
+        if (rememberMe) {
+          await AsyncStorage.setItem('email', email);
+          await AsyncStorage.setItem('password', password);
+        } else {
+          await AsyncStorage.removeItem('email');
+          await AsyncStorage.removeItem('password');
+        }
+
         navigation.replace("Home");
       } catch (error) {
         alert(error?.message);

@@ -3,12 +3,15 @@ import MainNavigator from './src/Navigation/MainNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './hooks/useCachedResources';
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import { Settings } from "react-native-fbsdk-next";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilState, useSetRecoilState } from 'recoil';
+import { ActivityIndicator } from 'react-native-paper';
+import { Colors } from './constants/Colors';
+import { userInfo } from './utils/State';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -16,8 +19,11 @@ SplashScreen.preventAutoHideAsync();
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userInfovalue, setUserInfo] = useRecoilState(userInfo);
   useEffect(() => {
     const checkToken = async () => {
+      const userInfo = await AsyncStorage.getItem('userInfo');
+      setUserInfo(userInfo)
       const token = await AsyncStorage.getItem('token');
       if (token) {
         setIsLoggedIn(true);
@@ -37,7 +43,7 @@ export default function App() {
       });
     }
   };
-  
+
   tracking();
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
@@ -45,11 +51,19 @@ export default function App() {
   }
 
   return (
-   <RecoilRoot>
-     <NavigationContainer>
-      <StatusBar backgroundColor="#f5fafa" barStyle="dark-content"/>
-      <MainNavigator isLoggedIn={isLoggedIn}/>
-    </NavigationContainer>
-   </RecoilRoot>
+    (isLoading ?
+      <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }}>
+        <ActivityIndicator
+          color={Colors.light?.green}
+          size="small"
+          style={{ flex: 1 }}
+        />
+      </View> :
+      <RecoilRoot>
+        <NavigationContainer>
+          <StatusBar backgroundColor="#f5fafa" barStyle="dark-content" />
+          <MainNavigator isLoggedIn={isLoggedIn} userInfo={userInfo}/>
+        </NavigationContainer>
+      </RecoilRoot>)
   );
 }
