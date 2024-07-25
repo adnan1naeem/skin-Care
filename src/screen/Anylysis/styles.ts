@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F5FAFA',
         padding: 18,
-        paddingTop: Platform?.OS === "android" ? 10 : '11%',
+        paddingTop: Platform?.OS === "android" ? 30 : '11%',
       },
       backButton: {
         alignItems: 'center',

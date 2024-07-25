@@ -36,7 +36,10 @@ export default function TrackingBottomTabNavigator({route}) {
   const handleModalNavgation =()=>{
     global.DailyRoutine=true;
     setModalVisible(false);
-    navigation.navigate("Analysis");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Analysis" }],
+    });
   }
   return (
     <>

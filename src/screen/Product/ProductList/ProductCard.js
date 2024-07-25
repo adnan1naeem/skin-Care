@@ -2,10 +2,9 @@ import { Colors } from '../../../../constants/Colors';
 import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-
+import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductCard = ({ product, onPress }) => {
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-    const imageUrl = `${apiUrl}${product?.productImage}`; 
+    const imageUrl = `${EXPO_PUBLIC_API_URL}${product?.productImage}`; 
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.ImageContainer}>

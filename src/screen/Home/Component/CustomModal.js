@@ -4,7 +4,7 @@ import { Colors } from '../../../../constants/Colors';
 import AnalysisInput from './AnalysisInput';
 import Typography from '../../../../constants/Typography';
 import { ThemedText } from '../../../../components/ThemedText';
-import { postRequest, postRequestToken } from '../../../../components/ApiHandler';
+import { postRequestToken } from '../../../../components/ApiHandler';
 
 const CustomModal = ({ visible, onClose, onAnalyze }) => {
     const [inputValue, setInputValue] = useState(0);
@@ -34,7 +34,7 @@ const CustomModal = ({ visible, onClose, onAnalyze }) => {
             };
             const response = await postRequestToken('api/user/skinnalysis', analysisData);
             if (response) {
-                alert('Analysis successful:', JSON?.stringify(response));
+                // alert('Analysis successful:', JSON?.stringify(response));
                 onAnalyze();
             }
         } catch (error) {

@@ -1,9 +1,10 @@
 import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-
+import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductItem = ({ image1, text, description,icons,onPress}) => {
-  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+  
+  const apiUrl = EXPO_PUBLIC_API_URL;
   const imageUrl = `${apiUrl}${image1}`; 
   const iconMapping = {
     'Hydration': require('../../../../assets/images/Hydration.png'),

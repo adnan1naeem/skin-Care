@@ -8,7 +8,7 @@ import { Settings } from "react-native-fbsdk-next";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RecoilRoot, useRecoilState, useSetRecoilState } from 'recoil';
+import { RecoilRoot, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { ActivityIndicator } from 'react-native-paper';
 import { Colors } from './constants/Colors';
 import { userInfo } from './utils/State';
@@ -20,6 +20,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfovalue, setUserInfo] = useRecoilState(userInfo);
+  const resetUserInfo = useResetRecoilState(userInfo);
   useEffect(() => {
     const checkToken = async () => {
       const userInfo = await AsyncStorage.getItem('userInfo');
@@ -49,7 +50,22 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   }
-
+const checkInternetConnection = async () => {
+    try {
+        const response = await fetch('https://google.com', {
+            method: 'HEAD',
+            cache: 'no-cache'
+        });
+        console.log("response",response.ok);
+        return response.ok;
+    } catch (error) {
+      alert("Network Error")
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('userInfo');
+      resetUserInfo();
+    }
+};
+checkInternetConnection();
   return (
     (isLoading ?
       <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }}>

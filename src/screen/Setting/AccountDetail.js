@@ -22,7 +22,7 @@ const AccountDetail = ({ navigation,route }) => {
           showsVerticalScrollIndicator={false}
           bounces={false}
         >
-          <ThemedText type="title" style={{ color: Colors.light.green, }}>Account</ThemedText>
+          <ThemedText type="title" style={{ color: Colors.light.green, }}>Personal Details</ThemedText>
           <View style={{marginTop:40}}>
           <TextWithLabel heading="First Name" data={data?.firstName} />
           <TextWithLabel heading="Last Name" data={data?.lastName} />

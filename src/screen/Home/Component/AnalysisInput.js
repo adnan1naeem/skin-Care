@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         height: '100%',
-        ...Typography.Regular20_24,
+        ...Typography.Regular19_24,
         paddingTop:6,
     },
     icon: {

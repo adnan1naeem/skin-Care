@@ -70,6 +70,7 @@ const SetProfile = ({ navigation,route }) => {
   };
 
   const handleSaveProfile =async () => {
+   try{
     if (validateForm()) {
       const NewDate = convertToISODateString(day, month, year);
       const profileData = {
@@ -88,6 +89,10 @@ const SetProfile = ({ navigation,route }) => {
         routes: [{ name: "Home" }],
       });
     }
+   }catch (error) {
+    alert(JSON?.stringify(error))
+    alert(error?.message);
+  }
   };
 
   return (

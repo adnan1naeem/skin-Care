@@ -118,7 +118,7 @@ const EditProfile = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
         >
           <ThemedText type="title" style={{ color: Colors.light.green }}>
-            Setup Your Profile
+            Personal Details
           </ThemedText>
           <View style={[styles.input, { marginTop: 25 }]}>
             <PrimaryInput
@@ -235,7 +235,7 @@ const EditProfile = ({ navigation, route }) => {
                     <Text style={styles.closeButtonText}>Cancel</Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={updateProfile} style={styles.AnalyzeButon}>
-                    <Text style={styles.AnalyzeButtonText}>Analyze</Text>
+                    <Text style={styles.AnalyzeButtonText}>Save</Text>
                   </TouchableOpacity>
                 </View>
               </View>

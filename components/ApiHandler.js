@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-
+// const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+import {EXPO_PUBLIC_API_URL} from '@env';
 export const postRequest = async (endpoint, body) => {
   try {
-    const response = await fetch(`${apiUrl}${endpoint}`, {
+    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,7 +29,7 @@ export const postRequest = async (endpoint, body) => {
 export const getRequest = async (endpoint) => {
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${apiUrl}${endpoint}`, {
+    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const getRequest = async (endpoint) => {
 export const putRequest = async (endpoint, body) => {
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${apiUrl}${endpoint}`, {
+    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const postRequestToken = async (endpoint, body) => {
   
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${apiUrl}${endpoint}`, {
+    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

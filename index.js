@@ -9,9 +9,11 @@ import React from 'react';
 import { registerRootComponent } from 'expo';
 import { RecoilRoot } from 'recoil';
 import App from './App';
+import { StatusBar } from 'expo-status-bar';
 
 const Root = () => (
   <RecoilRoot>
+     <StatusBar backgroundColor="#f5fafa" barStyle="dark-content" />
     <App />
   </RecoilRoot>
 );

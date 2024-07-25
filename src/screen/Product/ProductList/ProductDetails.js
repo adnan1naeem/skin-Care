@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductDetails = ({ product }) => {
     const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
     const [saveCardChecked, setSaveCardChecked] = useState(false);
@@ -27,8 +28,8 @@ const ProductDetails = ({ product }) => {
         }
     };
     const navigation = useNavigation()
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-    const imageUrl = `${apiUrl}${product?.productImage}`; 
+    // const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+    const imageUrl = `${EXPO_PUBLIC_API_URL}${product?.productImage}`; 
     return (
         <ScrollView style={styles.container}>
             <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18, paddingHorizontal: 16, }}>

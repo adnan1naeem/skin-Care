@@ -8,7 +8,7 @@ import { DailyRoutine } from './HomeDummyData';
 import DailyRecommand from './Component/DailyRecommand';
 import CustomModal from './Component/CustomModal';
 import { useNavigation } from "@react-navigation/native";
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userInfo } from '../../../utils/State';
 import { ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,19 +19,12 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const [Button, setButton] = useState(false);
-  const [Analyze, setAnalyze] = useState(false);
-  const [SkinDetailData, setSkinDetailData] = useState("");
   const [AnalysisData, setAnalysisData] = useState("");
   const [userInfovalue, setUserInfo] = useRecoilState(userInfo);
   const [loading, setLoading] = useState(true);
   const [releventData, setReleventData] = useState(null)
-  const [DailyRoutineAnalyze,setDailyRoutineAnalyze]=useState(false)
   
-  useEffect(() => {
-    if (loading) {
-      checkUserInfo();
-    }
-  }, [loading]);
+
   const checkUserInfo = async () => {
     try {
       const userInfoData = await AsyncStorage.getItem('userInfo');
@@ -41,7 +34,6 @@ const HomeScreen = () => {
       }
       const AnalysisData = await getRequest('api/user/skinnalysis/skinanalysisbydate');
       if (AnalysisData && AnalysisData.length > 0) {
-        setSkinDetailData(AnalysisData)
         const sortedData = AnalysisData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         const SkinAnalysisData = dataFunction(sortedData[0]);
         setAnalysisData(SkinAnalysisData)
@@ -60,6 +52,11 @@ const HomeScreen = () => {
     setLoading(false);
   };
 
+  useEffect(() => {
+    if (loading) {
+      checkUserInfo();
+    }
+  }, [loading]);
   const renderItem = ({ item }) => (
     <GridItem image1={item.image1} progress={item.progress} text={item.text} id={item?.id} year={item?.Year} onPress={() => handleSkinDetail(item)} />
   );
@@ -100,7 +97,7 @@ const HomeScreen = () => {
       Id={item?.id}
       DailyRoutine={Button}
       ButtonText={item?.buttonText}
-      AnalyzeButton={DailyRoutineAnalyze}
+      AnalyzeButton={false}
       OnPress={() => handleRoutine(item)}
     />
   );
@@ -114,7 +111,6 @@ const HomeScreen = () => {
   };
   const handleModalNavgation = () => {
     checkUserInfo()
-    setAnalyze(true);
     setModalVisible(false);
     navigation.navigate("Analysis")
   }
