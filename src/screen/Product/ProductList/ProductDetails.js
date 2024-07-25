@@ -29,7 +29,7 @@ const ProductDetails = ({ product }) => {
     };
     const navigation = useNavigation()
     // const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-    const imageUrl = `${EXPO_PUBLIC_API_URL}${product?.productImage}`; 
+    const imageUrl = `${"http://152.42.225.202/"}${product?.productImage}`; 
     return (
         <ScrollView style={styles.container}>
             <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18, paddingHorizontal: 16, }}>

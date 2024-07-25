@@ -91,7 +91,7 @@ const SignUp = ({ navigation }) => {
                 value={firstName}
                 onChangeText={(text) => setFirstname(text)}
                 placeholderText={"First Name"}
-                isError={firstnameError}
+                isError={""}
                 textContentType="givenName"
                 autoCapitalize={"words"}
               />
@@ -103,7 +103,7 @@ const SignUp = ({ navigation }) => {
                 value={lastName}
                 onChangeText={(text) => setLastname(text)}
                 placeholderText={"Last Name"}
-                isError={lastnameError}
+                isError={""}
                 textContentType="familyName"
                 autoCapitalize={"words"}
               />
@@ -115,7 +115,7 @@ const SignUp = ({ navigation }) => {
                 value={email}
                 onChangeText={(text) => setEmail(text)}
                 placeholderText={"Your email here"}
-                isError={emailError}
+                isError={""}
                 textContentType="emailAddress"
                 autoCapitalize={"none"}
               />

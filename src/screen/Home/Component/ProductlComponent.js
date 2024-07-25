@@ -4,7 +4,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductItem = ({ image1, text, description,icons,onPress}) => {
   
-  const apiUrl = EXPO_PUBLIC_API_URL;
+  const apiUrl = "http://152.42.225.202/";
   const imageUrl = `${apiUrl}${image1}`; 
   const iconMapping = {
     'Hydration': require('../../../../assets/images/Hydration.png'),

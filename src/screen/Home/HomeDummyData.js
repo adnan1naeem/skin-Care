@@ -43,13 +43,46 @@ export const data = [
       DailyRoutineTask:false,
       desciption:'Great for dehydrated and oily skin types.'
     },
+  ];
+  export const DailyRoutine2= [
     {
-      id: '2',
+      id: '1',
       image1: require('../../../assets/images/SkinDrop.png'),
       text: 'Hydrate Skin',
       buttonText:"Mark As Done",
-      DailyRoutineTask:true,
-           desciption:'Great for dehydrated and oily skin types.'
+      description:'Great for dehydrated and oily skin types.'
+    },
+    {
+      id: '2',
+      image1: require('../../../assets/images/SkinDrop.png'),
+      text: 'Cleanse',
+      buttonText:"Mark As Done",
+      DailyRoutineTask:false,
+      description:'Great for Cleanse and oily skin types.'
+    },
+    {
+      id: '3',
+      image1: require('../../../assets/images/SkinDrop.png'),
+      text: 'Skin Tone',
+      buttonText:"Mark As Done",
+      DailyRoutineTask:false,
+      description:'Great for oily skin types.'
+    },
+    {
+      id: '4',
+      image1: require('../../../assets/images/SkinDrop.png'),
+      text: 'Moisturize Skin',
+      buttonText:"Mark As Done",
+      DailyRoutineTask:false,
+      description:'Great for dehydrated skin types.'
+    },
+    {
+      id: '5',
+      image1: require('../../../assets/images/SkinDrop.png'),
+      text: 'Protection Skin',
+      buttonText:"Mark As Done",
+      DailyRoutineTask:false,
+      description:'Great for Protect your types.'
     },
   ];
   

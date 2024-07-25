@@ -4,7 +4,7 @@ import HomeHeading from './Component/HomeHeadingComponent';
 import { styles } from './styles';
 import GridItem from './Component/GridItem';
 import ProductItem from './Component/ProductlComponent';
-import { DailyRoutine } from './HomeDummyData';
+import { DailyRoutine, DailyRoutine2 } from './HomeDummyData';
 import DailyRecommand from './Component/DailyRecommand';
 import CustomModal from './Component/CustomModal';
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Colors } from '../../../constants/Colors';
 import { getRequest } from '../../../components/ApiHandler';
 import { dataFunction, EmyptyStatedata } from '../../../hooks/SkinAnalysis';
+import DailyResetButton from './Component/DailyRoutine';
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
@@ -146,8 +147,9 @@ const HomeScreen = () => {
                 data={DailyRoutine}
                 renderItem={renderItem3}
                 keyExtractor={item => item.id}
-                contentContainerStyle={{ marginTop: 20, flex: 1, paddingHorizontal: 16, marginBottom: 20 }}
+                contentContainerStyle={{ marginTop: 20, flex: 1, paddingHorizontal: 16, }}
               />
+              <DailyResetButton routines={DailyRoutine2}/>
             </ScrollView>
           )
       }

@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {EXPO_PUBLIC_API_URL} from '@env';
 export const postRequest = async (endpoint, body) => {
   try {
-    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
+    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export const postRequest = async (endpoint, body) => {
       // Handle successful response
       return jsonResponse;
     } else {
-      // Handle error response
+      // Handle error res
       throw new Error(jsonResponse.message || 'Request failed');
     }
   } catch (error) {
@@ -29,7 +29,7 @@ export const postRequest = async (endpoint, body) => {
 export const getRequest = async (endpoint) => {
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
+    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const getRequest = async (endpoint) => {
 export const putRequest = async (endpoint, body) => {
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
+    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const postRequestToken = async (endpoint, body) => {
   
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${EXPO_PUBLIC_API_URL}${endpoint}`, {
+    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

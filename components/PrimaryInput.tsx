@@ -64,7 +64,7 @@ const PrimaryInput = ({
         onChangeText={onChangeText}
         placeholder={placeholderText}
         style={[styles.inputField, inputStyle]}
-        placeholderTextColor={"#708090"}
+        placeholderTextColor={"#11181C"}
       />
     </View>
   );
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#D3D3D3",
     paddingHorizontal: 16,
-    color: Colors.light.greyText,
+    color: Colors.light.text,
     backgroundColor:Colors.light.white
   },
   heading:{

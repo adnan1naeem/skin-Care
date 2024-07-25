@@ -25,9 +25,8 @@ const ConfirmPassword = ({ navigation,route }) => {
      await postRequest(endpoint, data).then((res)=>{
       navigation.navigate("Login");
      }).catch((error)=>{
-      alert(JSON?.stringify(error))
+      alert(JSON?.stringify(error?.message))
      });
-     
     }
   };
 
@@ -52,7 +51,7 @@ const ConfirmPassword = ({ navigation,route }) => {
                 onChangeText={(text) => {
                   setPassword(text);
                 }}
-                isError={passwordError}
+                isError={""}
                 placeholderText='********'
                 textContentType="password"
                 secureTextEntry={true}
@@ -65,7 +64,7 @@ const ConfirmPassword = ({ navigation,route }) => {
                 onChangeText={(text) => {
                   setConfirmPassword(text);
                 }}
-                isError={passwordError}
+                isError={""}
                 placeholderText='********'
                 textContentType="password"
                 secureTextEntry={true}

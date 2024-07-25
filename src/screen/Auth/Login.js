@@ -83,6 +83,7 @@ const Login = ({ navigation }) => {
 
         navigation.replace("Home");
       } catch (error) {
+        alert(JSON?.stringify(error))
         alert(error?.message);
       }
     }

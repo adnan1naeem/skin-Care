@@ -51,8 +51,8 @@ export default {
   },
   Regular19_24:{
     fontFamily: 'Poppins-Regular',
-    fontSize: 19,
-    lineHeight: 24,
+    fontSize: 18,
+    lineHeight: 20,
   },
   Medium14_18:{
     fontFamily: 'Poppins-Medium',

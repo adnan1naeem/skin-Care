@@ -4,7 +4,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductCard = ({ product, onPress }) => {
-    const imageUrl = `${EXPO_PUBLIC_API_URL}${product?.productImage}`; 
+    const imageUrl = `${"http://152.42.225.202/"}${product?.productImage}`; 
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.ImageContainer}>
