@@ -10,10 +10,33 @@ import ProductDetailScreen from '../screen/Product/ProductDetailScreen';
 import ResetPassword from '../screen/Auth/ResetPassword';
 import ResetCode from '../screen/Auth/ResetCode';
 import ConfirmPassword from '../screen/Auth/ConfirmPassword';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useResetRecoilState } from 'recoil';
+import { userInfo } from '../../utils/State';
 
 const Stack = createStackNavigator();
 
 function MainNavigator({ isLoggedIn }) {
+  const navigation=useNavigation();
+  const resetUserInfo = useResetRecoilState(userInfo);
+  const checkInternetConnection = async () => {
+    try {
+      const response = await fetch('https://google.com', {
+        method: 'HEAD',
+        cache: 'no-cache'
+      });
+      console.log("response", response.ok);
+      return response.ok;
+    } catch (error) {
+      alert("Network Error")
+      navigation.navigate("Login")
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('userInfo');
+      resetUserInfo();
+    }
+  };
+  checkInternetConnection();
   return (
     <Stack.Navigator initialRouteName={isLoggedIn ? "Home" : "Login"} screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />

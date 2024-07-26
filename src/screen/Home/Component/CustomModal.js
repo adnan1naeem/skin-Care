@@ -38,7 +38,7 @@ const CustomModal = ({ visible, onClose, onAnalyze }) => {
                 onAnalyze();
             }
         } catch (error) {
-            alert('Error during analysis:', error);
+            // alert('Error during analysis:', error);
         }
     };
 

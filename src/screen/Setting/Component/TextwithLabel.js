@@ -4,11 +4,11 @@ import { View, Text, StyleSheet } from 'react-native';
 import Typography  from '../../../../constants/Typography'; // Adjust path if needed
 import { Colors } from '../../../../constants/Colors'; // Adjust path if needed
 
-const TextWithLabel = ({ heading, data }) => {
+const TextWithLabel = ({ heading, data,email }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>{heading}</Text>
-      <Text style={styles.data}>{data}</Text>
+      <Text style={[styles.data,{textTransform:email?"lowercase":"capitalize"}]}>{data}</Text>
     </View>
   );
 };
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   data: {
+    textTransform:"capitalize",
     ...Typography.Light12_15,
     color: '#708090',
   },

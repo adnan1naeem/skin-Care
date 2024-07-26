@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { styles } from './styles';
 import { Dropdown } from 'react-native-element-dropdown';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -26,12 +26,69 @@ const EditProfile = ({ navigation, route }) => {
   const [lastname, setLastname] = useState("");
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-  const userInfoData = useSetRecoilState(userInfo)
+  const [errors, setErrors] = useState({
+    firstname: "",
+    lastname: "",
+    day: "",
+    month: "",
+    year: "",
+    country: "",
+    gender: "",
+  });
+
+  const userInfoData = useSetRecoilState(userInfo);
   const endpoint = `api/user/${route.params?._id}`;
+
   const updateProfile = async () => {
+    // Validation
+    let valid = true;
+    let newErrors = { ...errors };
+
+    if (!firstname) {
+      newErrors.firstname = 'First Name cannot be empty';
+      valid = false;
+    }
+
+    if (!lastname) {
+      newErrors.lastname = 'Last Name cannot be empty';
+      valid = false;
+    }
+
+    if (!day || !month || !year) {
+      newErrors.day = 'Day, Month, and Year cannot be empty';
+      valid = false;
+    } else if (day > 31) {
+      newErrors.day = 'Day cannot be greater than 31';
+      valid = false;
+    } else if (month > 12) {
+      newErrors.month = 'Month cannot be greater than 12';
+      valid = false;
+    }
+
+    if (year.length < 4 || year > new Date().getFullYear()) {
+      newErrors.year = `Invalid year. Must be a valid year less than ${new Date().getFullYear()}`;
+      valid = false;
+    }
+
+    if (!countryValue) {
+      newErrors.country = 'Country cannot be empty';
+      valid = false;
+    }
+
+    if (!value) {
+      newErrors.gender = 'Gender cannot be empty';
+      valid = false;
+    }
+
+    if (!valid) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // Proceed with API request if valid
     try {
       const NewDate = convertToISODateString(day, month, year);
-  
+
       const response = await putRequest(endpoint, {
         firstName: firstname,
         lastName: lastname,
@@ -39,21 +96,21 @@ const EditProfile = ({ navigation, route }) => {
         country: countryValue,
         gender: value,
       });
-  
+
       userInfoData(response);
-      await AsyncStorage.setItem('userInfo', JSON?.stringify(response));
+      await AsyncStorage.setItem('userInfo', JSON.stringify(response));
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
           routes: [{ name: 'ProfileSettings' }],
         })
       );
-  
 
     } catch (error) {
       console.error('Failed to update profile:', error);
     }
   };
+
   useEffect(() => {
     const { firstName, lastName, gender, country, dob } = route.params;
     if (route.params) {
@@ -86,9 +143,24 @@ const EditProfile = ({ navigation, route }) => {
   };
 
   const handleYearChange = (text) => {
+    const currentYear = new Date().getFullYear();
     const numericValue = text.replace(/[^0-9]/g, '');
+
     if (numericValue.length <= 4) {
-      setYear(numericValue);
+      if (numericValue === '' || parseInt(numericValue) < currentYear) {
+        setYear(numericValue);
+      } else {
+        Alert.alert('Invalid Year', `Year should not be greater than ${currentYear}`);
+      }
+    }
+  };
+
+  const handleFirstnameChange = (text) => {
+    setFirstname(text);
+    if (text) {
+      setErrors(prevErrors => ({ ...prevErrors, firstname: "" }));
+    } else {
+      setErrors(prevErrors => ({ ...prevErrors, firstname: 'First Name cannot be empty' }));
     }
   };
 
@@ -106,7 +178,14 @@ const EditProfile = ({ navigation, route }) => {
     { label: 'female', value: '2' },
     { label: 'other', value: '3' },
   ];
-
+  const handleLastnameChange = (text) => {
+    setLastname(text);
+    if (text) {
+      setErrors(prevErrors => ({ ...prevErrors, lastname: "" }));
+    } else {
+      setErrors(prevErrors => ({ ...prevErrors, lastname: 'Last Name cannot be empty' }));
+    }
+  };
   return (
     <Screen style={styles.mainContainer}>
       <KeyboardAvoidingView
@@ -124,23 +203,27 @@ const EditProfile = ({ navigation, route }) => {
             <PrimaryInput
               Heading={"First Name"}
               value={firstname}
-              onChangeText={(text) => setFirstname(text)}
+              onChangeText={handleFirstnameChange}
               placeholderText={"First Name"}
-              isError={""}
+              isError={!!errors.firstname}
+              errorText={errors.firstname}
               textContentType="givenName"
               autoCapitalize={"none"}
             />
+            {errors?.firstname &&<Text style={styles.InvalidText}>{errors.firstname}</Text>}
           </View>
           <View style={styles.input}>
             <PrimaryInput
               Heading={"Last Name"}
               value={lastname}
-              onChangeText={(text) => setLastname(text)}
+              onChangeText={handleLastnameChange}
               placeholderText={"Last Name"}
-              isError={""}
+              isError={!!errors.lastname}
+              errorText={errors.lastname}
               textContentType="familyName"
               autoCapitalize={"none"}
             />
+             {errors?.lastname &&<Text style={styles.InvalidText}>{errors.lastname}</Text>}
           </View>
           <View style={styles.topSection}>
             <View style={[styles.input, { marginTop: 25 }]}>
@@ -189,7 +272,7 @@ const EditProfile = ({ navigation, route }) => {
                 labelField="label"
                 valueField="label"
                 placeholder={!isFocus ? 'Select item' : '...'}
-                itemTextStyle={{textTransform:'capitalize'}}
+                itemTextStyle={{ textTransform: 'capitalize' }}
                 searchPlaceholder="Search..."
                 value={value}
                 onFocus={() => setIsFocus(true)}
@@ -197,6 +280,7 @@ const EditProfile = ({ navigation, route }) => {
                 onChange={item => {
                   setValue(item.label);
                   setIsFocus(false);
+                  setErrors(prevErrors => ({ ...prevErrors, gender: "" }));
                 }}
                 renderRightIcon={() => (
                   <MaterialCommunityIcons
@@ -207,6 +291,7 @@ const EditProfile = ({ navigation, route }) => {
                   />
                 )}
               />
+              {errors.gender ? <Text style={styles.InvalidText}>{errors.gender}</Text> : null}
               <Text style={[styles.heading, { marginTop: 10 }]}>Country of Residence</Text>
               <Dropdown
                 style={[styles.dropdown, isCountryFocus && { borderColor: Colors.light.green }]}
@@ -226,6 +311,7 @@ const EditProfile = ({ navigation, route }) => {
                 onChange={item => {
                   setCountryValue(item.label);
                   setIsCountryFocus(false);
+                  setErrors(prevErrors => ({ ...prevErrors, country: "" }));
                 }}
                 renderRightIcon={() => (
                   <MaterialCommunityIcons
@@ -236,6 +322,7 @@ const EditProfile = ({ navigation, route }) => {
                   />
                 )}
               />
+              {errors.country ? <Text style={styles.InvalidText}>{errors.country}</Text> : null}
               <View style={[styles.button, { marginBottom: 50 }]}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                   <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeButton}>

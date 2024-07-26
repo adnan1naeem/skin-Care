@@ -10,13 +10,32 @@ const ResetCode = ({ navigation,route }) => {
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
   const isCodeValid = (text) => {
-    // Example validation: code must be a number and have a specific length
-    const regex = /^[0-9]{6}$/; // Adjust regex to match your code requirements
+    const regex = /^[0-9]{6}$/;
     return regex.test(text);
   };
-  const handleNavigation=()=>{
-    navigation.navigate("ConfirmPassword",{...route?.params,token:code})
-  }
+  const handleNavigation = () => {
+    let valid=true;
+    let codeErr = '';
+    if (!code) {
+      codeErr = 'Code is required';
+      valid = false;
+      setCodeError(codeErr);
+    } else if (!isCodeValid(code)) {
+      codeErr = 'Please enter valid 6 digit code';
+      valid = false;
+      setCodeError(codeErr);
+    }
+    else if(route?.params?.res?.otp!=code){
+      codeErr = 'Please enter a valid code';
+      valid = false;
+      setCodeError(codeErr);
+    }
+    if(valid){
+      if (isCodeValid(code)) {
+        navigation.navigate("ConfirmPassword", { ...route?.params, token: code });
+      } 
+    }
+  };
   return (
     <View style={[styles.mainContainer, { backgroundColor: Colors.light.background }]}>
       <KeyboardAvoidingView
@@ -48,7 +67,7 @@ const ResetCode = ({ navigation,route }) => {
                 textContentType="oneTimeCode" 
                 autoCapitalize="none"
               />
-              {codeError && <Text style={styles.InvalidText}>Invalid code</Text>}
+              {codeError ? <Text style={styles.InvalidText}>{codeError}</Text> : null}
             </View>
 
             <View style={styles.button}>

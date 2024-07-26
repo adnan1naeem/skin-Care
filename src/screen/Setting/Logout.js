@@ -40,7 +40,7 @@ const Logout = ({route}) => {
         >
           <ThemedText type="title" style={{ color: Colors.light.green, }}>Account</ThemedText>
           <View style={{ marginTop: 40 }}>
-            <TextWithLabel heading="Email" data={route?.params?.userInfoData?.email} />
+            <TextWithLabel heading="Email" data={route?.params?.userInfoData?.email}  email={true}/>
           </View>
           <View style={styles.button}>
             <PrimaryButton text={"Log Out"} onPress={handleNavigation} />

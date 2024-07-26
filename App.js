@@ -34,11 +34,11 @@ export default function App() {
 
     checkToken();
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     //this is for the restrict android fontSize 
     if (Text.defaultProps == null) Text.defaultProps = {};
-       Text.defaultProps.allowFontScaling = false;
-  },[])
+    Text.defaultProps.allowFontScaling = false;
+  }, [])
   const tracking = () => {
     if (Platform.OS === "ios") {
       requestTrackingPermissionsAsync().then(({ status }: { status: string }) => {
@@ -54,22 +54,6 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   }
-const checkInternetConnection = async () => {
-    try {
-        const response = await fetch('https://google.com', {
-            method: 'HEAD',
-            cache: 'no-cache'
-        });
-        console.log("response",response.ok);
-        return response.ok;
-    } catch (error) {
-      alert("Network Error")
-      await AsyncStorage.removeItem('token');
-      await AsyncStorage.removeItem('userInfo');
-      resetUserInfo();
-    }
-};
-checkInternetConnection();
   return (
     (isLoading ?
       <View style={{ flex: 1, justifyContent: 'center', alignSelf: 'center' }}>
@@ -82,7 +66,7 @@ checkInternetConnection();
       <RecoilRoot>
         <NavigationContainer>
           <StatusBar backgroundColor="#f5fafa" barStyle="dark-content" />
-          <MainNavigator isLoggedIn={isLoggedIn} userInfo={userInfo}/>
+          <MainNavigator isLoggedIn={isLoggedIn} userInfo={userInfo} />
         </NavigationContainer>
       </RecoilRoot>)
   );

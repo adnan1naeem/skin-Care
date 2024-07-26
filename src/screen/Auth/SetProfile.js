@@ -1,6 +1,6 @@
 import { Colors } from '../../../constants/Colors';
 import React, { useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TextInput } from 'react-native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TextInput, Alert } from 'react-native';
 import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles'
 import { Dropdown } from 'react-native-element-dropdown';
@@ -39,13 +39,6 @@ const SetProfile = ({ navigation,route }) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 12) {
       setMonth(numericValue);
-    }
-  };
-
-  const handleYearChange = (text) => {
-    const numericValue = text.replace(/[^0-9]/g, '');
-    if (numericValue.length <= 4) {
-      setYear(numericValue);
     }
   };
 
@@ -94,7 +87,18 @@ const SetProfile = ({ navigation,route }) => {
     alert(error?.message);
   }
   };
+  const handleYearChange = (text) => {
+    const currentYear = new Date().getFullYear();
+    const numericValue = text.replace(/[^0-9]/g, '');
 
+    if (numericValue.length <= 4) {
+        if (numericValue === '' || parseInt(numericValue) < currentYear) {
+            setYear(numericValue);
+        } else {
+            Alert.alert('Invalid Year',`Year should not be greater than ${currentYear}`);
+        }
+    }
+};
   return (
     <Screen style={styles.mainContainer}>
       <KeyboardAvoidingView

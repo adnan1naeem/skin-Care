@@ -165,6 +165,7 @@ export const styles = StyleSheet.create({
     lineHeight: 15.6
   },
   selectedTextStyle: {
+    textTransform:'capitalize',
     fontSize: 16,
   },
   iconStyle: {

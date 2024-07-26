@@ -26,26 +26,7 @@ const SettingNavigator = () => {
           gestureEnabled: false,
           headerBackground: () => <View style={styles.headerBackground} />,
           headerTitleContainerStyle: styles.headerTitle,
-          headerTitle: () => (
-            <View style={styles.profileContainer}>
-              {!userName ? (
-                <Image
-                  source={require('../../../assets/images/Notification.png')}
-                  style={styles.profileImage}
-                />
-              ) : (
-                <View style={styles.InitialContainer}>
-                  <Text style={styles.InitialText}>{userInitial}</Text>
-                </View>
-              )}
-
-              <View style={styles.profileDetails}>
-                <Text style={styles.profileName}>{userInfoData?.firstName}</Text>
-                <Text style={styles.profileEmail}>{userInfoData?.email}</Text>
-              </View>
-            </View>
-          ),
-          headerLeft: () => null,
+          headerShown: false,
         }}
       />
       <SettingStack.Screen
@@ -54,7 +35,7 @@ const SettingNavigator = () => {
         options={{
           headerShown: false,
         }}
-        initialParams={{userInfoData}}
+        initialParams={{ userInfoData }}
       />
       <SettingStack.Screen
         name="AccountDetail"
@@ -62,7 +43,7 @@ const SettingNavigator = () => {
         options={{
           headerShown: false,
         }}
-        initialParams={{userInfoData}}
+        initialParams={{ userInfoData }}
       />
       <SettingStack.Screen
         name="EditProfile"

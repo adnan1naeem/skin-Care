@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 import {EXPO_PUBLIC_API_URL} from '@env';
 export const postRequest = async (endpoint, body) => {
   try {
@@ -22,6 +21,7 @@ export const postRequest = async (endpoint, body) => {
       throw new Error(jsonResponse.message || 'Request failed');
     }
   } catch (error) {
+    alert(error?.message)
     console.error('Error:', error);
     throw new Error(error);
   }
@@ -94,7 +94,7 @@ export const postRequestToken = async (endpoint, body) => {
       throw new Error(jsonResponse.message || 'Request failed');
     }
   } catch (error) {
-    console.error('Error:', error);
+    alert(error)
     throw new Error(error);
   }
 };

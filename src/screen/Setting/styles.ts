@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
     height: 50,
     backgroundColor: Colors.light.background
   },
+  InvalidText: { color: 'red',marginTop:5,paddingLeft:5 },
   buttonsWrapper: {
     height: 50,
     flexDirection: "row",

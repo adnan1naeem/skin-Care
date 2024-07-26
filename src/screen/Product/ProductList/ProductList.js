@@ -19,26 +19,31 @@ const ProductList = ({ products, ReleventData }) => {
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text style={styles.title}>Products</Text>
-            <Text style={styles.subtitle}>Recommended For You</Text>
-            <FlatList
-                data={ReleventData}
-                renderItem={renderItem2}
-                scrollEnabled={false}
-                keyExtractor={(item) => item._id.toString()}
-                numColumns={2}
-                columnWrapperStyle={styles.row}
-                contentContainerStyle={styles.list}
-            />
-             <Text style={styles.subtitle}>All Products</Text>
-            <FlatList
-                data={products}
-                renderItem={renderItem}
-                scrollEnabled={false}
-                keyExtractor={(item) => item._id.toString()}
-                numColumns={2}
-                columnWrapperStyle={styles.row}
-                contentContainerStyle={styles.list}
-            />
+            {ReleventData?.length > 0 &&
+                <>
+                    <Text style={styles.subtitle}>Recommended For You</Text>
+                    <FlatList
+                        data={ReleventData}
+                        renderItem={renderItem2}
+                        scrollEnabled={false}
+                        keyExtractor={(item) => item._id.toString()}
+                        numColumns={2}
+                        columnWrapperStyle={styles.row}
+                        contentContainerStyle={styles.list}
+                    /></>}
+
+            {products?.length > 0 ? <>
+                <Text style={styles.subtitle}>All Products</Text>
+                <FlatList
+                    data={products}
+                    renderItem={renderItem}
+                    scrollEnabled={false}
+                    keyExtractor={(item) => item._id.toString()}
+                    numColumns={2}
+                    columnWrapperStyle={styles.row}
+                    contentContainerStyle={styles.list}
+                /></> : <View style={{ height: '100%', justifyContent: 'center', alignItems: 'center', }}>
+                <Text style={[styles.subtitle]}>No Product List Found</Text></View>}
         </ScrollView>
     );
 };

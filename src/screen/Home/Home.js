@@ -133,7 +133,7 @@ const HomeScreen = () => {
                 contentContainerStyle={{ marginTop: 20, flex: 1, paddingLeft: 16 }}
                 numColumns={2}
               />
-              <HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />
+             { releventData?.length>0 &&<><HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />
               <FlatList
                 data={releventData}
                 renderItem={renderItem2}
@@ -141,7 +141,7 @@ const HomeScreen = () => {
                 horizontal
                 contentContainerStyle={{ marginTop: 20, paddingLeft: 16 }}
                 showsHorizontalScrollIndicator={false}
-              />
+              /></>}
               <HomeHeading heading={"Daily Routines"} />
               <FlatList
                 data={DailyRoutine}
