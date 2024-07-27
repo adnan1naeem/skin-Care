@@ -4,6 +4,7 @@ import { Platform, StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   mainContainer:{ flex: 1, paddingHorizontal: 16 ,paddingTop:Platform?.OS==="ios"?"15%":60,backgroundColor:Colors.light.background},
+  SignUpContainer:{ flex: 1 ,paddingTop:Platform?.OS==="ios"?"15%":60,backgroundColor:Colors.light.background},
   wrapper: {
     width: "100%",
     height: 50,

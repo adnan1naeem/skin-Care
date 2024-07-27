@@ -118,6 +118,8 @@ const SetProfile = ({ navigation,route }) => {
                   placeholder="Day"
                   keyboardType="numeric"
                   maxLength={2}
+                  allowFontScaling={false}
+                  placeholderTextColor={"#D4D8D8"}
                 />
                 <TextInput
                   style={styles.Dateinput}
@@ -126,6 +128,8 @@ const SetProfile = ({ navigation,route }) => {
                   placeholder="Month"
                   keyboardType="numeric"
                   maxLength={2}
+                  allowFontScaling={false}
+                  placeholderTextColor={"#D4D8D8"}
                 />
                 <TextInput
                   style={styles.DateInputYear}
@@ -134,6 +138,8 @@ const SetProfile = ({ navigation,route }) => {
                   placeholder="Year"
                   keyboardType="numeric"
                   maxLength={4}
+                  allowFontScaling={false}
+                  placeholderTextColor={"#D4D8D8"}
                 />
               </View>
               <Text style={[styles.heading, { marginTop: 10 }]}>Gender</Text>
@@ -148,6 +154,7 @@ const SetProfile = ({ navigation,route }) => {
                 maxHeight={300}
                 labelField="label"
                 valueField="label"
+                itemTextStyle={{textTransform:'capitalize'}}
                 placeholder={!isFocus ? 'Select item' : '...'}
                 searchPlaceholder="Search..."
                 value={value}
@@ -177,6 +184,7 @@ const SetProfile = ({ navigation,route }) => {
                 maxHeight={300}
                 labelField="label"
                 valueField="label"
+                itemTextStyle={{textTransform:'capitalize'}}
                 placeholder={!isCountryFocus ? 'Select' : '...'}
                 searchPlaceholder="Search..."
                 value={countryValue}

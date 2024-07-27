@@ -206,6 +206,7 @@ AnalyzeButtonText: {
   },
   selectedTextStyle: {
     fontSize: 16,
+    textTransform:'capitalize'
   },
   iconStyle: {
     width: 20,

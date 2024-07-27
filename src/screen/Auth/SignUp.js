@@ -121,7 +121,7 @@ const SignUp = ({ navigation }) => {
               />
               {emailError ? <Text style={styles.InvalidText}>{emailError}</Text> : null}
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10,paddingRight:20 }}>
               <TouchableOpacity onPress={toggleRememberMe}>
                 <Ionicons
                   name={AgreeTC ? "checkbox-outline" : "square-outline"}
@@ -131,13 +131,9 @@ const SignUp = ({ navigation }) => {
               </TouchableOpacity>
               <Text style={styles.agreementText}>
                 I have read and agree to the{' '}
-                <Pressable onPress={handleTermsPress} style={{ paddingVertical: 1 }}>
-                  <Text style={styles.linkText}>Terms of Service</Text>
-                </Pressable>
+                  <Text style={styles.linkText} onPress={handleTermsPress}>Terms of Service</Text>
                 {" "}and{" "}
-                <Pressable onPress={handlePrivacyPress} style={{ paddingVertical: 1 }}>
-                  <Text style={styles.linkText}>Privacy Policy</Text>
-                </Pressable>.
+                  <Text style={styles.linkText} onPress={handlePrivacyPress}>Privacy Policy</Text>
               </Text>
             </View>
             <PrimaryButton text={"Sign Up"} onPress={handleSignUp} />

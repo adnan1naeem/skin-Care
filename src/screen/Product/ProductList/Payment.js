@@ -78,6 +78,7 @@ const PaymentBottomSheet = ({
                         keyboardType="numeric"
                         value={cardNumber}
                         onChangeText={handleCardNumberChange}
+                        placeholderTextColor={"#D4D8D8"}
                     />
                     <View style={styles.expiryCvcContainer}>
                     <View style={{flexDirection:'column',flex:1}}>
@@ -88,6 +89,7 @@ const PaymentBottomSheet = ({
                             keyboardType=""
                             value={expiry}
                             onChangeText={handleExpiryChange}
+                            placeholderTextColor={"#D4D8D8"}
                         />
                         </View>
                         <View style={{flexDirection:'column', flex:1,marginLeft: 5}}>
@@ -98,6 +100,7 @@ const PaymentBottomSheet = ({
                             keyboardType="numeric"
                             value={cvc}
                             onChangeText={handleCVCChange}
+                            placeholderTextColor={"#D4D8D8"}
                         />
                         </View>
                     </View>
@@ -108,6 +111,7 @@ const PaymentBottomSheet = ({
                         keyboardType="numeric"
                         value={zip}
                         onChangeText={handleZIPChange}
+                        placeholderTextColor={"#D4D8D8"}
                     />
                 </View>
 

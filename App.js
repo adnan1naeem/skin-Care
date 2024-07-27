@@ -3,7 +3,7 @@ import MainNavigator from './src/Navigation/MainNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import useCachedResources from './hooks/useCachedResources';
 import React, { useEffect, useState } from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, Text, View } from 'react-native';
 import { Settings } from "react-native-fbsdk-next";
 import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
 import * as SplashScreen from 'expo-splash-screen';
@@ -34,7 +34,11 @@ export default function App() {
 
     checkToken();
   }, []);
-
+  useEffect(()=>{
+    //this is for the restrict android fontSize 
+    if (Text.defaultProps == null) Text.defaultProps = {};
+       Text.defaultProps.allowFontScaling = false;
+  },[])
   const tracking = () => {
     if (Platform.OS === "ios") {
       requestTrackingPermissionsAsync().then(({ status }: { status: string }) => {

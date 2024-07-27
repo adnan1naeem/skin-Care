@@ -153,6 +153,8 @@ const EditProfile = ({ navigation, route }) => {
                   placeholder="Day"
                   keyboardType="numeric"
                   maxLength={2}
+                  allowFontScaling={false}
+                  placeholderTextColor={"#D4D8D8"}
                 />
                 <TextInput
                   style={styles.Dateinput}
@@ -161,6 +163,8 @@ const EditProfile = ({ navigation, route }) => {
                   placeholder="Month"
                   keyboardType="numeric"
                   maxLength={2}
+                  allowFontScaling={false}
+                  placeholderTextColor={"#D4D8D8"}
                 />
                 <TextInput
                   style={styles.DateInputYear}
@@ -169,6 +173,8 @@ const EditProfile = ({ navigation, route }) => {
                   placeholder="Year"
                   keyboardType="numeric"
                   maxLength={4}
+                  allowFontScaling={false}
+                  placeholderTextColor={"#D4D8D8"}
                 />
               </View>
               <Text style={[styles.heading, { marginTop: 10 }]}>Gender</Text>
@@ -183,6 +189,7 @@ const EditProfile = ({ navigation, route }) => {
                 labelField="label"
                 valueField="label"
                 placeholder={!isFocus ? 'Select item' : '...'}
+                itemTextStyle={{textTransform:'capitalize'}}
                 searchPlaceholder="Search..."
                 value={value}
                 onFocus={() => setIsFocus(true)}

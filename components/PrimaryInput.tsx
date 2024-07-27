@@ -55,6 +55,7 @@ const PrimaryInput = ({
         returnKeyType="next"
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
+        allowFontScaling={false}
         value={value}
         onBlur={() => {
           setInputSelected(false);
@@ -64,7 +65,7 @@ const PrimaryInput = ({
         onChangeText={onChangeText}
         placeholder={placeholderText}
         style={[styles.inputField, inputStyle]}
-        placeholderTextColor={"#11181C"}
+        placeholderTextColor={"#D4D8D8"}
       />
     </View>
   );

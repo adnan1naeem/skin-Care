@@ -30,6 +30,8 @@ const AnalysisInput = ({ value, onChange,title,icon }) => {
                     value={value}
                     onChangeText={handleChange}
                     keyboardType="numeric"
+                    allowFontScaling={false}
+                    placeholderTextColor={"#D4D8D8"}
                 />
                 {title!="Skin Age"?(
                     <Icon name="percent" size={20} color="#708090" style={styles.icon} />
