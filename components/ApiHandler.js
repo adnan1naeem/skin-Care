@@ -54,10 +54,10 @@ export const getRequest = async (endpoint) => {
 };
 export const putRequest = async (endpoint, body) => {
   try {
-    const connection=  await checkInternetConnection();
-   if(!connection){
-   return;
-   }
+    const isConnected = await checkInternetConnection();
+    if (!isConnected) {
+      return;
+    }
     const token = await AsyncStorage.getItem('token');
     const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'PUT',
@@ -80,13 +80,11 @@ export const putRequest = async (endpoint, body) => {
   }
 };
 export const postRequestToken = async (endpoint, body) => {
-  
   try {
-   const connection=  await checkInternetConnection();
-   if(!connection){
-   return;
-   }
-
+    const isConnected = await checkInternetConnection();
+    if (!isConnected) {
+      return;
+    }
     const token = await AsyncStorage.getItem('token');
     const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'POST',
@@ -111,8 +109,7 @@ export const postRequestToken = async (endpoint, body) => {
     throw new Error(error);
   }
 };
-
-export const checkInternetConnection = async () => {
+const checkInternetConnection = async () => {
   try {
     const response = await fetch('https://google.com', {
       method: 'HEAD',

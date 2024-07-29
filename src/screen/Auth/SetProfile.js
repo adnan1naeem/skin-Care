@@ -83,8 +83,6 @@ const SetProfile = ({ navigation,route }) => {
       });
     }
    }catch (error) {
-    alert(JSON?.stringify(error))
-    alert(error?.message);
   }
   };
   const handleYearChange = (text) => {
