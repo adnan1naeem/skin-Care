@@ -3,6 +3,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {EXPO_PUBLIC_API_URL} from '@env';
 export const postRequest = async (endpoint, body) => {
   try {
+    const connection=  await checkInternetConnection();
+   if(!connection){
+   return;
+   }
     const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'POST',
       headers: {
@@ -50,6 +54,10 @@ export const getRequest = async (endpoint) => {
 };
 export const putRequest = async (endpoint, body) => {
   try {
+    const connection=  await checkInternetConnection();
+   if(!connection){
+   return;
+   }
     const token = await AsyncStorage.getItem('token');
     const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'PUT',
@@ -74,6 +82,11 @@ export const putRequest = async (endpoint, body) => {
 export const postRequestToken = async (endpoint, body) => {
   
   try {
+   const connection=  await checkInternetConnection();
+   if(!connection){
+   return;
+   }
+
     const token = await AsyncStorage.getItem('token');
     const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
       method: 'POST',
@@ -96,5 +109,18 @@ export const postRequestToken = async (endpoint, body) => {
   } catch (error) {
     alert(error)
     throw new Error(error);
+  }
+};
+
+export const checkInternetConnection = async () => {
+  try {
+    const response = await fetch('https://google.com', {
+      method: 'HEAD',
+      cache: 'no-cache'
+    });
+    console.log("response", response.ok);
+    return response.ok;
+  } catch (error) {
+    alert("Please check your internet connection")
   }
 };
