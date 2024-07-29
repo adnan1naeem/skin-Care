@@ -8,7 +8,9 @@ const AnalysisInput = ({ value, onChange,title,icon }) => {
     const handleChange = (text) => {
         const numericValue = parseFloat(text);
         if(title=="Skin Age"){
-            onChange(text);
+            if (text.length <= 3) {
+                onChange(text);
+            }
         }else{
             if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 100) {
                 onChange(text);

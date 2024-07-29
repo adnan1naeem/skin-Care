@@ -65,8 +65,9 @@ const EditProfile = ({ navigation, route }) => {
       valid = false;
     }
 
-    if (year.length < 4 || year > new Date().getFullYear()) {
-      newErrors.year = `Invalid year. Must be a valid year less than ${new Date().getFullYear()}`;
+    if (year.length <= 4 && year < 1900) {
+      newErrors.year = `Invalid year. Must be a valid year greater than 1900`;
+      alert(newErrors?.year)
       valid = false;
     }
 
@@ -128,12 +129,6 @@ const EditProfile = ({ navigation, route }) => {
 
   // Handlers for input changes
   const handleDayChange = (text) => {
-    let newErrors = { ...errors };
-    if(!text){
-      newErrors.text = `Date should not be empty`;
-      setErrors(newErrors);
-    }
-    
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 31) {
       setDay(numericValue);
@@ -265,9 +260,6 @@ const EditProfile = ({ navigation, route }) => {
                   placeholderTextColor={"#D4D8D8"}
                 />
               </View>
-              {errors?.day &&<Text style={styles.InvalidText}>{errors.day}</Text>}
-              {errors?.month &&<Text style={styles.InvalidText}>{errors.month}</Text>}
-              {errors?.year &&<Text style={styles.InvalidText}>{errors.year}</Text>}
               <Text style={[styles.heading, { marginTop: 10 }]}>Gender</Text>
               <Dropdown
                 style={[styles.dropdown, isFocus && { borderColor: Colors.light.green }]}

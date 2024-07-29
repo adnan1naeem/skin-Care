@@ -4,16 +4,16 @@ import HomeHeading from './Component/HomeHeadingComponent';
 import { styles } from './styles';
 import GridItem from './Component/GridItem';
 import ProductItem from './Component/ProductlComponent';
-import { DailyRoutine, DailyRoutine2 } from './HomeDummyData';
+import { DailyRoutine, DailyRoutineData } from './HomeDummyData';
 import DailyRecommand from './Component/DailyRecommand';
 import CustomModal from './Component/CustomModal';
 import { useNavigation } from "@react-navigation/native";
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userInfo } from '../../../utils/State';
 import { ActivityIndicator } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Colors } from '../../../constants/Colors';
-import { getRequest } from '../../../components/ApiHandler';
+import { getRequest, putRequest } from '../../../components/ApiHandler';
 import { dataFunction, EmyptyStatedata } from '../../../hooks/SkinAnalysis';
 import DailyResetButton from './Component/DailyRoutine';
 const HomeScreen = () => {
@@ -24,7 +24,7 @@ const HomeScreen = () => {
   const [userInfovalue, setUserInfo] = useRecoilState(userInfo);
   const [loading, setLoading] = useState(true);
   const [releventData, setReleventData] = useState(null)
-  
+  const [dailyRoutine,setDailyRoutine]=useState(null);
 
   const checkUserInfo = async () => {
     try {
@@ -47,6 +47,10 @@ const HomeScreen = () => {
       }).catch((error) => {
         console.log(JSON?.stringify(error))
       });
+      const response = await putRequest('api/user/dailyroutine/update', {
+      });
+      const DailtRoutineData = DailyRoutineData(response?.routine);
+      setDailyRoutine(DailtRoutineData)
     } catch (error) {
       console.log("Failed to fetch user info from AsyncStorage", error);
     }
@@ -115,6 +119,43 @@ const HomeScreen = () => {
     setModalVisible(false);
     navigation.navigate("Analysis")
   }
+  const handleDailyRoutine = async (item) => {
+    try {
+      setLoading(true);
+      let data = {};
+      switch (item?.id) {
+        case '1':
+          data = { hydrate: true };
+          break;
+        case '2':
+          data = { cleanse: true };
+          break;
+        case '3':
+          data = { tone: true };
+          break;
+        case '4':
+          data = { moisturize: true };
+          break;
+        case '5':
+          data = { protection: true };
+          break;
+        default:
+          throw new Error('Invalid routine item');
+      }
+      const response = await putRequest('api/user/dailyroutine/update', data);
+      if (response?.routine) {
+        const updatedRoutineData = DailyRoutineData(response.routine);
+        setDailyRoutine(updatedRoutineData);
+      } else {
+        throw new Error('Failed to update routine');
+      }
+    } catch (error) {
+      console.error('Error in handleDailyRoutine:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   return (
     <View style={styles.main_container}>
       {
@@ -149,7 +190,7 @@ const HomeScreen = () => {
                 keyExtractor={item => item.id}
                 contentContainerStyle={{ marginTop: 20, flex: 1, paddingHorizontal: 16, }}
               />
-              <DailyResetButton routines={DailyRoutine2}/>
+              <DailyResetButton routines={dailyRoutine} OnPress={handleDailyRoutine}/>
             </ScrollView>
           )
       }

@@ -57,7 +57,10 @@ const SetProfile = ({ navigation,route }) => {
       setValidationError("Please select your country of residence.");
       return false;
     }
-
+    if (year < 1900) {
+      alert("Invalid year. Must be a valid year greater than 1900")
+      return false;
+    }
     setValidationError("");
     return true;
   };
