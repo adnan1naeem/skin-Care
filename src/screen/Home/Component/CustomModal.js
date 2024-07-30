@@ -5,13 +5,14 @@ import AnalysisInput from './AnalysisInput';
 import Typography from '../../../../constants/Typography';
 import { ThemedText } from '../../../../components/ThemedText';
 import { postRequestToken } from '../../../../components/ApiHandler';
+import { ActivityIndicator } from 'react-native-paper';
 
 const CustomModal = ({ visible, onClose, onAnalyze }) => {
     const [inputValue, setInputValue] = useState(0);
     const [inputValue2, setInputValue2] = useState(0);
     const [inputValue3, setInputValue3] = useState(0);
     const [inputValue4, setInputValue4] = useState(0);
-
+    const [loading, setLoading] = useState(false)
     const handleAnalyze = async () => {
         const hydration = Number(inputValue);
         const oilness = Number(inputValue2);
@@ -26,18 +27,21 @@ const CustomModal = ({ visible, onClose, onAnalyze }) => {
             return;
         }
         try {
+            setLoading(true)
             const analysisData = {
-                hydration:hydration,
-                oilness:oilness,
-                elastcity:elasticity,
-                skinAge:skinAge,
+                hydration: hydration,
+                oilness: oilness,
+                elastcity: elasticity,
+                skinAge: skinAge,
             };
             const response = await postRequestToken('api/user/skinnalysis', analysisData);
             if (response) {
                 // alert('Analysis successful:', JSON?.stringify(response));
+                setLoading(false)
                 onAnalyze();
             }
         } catch (error) {
+            setLoading(false)
             // alert('Error during analysis:', error);
         }
     };
@@ -66,9 +70,14 @@ const CustomModal = ({ visible, onClose, onAnalyze }) => {
                                 <TouchableOpacity onPress={onClose} style={[modalStyles.closeButton, { marginRight: 10 }]}>
                                     <Text style={modalStyles.closeButtonText}>Cancel</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={handleAnalyze} style={modalStyles.AnalyzeButon}>
+                                {loading ? <View style={[modalStyles.AnalyzeButon,{paddingHorizontal:36}]}> 
+                                    <ActivityIndicator
+                                    color={Colors.light?.white}
+                                    size="small"
+                                    style={{ flex: 1 }}
+                                /></View> : <TouchableOpacity onPress={handleAnalyze} style={modalStyles.AnalyzeButon}>
                                     <Text style={modalStyles.AnalyzeButtonText}>Analyze</Text>
-                                </TouchableOpacity>
+                                </TouchableOpacity>}
                             </View>
                         </View>
                     </KeyboardAvoidingView>

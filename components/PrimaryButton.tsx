@@ -1,16 +1,25 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps, View } from 'react-native';
 import { Colors } from '../constants/Colors';
+import { ActivityIndicator } from 'react-native-paper';
 
 interface PrimaryButtonProps extends TouchableOpacityProps {
   text: string;
+  loading: Boolean
 }
 
-const PrimaryButton: React.FC<PrimaryButtonProps> = ({ onPress, text, style, ...rest }) => {
+const PrimaryButton: React.FC<PrimaryButtonProps> = ({ onPress, text, style, loading, ...rest }) => {
   return (
-    <TouchableOpacity style={[styles.button, style]} onPress={onPress} {...rest}>
+    loading ? <View style={[styles.button, style]}>
+      <ActivityIndicator
+        color={Colors.light?.white}
+        size="small"
+        style={{ flex: 1 }}
+      /></View> : <TouchableOpacity style={[styles.button, style]} onPress={onPress} {...rest}>
       <Text style={styles.buttonText}>{text}</Text>
     </TouchableOpacity>
+
+
   );
 };
 

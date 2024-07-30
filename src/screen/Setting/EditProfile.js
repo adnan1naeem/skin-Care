@@ -14,9 +14,10 @@ import { putRequest } from '../../../components/ApiHandler';
 import { useSetRecoilState } from 'recoil';
 import { userInfo } from '../../../utils/State';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ActivityIndicator } from 'react-native-paper';
 
 const EditProfile = ({ navigation, route }) => {
-  // State variables
+  const [loading, setLoading] = useState(false)
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
@@ -40,7 +41,6 @@ const EditProfile = ({ navigation, route }) => {
   const endpoint = `api/user/${route.params?._id}`;
 
   const updateProfile = async () => {
-    // Validation
     let valid = true;
     let newErrors = { ...errors };
 
@@ -88,7 +88,7 @@ const EditProfile = ({ navigation, route }) => {
 
     try {
       const NewDate = convertToISODateString(day, month, year);
-
+      setLoading(true)
       const response = await putRequest(endpoint, {
         firstName: firstname,
         lastName: lastname,
@@ -99,20 +99,21 @@ const EditProfile = ({ navigation, route }) => {
 
       userInfoData(response);
       await AsyncStorage.setItem('userInfo', JSON.stringify(response));
+      setLoading(false)
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
           routes: [{ name: 'ProfileSettings' }],
         })
       );
-
     } catch (error) {
+      setLoading(false)
       console.error('Failed to update profile:', error);
     }
   };
 
   useEffect(() => {
-    const { firstName, lastName, gender, country, dob } = route.params;
+    const { firstName, lastName, gender, country, dob } = route?.params;
     if (route.params) {
       setFirstname(firstName || "");
       setLastname(lastName || "");
@@ -164,15 +165,6 @@ const EditProfile = ({ navigation, route }) => {
     }
   };
 
-  const handleNavigation = () => {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'ProfileSettings' }],
-      })
-    );
-  };
-
   const data = [
     { label: 'male', value: '1' },
     { label: 'female', value: '2' },
@@ -210,7 +202,7 @@ const EditProfile = ({ navigation, route }) => {
               textContentType="givenName"
               autoCapitalize={"none"}
             />
-            {errors?.firstname &&<Text style={styles.InvalidText}>{errors.firstname}</Text>}
+            {errors?.firstname && <Text style={styles.InvalidText}>{errors.firstname}</Text>}
           </View>
           <View style={styles.input}>
             <PrimaryInput
@@ -223,7 +215,7 @@ const EditProfile = ({ navigation, route }) => {
               textContentType="familyName"
               autoCapitalize={"none"}
             />
-             {errors?.lastname &&<Text style={styles.InvalidText}>{errors.lastname}</Text>}
+            {errors?.lastname && <Text style={styles.InvalidText}>{errors.lastname}</Text>}
           </View>
           <View style={styles.topSection}>
             <View style={[styles.input, { marginTop: 25 }]}>
@@ -328,9 +320,15 @@ const EditProfile = ({ navigation, route }) => {
                   <TouchableOpacity onPress={() => navigation.goBack()} style={styles.closeButton}>
                     <Text style={styles.closeButtonText}>Cancel</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={updateProfile} style={styles.AnalyzeButon}>
-                    <Text style={styles.AnalyzeButtonText}>Save</Text>
-                  </TouchableOpacity>
+                  {loading ? <View style={[styles.AnalyzeButon]}>
+                    <ActivityIndicator
+                      color={Colors.light?.white}
+                      size="small"
+                      style={{ flex: 1 }}
+                    /></View> :
+                    <TouchableOpacity onPress={updateProfile} style={styles.AnalyzeButon}>
+                      <Text style={styles.AnalyzeButtonText}>Save</Text>
+                    </TouchableOpacity>}
                 </View>
               </View>
             </View>
@@ -340,5 +338,4 @@ const EditProfile = ({ navigation, route }) => {
     </Screen>
   );
 };
-
 export default EditProfile;

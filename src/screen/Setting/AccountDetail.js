@@ -8,7 +8,7 @@ import TextWithLabel from "./Component/TextwithLabel";
 import BackButton from "../../../components/BackButton";
 import { formatDate } from "../../../utils/DateConverstion";
 const AccountDetail = ({ navigation,route }) => {
-  const data=route?.params?.userInfoData
+  const data=route?.params?.userInfoData||""
   const handleNavigation=()=>{navigation.navigate("EditProfile",data)}
 
   return (

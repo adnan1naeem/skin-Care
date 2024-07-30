@@ -21,8 +21,8 @@ const Login = ({ navigation }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-  const [response, setResponse] = useState(null);
   const userInfoValues = useSetRecoilState(userInfo);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const loadRememberedCredentials = async () => {
@@ -63,6 +63,7 @@ const Login = ({ navigation }) => {
     setPasswordError(passwordErr);
 
     if (valid) {
+      setLoading(true)
       const endpoint = 'api/auth/login';
       const body = {
         email: email,
@@ -70,11 +71,10 @@ const Login = ({ navigation }) => {
       };
       try {
         const jsonResponse = await postRequest(endpoint, body);
-        setResponse(jsonResponse);
         await AsyncStorage.setItem('token', jsonResponse.token);
         await AsyncStorage.setItem('userInfo', JSON.stringify(jsonResponse.userWithoutPassword));
         userInfoValues(jsonResponse?.userWithoutPassword);
-        
+
         if (rememberMe) {
           await AsyncStorage.setItem('email', email);
           await AsyncStorage.setItem('password', password);
@@ -82,14 +82,13 @@ const Login = ({ navigation }) => {
           await AsyncStorage.removeItem('email');
           await AsyncStorage.removeItem('password');
         }
-
         navigation.replace("Home");
       } catch ({ error }) {
-        // alert(error)
+        setLoading(false)
       }
     }
   };
-  
+
   const toggleRememberMe = () => {
     setRememberMe(!rememberMe);
   };
@@ -198,7 +197,7 @@ const Login = ({ navigation }) => {
               </TouchableOpacity>
               <Text style={styles.Forget}> Remember Me</Text>
             </View>
-            <PrimaryButton text={"Log in"} onPress={handleLogin} />
+            <PrimaryButton text={"Log in"} onPress={handleLogin} loading={loading} />
             {/* Uncomment if needed
             <View style={styles.button}>
               <PrimaryIconButton

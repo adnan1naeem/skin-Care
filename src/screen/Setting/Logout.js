@@ -1,5 +1,5 @@
 import { Colors } from "../../../constants/Colors";
-import React from 'react';
+import React, { useState } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles';
@@ -13,16 +13,20 @@ import { userInfo } from "../../../utils/State";
 const Logout = ({route}) => {
   const navigation=useNavigation()
   const resetUserInfo = useResetRecoilState(userInfo);
+  const [loading, setLoading] = useState(false)
   const handleNavigation = async () => {
     try {
+      setLoading(true)
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('userInfo');
       resetUserInfo();
+      setLoading(false)
       navigation.reset({
         index: 0,
         routes: [{ name: 'Login' }],
       });
     } catch (error) {
+      setLoading(false)
       console.error('Error logging out:', error);
     }
 
@@ -43,7 +47,7 @@ const Logout = ({route}) => {
             <TextWithLabel heading="Email" data={route?.params?.userInfoData?.email}  email={true}/>
           </View>
           <View style={styles.button}>
-            <PrimaryButton text={"Log Out"} onPress={handleNavigation} />
+            <PrimaryButton text={"Log Out"} onPress={handleNavigation} loading={loading}/>
           </View>
           <BackButton text="Back" onPress={() => { navigation.goBack() }} />
         </ScrollView>

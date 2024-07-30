@@ -12,7 +12,7 @@ const ConfirmPassword = ({ navigation, route }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
-
+  const [loading,setLoading]=useState(false)
   const validatePasswords = async () => {
     let valid = true;
     let passwordErr = '';
@@ -35,6 +35,7 @@ const ConfirmPassword = ({ navigation, route }) => {
     setConfirmPasswordError(confirmPasswordErr);
 
     if (valid) {
+      setLoading(true)
       const endpoint = 'api/auth/reset-password';
       const data = {
         ...route.params,
@@ -43,8 +44,10 @@ const ConfirmPassword = ({ navigation, route }) => {
 
       try {
         await postRequest(endpoint, data);
+        setLoading(false)
         navigation.navigate("Login");
       } catch (error) {
+        setLoading(false)
       }
     }
   };
@@ -93,7 +96,7 @@ const ConfirmPassword = ({ navigation, route }) => {
             </View>
             {confirmPasswordError ? <Text style={styles.InvalidText}>{confirmPasswordError}</Text> : null}
             <View style={styles.button}>
-              <PrimaryButton text={"Reset Password"} onPress={validatePasswords} />
+              <PrimaryButton text={"Reset Password"} onPress={validatePasswords} loading={loading}/>
             </View>
           </View>
         </ScrollView>

@@ -17,11 +17,11 @@ const SetProfile = ({ navigation,route }) => {
   const [day, setDay] = useState('');
   const [month, setMonth] = useState('');
   const [year, setYear] = useState('');
-  const [selectedValue, setSelectedValue] = useState('');
   const [isCountryFocus, setIsCountryFocus] = useState(false);
   const [countryValue, setCountryValue] = useState(null);
   const [validationError, setValidationError] = useState("");
   const userInfoValues = useSetRecoilState(userInfo);
+  const [loading,setLoading]=useState(false)
   const handleDayChange = (text) => {
     const numericValue = text.replace(/[^0-9]/g, '');
     if (numericValue <= 31) {
@@ -68,6 +68,7 @@ const SetProfile = ({ navigation,route }) => {
   const handleSaveProfile =async () => {
    try{
     if (validateForm()) {
+      setLoading(true)
       const NewDate = convertToISODateString(day, month, year);
       const profileData = {
         ...route.params,
@@ -80,12 +81,14 @@ const SetProfile = ({ navigation,route }) => {
       await AsyncStorage.setItem('token', jsonResponse?.token);
       await AsyncStorage.setItem('userInfo', JSON.stringify(jsonResponse?.userWithoutPassword));
       userInfoValues(jsonResponse?.userWithoutPassword);
+      setLoading(false)
       navigation.reset({
         index: 0,
         routes: [{ name: "Home" }],
       });
     }
    }catch (error) {
+    setLoading(false)
   }
   };
   const handleYearChange = (text) => {
@@ -210,7 +213,7 @@ const SetProfile = ({ navigation,route }) => {
               />
               {validationError ? <Text style={{ color: 'red', textAlign: 'center' }}>{validationError}</Text> : null}
               <View style={styles.button}>
-                <PrimaryButton text={"Save Profile"} onPress={handleSaveProfile} />
+                <PrimaryButton text={"Save Profile"} onPress={handleSaveProfile} loading={loading}/>
               </View>
             </View>
           </View>

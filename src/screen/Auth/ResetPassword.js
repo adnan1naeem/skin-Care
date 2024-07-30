@@ -12,6 +12,7 @@ import { postRequest } from "../../../components/ApiHandler";
 const ResetPassword = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [loading,setLoading]=useState(false)
   const handleNavigation = async () => {
     let valid=true;
     let emailErr = '';
@@ -25,11 +26,14 @@ const ResetPassword = ({ navigation }) => {
       setEmailError(emailErr);
     }
     if(valid) {
+      setLoading(true)
       const endpoint = 'api/auth/forget-password';
       const body = { email: email }
       await postRequest(endpoint, body).then((res) => {
+        setLoading(false)
         navigation.navigate("ResetCode", { email ,res})
       }).catch((error) => {
+        setLoading(false)
         // alert(JSON?.stringify(error))
       });
 
@@ -68,7 +72,7 @@ const ResetPassword = ({ navigation }) => {
             </View>
             {emailError ? <Text style={styles.InvalidText}>{emailError}</Text> : null}
             <View style={styles.button}>
-              <PrimaryButton text={"Reset Password"} onPress={handleNavigation} />
+              <PrimaryButton text={"Reset Password"} onPress={handleNavigation} loading={loading}/>
             </View>
             <BackButton text="Back" onPress={() => { navigation.goBack() }} />
           </View>
