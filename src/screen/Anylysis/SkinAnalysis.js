@@ -18,10 +18,11 @@ const SkinAnalysis = () => {
         try {
             const data = await getRequest('api/user/skinnalysis/skinanalysisbydate');
             if (data && data.length > 0) {
-                const sortedData = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                const sortedData = data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
                 setAnalysisData(sortedData);
                 if (initialLoad) {
-                    setSelectedDate(sortedData[0].createdAt);
+                    const latestDate = sortedData[sortedData.length - 1].createdAt;
+                    setSelectedDate(latestDate);
                     setInitialLoad(false);
                 }
             }

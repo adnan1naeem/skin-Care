@@ -15,7 +15,7 @@ const Password = ({ navigation, route }) => {
 
   const handleSavePassword = () => {
     if (password.length < 6) {
-      setValidationError("Password must be at least 8 characters long.");
+      setValidationError("Password must be at least 6 characters long.");
       return;
     }
 

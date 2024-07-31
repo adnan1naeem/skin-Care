@@ -7,6 +7,7 @@ import { styles } from './styles';
 import Screen from '../../../components/Screen';
 import { ThemedText } from '../../../components/ThemedText';
 import { Ionicons } from '@expo/vector-icons';
+import { postRequest } from '../../../components/ApiHandler';
 // import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const SignUp = ({ navigation }) => {
@@ -17,7 +18,7 @@ const SignUp = ({ navigation }) => {
   const [emailError, setEmailError] = useState("");
   const [firstnameError, setFirstnameError] = useState("");
   const [lastnameError, setLastnameError] = useState("");
-  
+  const [loading, setLoading] = useState(false)
   const toggleRememberMe = () => {
     setAgreeTC(!AgreeTC);
   };
@@ -27,7 +28,7 @@ const SignUp = ({ navigation }) => {
     return emailRegex.test(email);
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = async () => {
     let valid = true;
     if (!firstName) {
       setFirstnameError("First Name is required");
@@ -59,7 +60,22 @@ const SignUp = ({ navigation }) => {
     }
 
     if (valid) {
-      navigation.navigate("Password", { email, firstName, lastName });
+      setLoading(true)
+      const endpoint = 'api/auth/useralreadyExist';
+      const body = {
+        email: email,
+      };
+      try {
+        await postRequest(endpoint, body).then((res) => {
+          setLoading(false)
+          if (res?.message == "Valid email") {
+            navigation.navigate("Password", { email, firstName, lastName });
+          }
+        });
+      } catch ({ error }) {
+        setLoading(false)
+      }
+
     }
   };
 
@@ -121,7 +137,7 @@ const SignUp = ({ navigation }) => {
               />
               {emailError ? <Text style={styles.InvalidText}>{emailError}</Text> : null}
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10,paddingRight:20 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10, paddingRight: 20 }}>
               <TouchableOpacity onPress={toggleRememberMe}>
                 <Ionicons
                   name={AgreeTC ? "checkbox-outline" : "square-outline"}
@@ -131,12 +147,12 @@ const SignUp = ({ navigation }) => {
               </TouchableOpacity>
               <Text style={styles.agreementText}>
                 I have read and agree to the{' '}
-                  <Text style={styles.linkText} onPress={handleTermsPress}>Terms of Service</Text>
+                <Text style={styles.linkText} onPress={handleTermsPress}>Terms of Service</Text>
                 {" "}and{" "}
-                  <Text style={styles.linkText} onPress={handlePrivacyPress}>Privacy Policy</Text>
+                <Text style={styles.linkText} onPress={handlePrivacyPress}>Privacy Policy</Text>
               </Text>
             </View>
-            <PrimaryButton text={"Sign Up"} onPress={handleSignUp} />
+            <PrimaryButton text={"Sign Up"} onPress={handleSignUp} loading={loading} />
             <View>
               <View style={styles.separator}>
                 <View style={styles.SeparatorLine}></View>

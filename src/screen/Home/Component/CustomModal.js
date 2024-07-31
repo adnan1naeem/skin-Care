@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Modal, TouchableOpacity, StyleSheet, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Platform, Alert } from 'react-native';
 import { Colors } from '../../../../constants/Colors';
 import AnalysisInput from './AnalysisInput';
@@ -12,7 +12,15 @@ const CustomModal = ({ visible, onClose, onAnalyze }) => {
     const [inputValue2, setInputValue2] = useState(0);
     const [inputValue3, setInputValue3] = useState(0);
     const [inputValue4, setInputValue4] = useState(0);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        if (visible) {
+            setInputValue(0);
+            setInputValue2(0);
+            setInputValue3(0);
+            setInputValue4(0);
+        }
+    }, [visible]);
     const handleAnalyze = async () => {
         const hydration = Number(inputValue);
         const oilness = Number(inputValue2);
