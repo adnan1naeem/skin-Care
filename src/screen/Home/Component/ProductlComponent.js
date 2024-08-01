@@ -1,16 +1,18 @@
 import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductItem = ({ image1, text, description,icons,onPress}) => {
   
-  const apiUrl = "http://152.42.225.202/";
-  const imageUrl = `${apiUrl}${image1}`; 
+
+  const imageUrl =image1? image1.startsWith('uploads/')
+  ? `http://152.42.225.202/${image1}`
+  : image1
+: " "
   const iconMapping = {
     'Hydration': require('../../../../assets/images/Hydration.png'),
     'Oilness': require('../../../../assets/images/Oilness.png'),
     'Elasticity': require('../../../../assets/images/Elasticity.png'),
-    'Age': require('../../../../assets/images/Age.png'),
+    'SkinAge': require('../../../../assets/images/Age.png'),
   }; 
   let parsedIcons = [];
   try {
@@ -22,11 +24,11 @@ const ProductItem = ({ image1, text, description,icons,onPress}) => {
   return (
     <TouchableOpacity style={[styles.gridItem, { marginRight: 15 }]} onPress={onPress}>
         <View style={{flexDirection: 'row' }}>
-          <Image source={{ uri: imageUrl }} style={styles.image} resizeMode='contain' />
+          <Image source={{ uri: imageUrl }} style={styles.image} resizeMode="contain" />
           <Text style={styles.text} numberOfLines={1}>{text}</Text>
         </View>
         <View style={{ flexDirection:'row',marginVertical:5,width: 17,height: 17, }}>
-        {parsedIcons && parsedIcons.map((icon) => (
+        {icons && icons.map((icon) => (
           <Image
             source={iconMapping[icon]}
             style={styles.icon}

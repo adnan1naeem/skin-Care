@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.green,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    borderRadius: 20,
+    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,

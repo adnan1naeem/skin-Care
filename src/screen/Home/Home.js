@@ -171,7 +171,7 @@ const HomeScreen = () => {
                 data={AnalysisData}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-                contentContainerStyle={{ marginTop: 20, flex: 1, paddingLeft: 16 }}
+                contentContainerStyle={{ marginTop: 20, flex: 1,alignSelf:'center' }}
                 numColumns={2}
               />
              { releventData?.length>0 &&<><HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />

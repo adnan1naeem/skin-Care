@@ -39,7 +39,7 @@ const SkinDetail = ({ navigation, route }) => {
         </View>
         <View style={styles.analysisContainer}>
           <View style={styles.header}>
-            {!value2?.item?.image1 ? <Image source={getImageSource('hydration')} style={styles.icon} />
+            {!value2?.item?.image1 ? <Image source={getImageSource(route?.params?.params?.item?.parameter)} style={styles.icon} />
               : <Image source={value2?.item?.image1} style={styles.icon} />}
             <Text style={styles.headerText}>{value2?.item?.text||value2?.title}</Text>
             <Text style={[styles.percentageText, { color: getColorCode(value2?.item?.level) }]}>{value2?.item?.progress || progress}%</Text>

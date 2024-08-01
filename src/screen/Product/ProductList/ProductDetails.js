@@ -5,14 +5,12 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductDetails = ({ product }) => {
     const [isBottomSheetVisible, setBottomSheetVisible] = useState(false);
     const [saveCardChecked, setSaveCardChecked] = useState(false);
-
-    const toggleBottomSheet = () => {
-        setBottomSheetVisible(!isBottomSheetVisible);
-    };
+    // const toggleBottomSheet = () => {
+    //     setBottomSheetVisible(!isBottomSheetVisible);
+    // };
 
     const handleSaveCardToggle = () => {
         setSaveCardChecked(!saveCardChecked);
@@ -20,16 +18,18 @@ const ProductDetails = ({ product }) => {
 
     const handlePay = () => {
         if (product?.amazonUrl) {
-            Linking.openURL(product.amazonUrl).catch(err => 
+            Linking.openURL(product.amazonUrl).catch(err =>
                 console.error('An error occurred', err)
             );
-        }else{
+        } else {
             navigation.goBack()
         }
     };
     const navigation = useNavigation()
-    // const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-    const imageUrl = `${"http://152.42.225.202/"}${product?.productImage}`; 
+    const imageUrl = product ? product?.productImage.startsWith('uploads/')
+        ? `http://152.42.225.202/${product?.productImage}`
+        : product?.productImage
+        : " "
     return (
         <ScrollView style={styles.container}>
             <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18, paddingHorizontal: 16, }}>
@@ -43,13 +43,15 @@ const ProductDetails = ({ product }) => {
             </View>
             <View style={styles.detailsContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={styles.productName}>{product.title}</Text>
-                    <Text style={styles.originalPrice}>{product.originalPrice}</Text>
-                    <Text style={styles.price}>${product.price}</Text>
+                    <Text style={styles.productName}>{product?.title}</Text>
+                    {product?.discountPrice > 0 ? <Text style={styles.originalPrice}>{"(u.p. $"}{product?.price}{")"}</Text> :
+                        <Text style={[styles.price, { paddingLeft: 10, }]}>${product?.price}</Text>}
+                    {product?.discountPrice > 0 ? <Text style={[styles.price, { paddingLeft: 10, }]}>${product?.discountPrice}</Text> :
+                        null}
                 </View>
                 <Text style={styles.descriptionTitle}>Description</Text>
                 <Text style={styles.description}>{product.detail}</Text>
-                <View style={{ marginTop: '12%' }}>
+                <View style={{ marginTop: '7%', marginBottom: 50 }}>
                     <PrimaryButton
                         text="Buy Now"
                         onPress={handlePay}

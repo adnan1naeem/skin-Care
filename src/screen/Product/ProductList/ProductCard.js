@@ -2,20 +2,23 @@ import { Colors } from '../../../../constants/Colors';
 import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import {EXPO_PUBLIC_API_URL} from '@env';
 const ProductCard = ({ product, onPress }) => {
-    const imageUrl = `${"http://152.42.225.202/"}${product?.productImage}`; 
+    const imageUrl =product? product?.productImage.startsWith('uploads/')
+                  ? `http://152.42.225.202/${product?.productImage}`
+                  : product?.productImage
+                : " "
+
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.ImageContainer}>
             <Image source={{ uri: imageUrl }} style={styles.image} />
             </View>
-            <Text style={styles.name}>{product?.title}</Text>
+            <Text style={styles.name} numberOfLines={2}>{product?.title}</Text>
             <View style={{ flexDirection: 'row' }}>
-                <Text style={styles.price}>${product?.price}</Text>
-                {product?.originalPrice && (
-                    <Text style={styles.originalPrice}>({product?.originalPrice})</Text>
-                )}
+            {product?.discountPrice>0? <Text style={[styles.price,{paddingLeft: 10,}]}>${product?.discountPrice}</Text>:
+            null}
+             {product?.discountPrice>0?<Text style={styles.originalPrice}>{"(u.p. $"}{product?.price}{")"}</Text>:
+            <Text style={[styles.price,{paddingLeft: 10,}]}>${product?.price}</Text> }
             </View>
             <Text style={styles.description} numberOfLines={2}>{product?.description}</Text>
         </TouchableOpacity>
@@ -74,7 +77,6 @@ const styles = StyleSheet.create({
         marginBottom: 8,
     },
     price: {
-        paddingLeft: 10,
         ...Typography.SemiBold12_14,
         color: Colors.light.green,
     },

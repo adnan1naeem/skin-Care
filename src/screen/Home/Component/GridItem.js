@@ -61,7 +61,7 @@ const GridItem = ({ image1, text, id, progress, year, onPress }) => {
 const styles = StyleSheet.create({
 
   gridItem: {
-    width: '45%',
+    width: 157,
     height: 82,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   gridItem2: {
-    width: '45%',
+    width: 157,
     height: 82,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
