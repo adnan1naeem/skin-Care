@@ -12,6 +12,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#f5fafa",
+        paddingBottom:30,
     },
     title: {
         ...Typography.SemiBold24_47,
@@ -136,5 +137,6 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 18,
         ...Typography.Light12_18,
         color: '#707070',
+        marginBottom:50
       },
 });

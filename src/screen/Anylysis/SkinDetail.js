@@ -30,7 +30,7 @@ const SkinDetail = ({ navigation, route }) => {
 
   return (
     <PaperProvider >
-      <ScrollView style={styles.container1}>
+      <ScrollView style={styles.container1} showsVerticalScrollIndicator={false}>
         <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18 }}>
           <TouchableOpacity onPress={handleNavigation} style={styles.backButton}>
             <Icon name="arrow-back" size={20} color="#000" />

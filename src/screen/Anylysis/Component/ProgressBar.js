@@ -3,25 +3,24 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { ProgressBar } from 'react-native-paper'; 
 import { Colors } from '../../../../constants/Colors';
 import Typography from '../../../../constants/Typography';
-import { getColor } from '../../../../utils/ProgressBarColor'
+import { getColor, getColorCode } from '../../../../utils/ProgressBarColor'
 const ProgressComponent = ({ data, onPress,onPressOilness,onPressElastcity }) => {
   const value = data?.hydration / 100
   const value1 = data?.oilness / 100
   const value2 = data?.elastcity / 100
-  const tintColor2 = getColor(value2);
-  const tintColor1 = getColor(value1);
-  const tintColor = getColor(value);
-
+  const tintColorHydration =getColorCode(data?.descriptions?.hydration?.level)
+  const tintColoroilness =getColorCode(data?.descriptions?.oilness?.level)
+  const tintColorelasicity =getColorCode(data?.descriptions?.elasticity?.level)
   return (
     <>
       <TouchableOpacity style={styles.progressContainer} onPress={onPress}>
         <View style={styles.textContainer}>
           <Text style={styles.progressLabel}>Hydration</Text>
-          <Text style={[styles.progressValue, { color: tintColor }]}>{data?.hydration}%</Text>
+          <Text style={[styles.progressValue, { color: tintColorHydration }]}>{data?.hydration}%</Text>
         </View>
         <ProgressBar
           progress={value}
-          color={tintColor}
+          color={tintColorHydration}
           fillStyle={{ borderRadius: 20 }}
           style={styles.progress}
         />
@@ -29,11 +28,11 @@ const ProgressComponent = ({ data, onPress,onPressOilness,onPressElastcity }) =>
       <TouchableOpacity style={styles.progressContainer} onPress={onPressOilness}>
         <View style={styles.textContainer}>
           <Text style={styles.progressLabel}>Oilness</Text>
-          <Text style={[styles.progressValue, { color: tintColor1 }]}>{data?.oilness}%</Text>
+          <Text style={[styles.progressValue, { color: tintColoroilness }]}>{data?.oilness}%</Text>
         </View>
         <ProgressBar
           progress={value1}
-          color={tintColor1}
+          color={tintColoroilness}
           fillStyle={{ borderRadius: 20 }}
           style={styles.progress}
         />
@@ -41,11 +40,11 @@ const ProgressComponent = ({ data, onPress,onPressOilness,onPressElastcity }) =>
       <TouchableOpacity style={styles.progressContainer} onPress={onPressElastcity}>
         <View style={styles.textContainer}>
           <Text style={styles.progressLabel}>Elastcity</Text>
-          <Text style={[styles.progressValue, { color: tintColor2 }]}>{data?.elastcity}%</Text>
+          <Text style={[styles.progressValue, { color: tintColorelasicity }]}>{data?.elastcity}%</Text>
         </View>
         <ProgressBar
           progress={value2}
-          color={tintColor2}
+          color={tintColorelasicity}
           fillStyle={{ borderRadius: 20 }}
           style={styles.progress}
         />

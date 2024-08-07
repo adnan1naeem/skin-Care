@@ -3,13 +3,12 @@ import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { getColorValue } from '../../../../utils/ProgressBarColor';
-const GridItem = ({ image1, text, id, progress, year, onPress }) => {
-
-  const tintColor = getColorValue(progress);
+import { getColorCode } from '../../../../utils/ProgressBarColor';
+const GridItem = ({ image1, text, id, progress, year, onPress,level }) => {
+  const tintColor = getColorCode(level);
   const WrapperComponent = text === 'Skin Age' ? View : TouchableOpacity;
   return (
-    <WrapperComponent style={[id == 4 ? styles.gridItem2 : styles.gridItem, { marginLeft: id == 2 || id == 4 ? 25 : 0 }]} onPress={onPress}>
+    <WrapperComponent style={[id == 4 ? styles.gridItem2 : styles.gridItem, { marginLeft: id == 2 || id == 4 ? 16 : 0 }]} onPress={onPress}>
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
           <Image source={image1} style={styles.image} />
@@ -61,9 +60,9 @@ const GridItem = ({ image1, text, id, progress, year, onPress }) => {
 const styles = StyleSheet.create({
 
   gridItem: {
-    width: 157,
+    width: "45%",
     height: 82,
-    marginBottom: 20,
+    marginBottom: 16,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     shadowColor: '#000',
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   gridItem2: {
-    width: 157,
+    width: "45%",
     height: 82,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',

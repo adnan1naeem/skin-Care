@@ -62,8 +62,8 @@ const HomeScreen = () => {
       checkUserInfo();
     }
   }, [loading]);
-  const renderItem = ({ item }) => (
-    <GridItem image1={item.image1} progress={item.progress} text={item.text} id={item?.id} year={item?.Year} onPress={() => handleSkinDetail(item)} />
+  const renderItem = ({ item }) => ( 
+    <GridItem image1={item.image1} progress={item.progress} level={item?.level} text={item.text} id={item?.id} year={item?.Year} onPress={() => handleSkinDetail(item)} />
   );
 
   const renderItem2 = ({ item }) => (
@@ -171,7 +171,7 @@ const HomeScreen = () => {
                 data={AnalysisData}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-                contentContainerStyle={{ marginTop: 20, flex: 1,alignSelf:'center' }}
+                contentContainerStyle={{ paddingTop: 20, flex: 1,paddingLeft:19}}
                 numColumns={2}
               />
              { releventData?.length>0 &&<><HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />
