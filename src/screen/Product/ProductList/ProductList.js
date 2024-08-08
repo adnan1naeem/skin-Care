@@ -51,7 +51,7 @@ const ProductList = ({ products, ReleventData }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5fafa',
+        backgroundColor: '#E6E5FB',
     },
     title: {
         marginTop: Platform?.OS === "android" ? 60 : '17%',

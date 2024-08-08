@@ -13,7 +13,7 @@ const ProductDetailScreen = ({route}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'#f5fafa',
+        backgroundColor:'#E6E5FB',
         paddingTop:Platform?.OS==="android"?30:'11%',
     },
 });

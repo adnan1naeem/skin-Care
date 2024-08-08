@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     LoadingView: { flex: 1, justifyContent: 'center', backgroundColor: Colors.light.background },
     container: {
         flex: 1,
-        backgroundColor: "#f5fafa",
+        backgroundColor: "#E6E5FB",
         paddingBottom:30,
     },
     title: {
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
     },
     container1: {
         flex: 1,
-        backgroundColor: '#F5FAFA',
+        backgroundColor: '#E6E5FB',
         padding: 18,
         paddingTop: Platform?.OS === "android" ? 30 : '11%',
       },

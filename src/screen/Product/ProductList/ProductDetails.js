@@ -74,7 +74,7 @@ const ProductDetails = ({ product }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5fafa',
+        backgroundColor: '#E6E5FB',
     },
     backButton: {
         marginTop: 16,

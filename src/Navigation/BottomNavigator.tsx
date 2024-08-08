@@ -3,18 +3,18 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import { Colors } from "../../constants/Colors";
-import Home from "../../assets/svg/Home.svg";
+import Home from "../../assets/svg/home.svg";
 import MarkedHome from "../../assets/svg/MarkedHome.svg";
 import Task from "../../assets/svg/task.svg";
 import MarkedTask from "../../assets/svg/MarkedTask.svg";
-import Setting from "../../assets/svg/settings.svg";
+import MarkedSetting from "../../assets/svg/settings.svg";
 import Box from "../../assets/svg/Box.svg";
 import MarkedBox from "../../assets/svg/MarkedBox.svg";
 import HomeNavigator from "./HomeStack/HomeNavigator";
 import AnalysisNavigator from "./AnalysisStack/AnalysisNavigator";
 import ProductNavigator from "./ProductStack/ProductNavigator";
 import SmileIcon from '../../assets/svg/SimpleIcon.svg'
-import MarkedSetting from '../../assets/svg/Markedsettings.svg'
+import Setting from '../../assets/svg/MarkedSettings.svg'
 import Typography from "../../constants/Typography";
 import CustomModal from "../screen/Home/Component/CustomModal";
 import { useNavigation } from "@react-navigation/native";
@@ -48,11 +48,11 @@ export default function TrackingBottomTabNavigator({route}) {
         screenOptions={{
           lazy: false,
           tabBarStyle: {
-            backgroundColor:Colors.light.background,
-            height: 62 + insets.bottom,
+            backgroundColor:Colors.light.white,
+            height: 55 + insets.bottom,
             borderTopWidth: 0.5,
             borderTopColor: "#3C3C432B",
-            paddingBottom: insets.bottom > 4 ? insets.bottom - 4 : 5,
+            paddingBottom: insets.bottom > 4 ? insets.bottom - 10 : 5,
           },
           tabBarIconStyle: { flex: undefined, height: 37 },
         }}
@@ -146,11 +146,11 @@ profileName: {
 },
   text:{
     ...Typography.SemiBold10_15,
-    color:Colors.light.icon
+    color:"#DCAE96"
   },
   markedtext:{
     ...Typography.SemiBold10_15,
-    color:Colors.light.green
+    color:"#673147"
   },
   SmileIcon:{
     backgroundColor:'#FFFFFF',

@@ -112,7 +112,7 @@ const modalStyles = StyleSheet.create({
         width: '83%',
         paddingVertical: 20,
         paddingHorizontal: 25,
-        backgroundColor: '#F5FAFA',
+        backgroundColor: '#E6E5FB',
         borderRadius: 10,
         shadowColor: '#000',
         shadowOpacity: 0.3,
