@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     paddingHorizontal: 10,
     justifyContent: 'center',
-    backgroundColor: Colors.light.background,
+    backgroundColor: Colors.light.tabWhite,
     marginBottom: 5,
   },
   textContainer: {

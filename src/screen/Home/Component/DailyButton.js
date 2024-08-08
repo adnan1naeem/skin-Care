@@ -3,21 +3,21 @@ import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 
-const DailyButton = ({ image1, text, description, ButtonText, OnPress, DailyRoutine, AnalyzeButton, Id, disabled }) => {
+const DailyButton = ({ image1, text, description, ButtonText, OnPress, horizontal, disabled }) => {
 
   return (
-    <View style={[styles.gridItem, { marginRight: 15 }]}>
+    <View style={[horizontal?styles.gridItem2:styles.gridItem, { marginRight: 15 }]}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        <View style={{ flexDirection: 'column', width: '60%' }}>
+        <View style={{ flexDirection: 'column', width: horizontal?'54%':"62%" }}>
           <View style={{ flexDirection: 'row' }}>
             <Image source={image1} style={styles.image} />
             <Text style={styles.text}>{text}</Text>
           </View>
-          <Text style={styles.desc} numberOfLines={1}>{description}</Text>
+          <Text style={styles.desc} numberOfLines={2}>{description}</Text>
         </View>
-        <View style={styles.button_container}>
-          {disabled ? <Text style={styles.completeText} numberOfLines={2}>Done</Text> :
-            <TouchableOpacity style={styles.button} onPress={OnPress}>
+        <View style={horizontal?styles.button_container:styles.button_container}>
+          {disabled ? <Text style={[styles.completeText,{marginRight:horizontal?0:25}]} numberOfLines={1}>Done</Text> :
+            <TouchableOpacity style={horizontal?styles.button2:styles.button} onPress={OnPress}>
               <Text style={disabled ? styles.completeText : styles.buttontext} numberOfLines={2}>{ButtonText}</Text>
             </TouchableOpacity>
           }
@@ -29,6 +29,16 @@ const DailyButton = ({ image1, text, description, ButtonText, OnPress, DailyRout
 };
 
 const styles = StyleSheet.create({
+  gridItem2:{
+    width: 217,
+    height: 83,
+    marginBottom: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingLeft: 15,
+    paddingRight:10,
+  },
   gridItem: {
     width: '100%',
     height: 72,
@@ -39,6 +49,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   button_container: { flex: 1, justifyContent: 'center', alignItems: "flex-end" },
+  button_container2: {  justifyContent: 'center', alignItems: "flex-end" },
   completeButton: {
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -46,9 +57,21 @@ const styles = StyleSheet.create({
   completeText: {
     ...Typography.SemiBold14_21,
     color: Colors.light.green,
-    marginRight:25
   },
   button: {
+    backgroundColor: Colors.light.green,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  button2: {
+    width:90,
+    height:25,
     backgroundColor: Colors.light.green,
     paddingVertical: 5,
     paddingHorizontal: 10,

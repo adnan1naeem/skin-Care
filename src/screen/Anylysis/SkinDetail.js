@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text,  TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text,  TouchableOpacity, Image, ScrollView, ImageBackgroundBase, ImageBackground } from 'react-native';
 import { ProgressBar, Provider as PaperProvider } from 'react-native-paper';
 import {  getColorCode } from '../../../utils/ProgressBarColor';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,16 +18,28 @@ const SkinDetail = ({ navigation, route }) => {
   const getImageSource = (title) => {
     switch (title) {
       case 'hydration':
-        return require('../../../assets/images/HydrationIcon.png');
+        return {
+          icon: require('../../../assets/images/HydrationIcon.png'),
+          background: require('../../../assets/images/HydrationDetail.png'),
+        };
       case 'oilness':
-        return require('../../../assets/images/OilLevelIcon.png');
+        return {
+          icon: require('../../../assets/images/OilLevelIcon.png'),
+          background: require('../../../assets/images/OilnessDetail.png'),
+        };
       case 'elasticity':
-        return require('../../../assets/images/ElasticityIcon.png');
+        return {
+          icon: require('../../../assets/images/ElasticityIcon.png'),
+          background: require('../../../assets/images/ElasticityDetail.png'),
+        };
       default:
-        return require('../../../assets/images/HydrationIcon.png');
+        return {
+          icon: require('../../../assets/images/HydrationIcon.png'),
+          background: require('../../../assets/images/HydrationDetail.png'),
+        };
     }
   };
-
+  const data=getImageSource(route?.params?.params?.item?.parameter);
   return (
     <PaperProvider >
       <ScrollView style={styles.container1} showsVerticalScrollIndicator={false}>
@@ -37,9 +49,9 @@ const SkinDetail = ({ navigation, route }) => {
           </TouchableOpacity>
           <Text style={styles.backButtonText}>Back</Text>
         </View>
-        <View style={styles.analysisContainer}>
+        <ImageBackground source={data?.background} resizeMode='center' borderRadius={5} style={styles.analysisContainer}>
           <View style={styles.header}>
-            {!value2?.item?.image1 ? <Image source={getImageSource(route?.params?.params?.item?.parameter)} style={styles.icon} />
+            {!value2?.item?.image1 ? <Image source={data?.icon} style={styles.icon} />
               : <Image source={value2?.item?.image1} style={styles.icon} />}
             <Text style={styles.headerText}>{value2?.item?.text||value2?.title}</Text>
             <Text style={[styles.percentageText, { color: getColorCode(value2?.item?.level) }]}>{value2?.item?.progress || progress}%</Text>
@@ -48,7 +60,7 @@ const SkinDetail = ({ navigation, route }) => {
           <Text style={styles.description}>
             {value2?.item?.Desciption || value2?.item?.description}
           </Text>
-        </View>
+        </ImageBackground>
         <Text style={styles.sectionTitle}>{"Your"} {value2?.item?.Header || value2?.item?.parameter}</Text>
         <Text style={styles.overviewText2}>
           {value2?.item?.Deatil||value2?.item?.detail}

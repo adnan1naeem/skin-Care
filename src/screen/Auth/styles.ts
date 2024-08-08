@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   },
   newaccount: {
     fontFamily: 'Poppins-Regular',
-    color: '#707070',
+    color: Colors.light?.greyTextColor,
     fontSize: 14,
     lineHeight: 19.6
   },
@@ -123,6 +123,7 @@ export const styles = StyleSheet.create({
     marginRight:15,
     height:52,
     width:"25%",
+    backgroundColor:Colors.light.white,
     borderRadius: 10,
     borderColor: '#D3D3D3',
     borderWidth: 1,
@@ -133,6 +134,7 @@ export const styles = StyleSheet.create({
     width:"39%",
     marginRight:15,
     borderRadius: 10,
+    backgroundColor:Colors.light.white,
     borderColor: '#D3D3D3',
     borderWidth: 1,
     textAlign: 'center',
@@ -140,6 +142,7 @@ export const styles = StyleSheet.create({
   dropdown: {
     height: 50,
     borderColor: '#D3D3D3',
+    backgroundColor:Colors.light.white,
     borderWidth: 0.5,
     borderRadius: 8,
     marginTop:10,

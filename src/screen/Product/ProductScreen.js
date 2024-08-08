@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import ProductList from './ProductList/ProductList'; 
 import { Colors } from '../../../constants/Colors';
@@ -7,7 +7,6 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const ProductScreen = () => {
     const [ProductListData,setProductList]=useState("");
-    const [loading,setLoading]=useState(true);
     const [ReleventData,setReleventData]=useState("")
     useFocusEffect(
       useCallback(() => {
@@ -23,7 +22,6 @@ const ProductScreen = () => {
               } catch (error) {
                   console.error("Failed to fetch user info", error);
               }
-              setLoading(false);
           };
 
           checkUserInfo();

@@ -90,7 +90,7 @@ export const data = [
       {
         id: '1',
         image1: require('../../../assets/images/SkinDrop.png'),
-        text: 'Hydrate Skin',
+        text: 'Hydrate',
         DailyRoutineTask:latestAnalysisData?.hydrate,
         buttonText:"Mark As Done",
         description:'Great for dehydrated and oily skin types.'
@@ -106,7 +106,7 @@ export const data = [
       {
         id: '3',
         image1: require('../../../assets/images/SkinDrop.png'),
-        text: 'Skin Tone',
+        text: 'Skin',
         buttonText:"Mark As Done",
         DailyRoutineTask:latestAnalysisData?.tone,
         description:'Great for oily skin types.'
@@ -114,7 +114,7 @@ export const data = [
       {
         id: '4',
         image1: require('../../../assets/images/SkinDrop.png'),
-        text: 'Moisturize Skin',
+        text: 'Moisturize',
         buttonText:"Mark As Done",
         DailyRoutineTask:latestAnalysisData?.moisturize,
         description:'Great for dehydrated skin types.'
@@ -122,7 +122,7 @@ export const data = [
       {
         id: '5',
         image1: require('../../../assets/images/SkinDrop.png'),
-        text: 'Protection Skin',
+        text: 'Protection',
         buttonText:"Mark As Done",
         DailyRoutineTask:latestAnalysisData?.protection,
         description:'Great for Protect your types.'

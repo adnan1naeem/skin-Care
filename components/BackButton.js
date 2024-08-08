@@ -11,7 +11,7 @@ const BackButton = ({ text,onPress }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress}>
-        <Ionicons name="arrow-back" size={24} color="#707070" />
+        <Ionicons name="arrow-back" size={24} color={Colors.light?.greyTextColor} />
       </TouchableOpacity>
       <Text style={styles.text}>{text}</Text>
     </View>

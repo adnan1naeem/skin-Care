@@ -2,25 +2,27 @@ import { Colors } from '../../../../constants/Colors';
 import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-const ProductCard = ({ product, onPress }) => {
-    const imageUrl =product? product?.productImage.startsWith('uploads/')
-                  ? `http://152.42.225.202/${product?.productImage}`
-                  : product?.productImage
-                : " "
+const ProductCard = ({ product, onPress, recommanded }) => {
+    const imageUrl = product ? product?.productImage.startsWith('uploads/')
+        ? `http://152.42.225.202/${product?.productImage}`
+        : product?.productImage
+        : " "
 
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.ImageContainer}>
-            <Image source={{ uri: imageUrl }} style={styles.image} />
+                <Image source={{ uri: imageUrl }} style={styles.image} />
             </View>
-            <Text style={styles.name} numberOfLines={2}>{product?.title}</Text>
-            <View style={{ flexDirection: 'row' }}>
-            {product?.discountPrice>0? <Text style={[styles.price,{paddingLeft: 10,}]}>${product?.discountPrice}</Text>:
-            null}
-             {product?.discountPrice>0?<Text style={styles.originalPrice}>{"(u.p. $"}{product?.price}{")"}</Text>:
-            <Text style={[styles.price,{paddingLeft: 10,}]}>${product?.price}</Text> }
+            <View style={recommanded?styles.lowerView:styles.lowerView2}>
+                <Text style={styles.name} numberOfLines={2}>{product?.title}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    {product?.discountPrice > 0 ? <Text style={[styles.price, { paddingLeft: 10,color:recommanded?Colors?.light?.green:Colors?.light?.oldgreen }]}>${product?.discountPrice}</Text> :
+                        null}
+                    {product?.discountPrice > 0 ? <Text style={[styles.originalPrice,{color:recommanded?Colors?.light?.green:Colors?.light?.oldgreen}]}>{"(u.p. $"}{product?.price}{")"}</Text> :
+                        <Text style={[styles.price, { paddingLeft: 10, }]}>${product?.price}</Text>}
+                </View>
+                <Text style={styles.description} numberOfLines={2}>{product?.description}</Text>
             </View>
-            <Text style={styles.description} numberOfLines={2}>{product?.description}</Text>
         </TouchableOpacity>
     );
 };
@@ -45,6 +47,22 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         ...Typography.SemiBold16_20,
     },
+    lowerView2:{
+        height:120,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10,
+    },
+    lowerView: {
+        height:120,
+        backgroundColor: Colors.light.tabWhite,
+        borderBottomRightRadius: 10,
+        borderBottomLeftRadius: 10,
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.2,
+        shadowRadius: 4,
+        elevation: 2,
+    },
     card: {
         width: '48%',
         height: 240,
@@ -62,7 +80,6 @@ const styles = StyleSheet.create({
     ImageContainer: {
         width: '100%',
         height: 120,
-        marginBottom: 14,
         borderBottomWidth: 0.5,
         borderColor: "#2F4F4F33"
     },
@@ -72,6 +89,7 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     name: {
+        marginTop:14,
         paddingHorizontal: 10,
         ...Typography.Medium12_20,
         marginBottom: 8,

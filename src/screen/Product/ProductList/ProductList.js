@@ -11,7 +11,7 @@ const ProductList = ({ products, ReleventData }) => {
         <ProductCard product={item} onPress={() => handleProductDetail(item)} />
     );
     const renderItem2 = ({ item }) => (
-        <ProductCard product={item} onPress={() => handleProductDetail(item)} />
+        <ProductCard product={item} onPress={() => handleProductDetail(item)} recommanded={true} />
     );
     const handleProductDetail = (item) => {
         navigation.navigate("ProductDetailScreen", item)

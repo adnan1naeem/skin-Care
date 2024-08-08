@@ -49,10 +49,10 @@ export default function TrackingBottomTabNavigator({route}) {
           lazy: false,
           tabBarStyle: {
             backgroundColor:Colors.light.white,
-            height: 55 + insets.bottom,
+            height: 62 + insets.bottom,
             borderTopWidth: 0.5,
             borderTopColor: "#3C3C432B",
-            paddingBottom: insets.bottom > 4 ? insets.bottom - 10 : 5,
+            paddingBottom: insets.bottom > 4 ? insets.bottom - 5 : 5,
           },
           tabBarIconStyle: { flex: undefined, height: 37 },
         }}

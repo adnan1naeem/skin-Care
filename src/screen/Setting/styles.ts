@@ -81,7 +81,7 @@ AnalyzeButtonText: {
   },
   newaccount: {
     fontFamily: 'Poppins-Regular',
-    color: '#707070',
+    color: Colors.light?.greyTextColor,
     fontSize: 14,
     lineHeight: 19.6
   },

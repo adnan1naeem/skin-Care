@@ -3,7 +3,6 @@ import { View, ScrollView, FlatList, Alert } from 'react-native';
 import HomeHeading from './Component/HomeHeadingComponent';
 import { styles } from './styles';
 import GridItem from './Component/GridItem';
-import ProductItem from './Component/ProductlComponent';
 import { DailyRoutine, DailyRoutineData } from './HomeDummyData';
 import DailyRecommand from './Component/DailyRecommand';
 import CustomModal from './Component/CustomModal';
@@ -16,6 +15,8 @@ import { Colors } from '../../../constants/Colors';
 import { getRequest, putRequest } from '../../../components/ApiHandler';
 import { dataFunction, EmyptyStatedata } from '../../../hooks/SkinAnalysis';
 import DailyResetButton from './Component/DailyRoutine';
+import HomeBanner from './Component/HomeBanner';
+import RecommendedProducts from './Component/Products/RecommandedProducts';
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
@@ -24,7 +25,7 @@ const HomeScreen = () => {
   const [userInfovalue, setUserInfo] = useRecoilState(userInfo);
   const [loading, setLoading] = useState(true);
   const [releventData, setReleventData] = useState(null)
-  const [dailyRoutine,setDailyRoutine]=useState(null);
+  const [dailyRoutine, setDailyRoutine] = useState(null);
 
   const checkUserInfo = async () => {
     try {
@@ -62,13 +63,10 @@ const HomeScreen = () => {
       checkUserInfo();
     }
   }, [loading]);
-  const renderItem = ({ item }) => ( 
+  const renderItem = ({ item }) => (
     <GridItem image1={item.image1} progress={item.progress} level={item?.level} text={item.text} id={item?.id} year={item?.Year} onPress={() => handleSkinDetail(item)} />
   );
 
-  const renderItem2 = ({ item }) => (
-    <ProductItem image1={item.productImage} description={item.description} text={item.title} icons={item?.featureImages} onPress={() => handleProductDeatil(item)} />
-  );
   const handleSkinDetail = (item) => {
     if (item?.progress === 0) {
       Alert.alert(
@@ -79,7 +77,7 @@ const HomeScreen = () => {
         ],
         { cancelable: false }
       );
-    
+
     }
     else {
       navigation.navigate('SkinTypeScreen', {
@@ -166,23 +164,18 @@ const HomeScreen = () => {
             style={{ flex: 1 }}
           />) : (
             <ScrollView style={{ flex: 1, paddingTop: 25 }} showsVerticalScrollIndicator={false}>
+              <HomeBanner routines={dailyRoutine} OnPress={handleDailyRoutine}/>
               <HomeHeading heading={"Facial Skin Analysis"} Text2={"View Analysis"} onPressView={() => navigation.navigate('Analysis')} />
               <FlatList
                 data={AnalysisData}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
-                contentContainerStyle={{ paddingTop: 20, flex: 1,paddingLeft:19}}
+                contentContainerStyle={{ paddingTop: 20, flex: 1, paddingLeft: 19 }}
                 numColumns={2}
               />
-             { releventData?.length>0 &&<><HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />
-              <FlatList
-                data={releventData}
-                renderItem={renderItem2}
-                keyExtractor={item => item.id}
-                horizontal
-                contentContainerStyle={{ marginTop: 20, paddingLeft: 16 }}
-                showsHorizontalScrollIndicator={false}
-              /></>}
+              {releventData?.length > 0 && <><HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />
+              <RecommendedProducts releventData={releventData} handleProductDeatil={handleProductDeatil}/></>
+                }
               <HomeHeading heading={"Daily Routines"} />
               <FlatList
                 data={DailyRoutine}

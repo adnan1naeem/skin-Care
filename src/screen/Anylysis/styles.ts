@@ -91,7 +91,7 @@ export const styles = StyleSheet.create({
         ...Typography.SemiBold16_20,
       },
       analysisContainer: {
-        backgroundColor: '#FFF',
+        backgroundColor: 'transparent',
         borderRadius: 10,
         paddingHorizontal: 20,
         paddingVertical: 40,
@@ -125,7 +125,7 @@ export const styles = StyleSheet.create({
       },
       description: {
         ...Typography.Light12_18,
-        color: '#707070',
+        color: Colors.light?.greyTextColor,
       },
       sectionTitle: {
         paddingHorizontal: 18,
@@ -136,7 +136,7 @@ export const styles = StyleSheet.create({
       overviewText2: {
         paddingHorizontal: 18,
         ...Typography.Light12_18,
-        color: '#707070',
+        color: Colors.light?.greyTextColor,
         marginBottom:50
       },
 });

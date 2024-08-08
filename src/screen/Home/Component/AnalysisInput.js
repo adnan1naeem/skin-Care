@@ -47,7 +47,7 @@ const AnalysisInput = ({ value, onChange,title,icon }) => {
 const styles = StyleSheet.create({
     container: {
         width: '100%', 
-        backgroundColor: Colors.light.background, 
+        backgroundColor: Colors.light.tabWhite, 
         flexDirection: 'row', 
         paddingHorizontal: 15, 
         paddingVertical: 10, 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     sub_container:{ flex: 1, flexDirection: "column",justifyContent:'center' },
     text: {
         ...Typography.Medium12_20,
-        color: '#708090',
+        color:Colors.light.green,
         marginTop: 5
     },
     YearText:{
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 113,
         height: 53,
+        backgroundColor:Colors.light.white,
         borderColor: '#ccc',
         borderWidth: 1,
         borderRadius: 5,
@@ -87,10 +88,7 @@ const styles = StyleSheet.create({
     icon: {
         marginRight: 10,
     },
-    text: {
-        marginRight:5,
-        ...Typography.Medium10_20,
-    },
+
 });
 
 export default AnalysisInput;
