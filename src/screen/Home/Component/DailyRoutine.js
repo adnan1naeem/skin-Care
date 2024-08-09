@@ -7,14 +7,14 @@ const DailyResetButtons = ({ routines,OnPress }) => {
 
   return (
     <View style={{ paddingHorizontal: 16,marginBottom:20 }}>
-      {routines.map((routine, index) => (
+      {routines?.map((routine, index) => (
         <DailyButton
-          key={routine.id}
-          image1={routine.image1}
-          description={routine.description}
-          text={routine.text}
-          ButtonText={routine.buttonText}
-          AnalyzeButton={routine.DailyRoutineTask}
+          key={routine?.id}
+          image1={routine?.image1}
+          description={routine?.description}
+          text={routine?.text}
+          ButtonText={routine?.buttonText}
+          AnalyzeButton={routine?.DailyRoutineTask}
           OnPress={() => OnPress(routine)}
           disabled={routine?.DailyRoutineTask}
         />

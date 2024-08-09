@@ -27,7 +27,7 @@ const ProgressComponent = ({ data, onPress,onPressOilness,onPressElastcity }) =>
       </TouchableOpacity>
       <TouchableOpacity style={styles.progressContainer} onPress={onPressOilness}>
         <View style={styles.textContainer}>
-          <Text style={styles.progressLabel}>Oilness</Text>
+          <Text style={styles.progressLabel}>Oiliness</Text>
           <Text style={[styles.progressValue, { color: tintColoroilness }]}>{data?.oilness}%</Text>
         </View>
         <ProgressBar
@@ -39,7 +39,7 @@ const ProgressComponent = ({ data, onPress,onPressOilness,onPressElastcity }) =>
       </TouchableOpacity>
       <TouchableOpacity style={styles.progressContainer} onPress={onPressElastcity}>
         <View style={styles.textContainer}>
-          <Text style={styles.progressLabel}>Elastcity</Text>
+          <Text style={styles.progressLabel}>Elasticity</Text>
           <Text style={[styles.progressValue, { color: tintColorelasicity }]}>{data?.elastcity}%</Text>
         </View>
         <ProgressBar
