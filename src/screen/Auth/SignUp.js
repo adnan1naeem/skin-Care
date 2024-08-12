@@ -1,6 +1,6 @@
 import { Colors } from '../../../constants/Colors';
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Pressable, Alert } from 'react-native';
+import { View, Text, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Pressable, Alert, Linking } from 'react-native';
 import PrimaryInput from '../../../components/PrimaryInput';
 import PrimaryButton from '../../../components/PrimaryButton';
 import { styles } from './styles';
@@ -80,11 +80,11 @@ const SignUp = ({ navigation }) => {
   };
 
   const handleTermsPress = () => {
-    // navigation.navigate('TermsOfService');
+    Linking.openURL('https://goofy-deer-e6f.notion.site/Terms-and-Conditions-b06aa6d4efe347fc8fe5ea01ba32f003?pvs=4');
   };
 
   const handlePrivacyPress = () => {
-    // navigation.navigate('PrivacyPolicy');
+    Linking.openURL("https://goofy-deer-e6f.notion.site/Privacy-Policy-a37286a1cddf40bd892f256624ab7af8?pvs=4")
   };
 
   return (

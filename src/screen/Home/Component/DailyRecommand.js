@@ -7,12 +7,12 @@ const DailyRecommand = ({ image1, text, description, ButtonText,OnPress,DailyRou
   return (
     <View style={[styles.gridItem, { marginRight: 15 }]}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        <View style={{ flexDirection: 'column', width: '60%' }}>
+        <View style={{ flexDirection: 'column', width: '70%' }}>
           <View style={{ flexDirection: 'row' }}>
             <Image source={image1} style={styles.image} />
             <Text style={styles.text}>{text}</Text>
           </View>
-          <Text style={styles.desc} numberOfLines={1}>{description}</Text>
+          <Text style={styles.desc} numberOfLines={2}>{description}</Text>
         </View>
         <View style={styles.button_container}>
          {DailyRoutine===true && Id==2 ? <View style={styles.completeButton} onPress={OnPress}>
@@ -36,7 +36,6 @@ const DailyRecommand = ({ image1, text, description, ButtonText,OnPress,DailyRou
 const styles = StyleSheet.create({
   gridItem: {
     width: '100%',
-    height: 72,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,

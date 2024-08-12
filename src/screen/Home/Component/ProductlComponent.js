@@ -5,12 +5,12 @@ const ProductItem = ({ image1, text, description,icons,onPress}) => {
   
 
   const imageUrl =image1? image1.startsWith('uploads/')
-  ? `http://152.42.225.202/${image1}`
+  ? `https://esthemate.com/${image1}`
   : image1
 : " "
   const iconMapping = {
     'Hydration': require('../../../../assets/images/Hydration.png'),
-    'Oilness': require('../../../../assets/images/Oilness.png'),
+    'Oiliness': require('../../../../assets/images/Oilness.png'),
     'Elasticity': require('../../../../assets/images/Elasticity.png'),
     'SkinAge': require('../../../../assets/images/Age.png'),
   }; 
