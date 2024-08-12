@@ -4,10 +4,13 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 const ProductCard = ({ product, onPress }) => {
     const imageUrl =product? product?.productImage.startsWith('uploads/')
-                  ? `http://152.42.225.202/${product?.productImage}`
+                  ? `https://esthemate.com/${product?.productImage}`
                   : product?.productImage
                 : " "
-
+                const formatPrice = (price) => {
+                    if (!price) return '';
+                    return parseFloat(price).toFixed(2);
+                };
     return (
         <TouchableOpacity style={styles.card} onPress={onPress}>
             <View style={styles.ImageContainer}>
@@ -15,10 +18,10 @@ const ProductCard = ({ product, onPress }) => {
             </View>
             <Text style={styles.name} numberOfLines={2}>{product?.title}</Text>
             <View style={{ flexDirection: 'row' }}>
-            {product?.discountPrice>0? <Text style={[styles.price,{paddingLeft: 10,}]}>${product?.discountPrice}</Text>:
+            {product?.discountPrice>0? <Text style={[styles.price,{paddingLeft: 10,}]}>${formatPrice(product?.discountPrice)}</Text>:
             null}
-             {product?.discountPrice>0?<Text style={styles.originalPrice}>{"(u.p. $"}{product?.price}{")"}</Text>:
-            <Text style={[styles.price,{paddingLeft: 10,}]}>${product?.price}</Text> }
+             {product?.discountPrice>0?<Text style={styles.originalPrice}>{"(u.p. $"}{formatPrice(product?.price)}{")"}</Text>:
+            <Text style={[styles.price,{paddingLeft: 10,}]}>${formatPrice(product?.price)}</Text> }
             </View>
             <Text style={styles.description} numberOfLines={2}>{product?.description}</Text>
         </TouchableOpacity>

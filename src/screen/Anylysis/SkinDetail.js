@@ -49,7 +49,7 @@ const SkinDetail = ({ navigation, route }) => {
             {value2?.item?.Desciption || value2?.item?.description}
           </Text>
         </View>
-        <Text style={styles.sectionTitle}>{"Your"} {value2?.item?.Header || value2?.item?.parameter}</Text>
+        <Text style={styles.sectionTitle}>{"Your"} {value2?.item?.Header || value2?.title}</Text>
         <Text style={styles.overviewText2}>
           {value2?.item?.Deatil||value2?.item?.detail}
         </Text>
