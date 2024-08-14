@@ -109,7 +109,7 @@ export default function TrackingBottomTabNavigator() {
             component={ProductNavigator}
             options={{
               tabBarLabel: ({ focused }) => (
-                <Text style={focused ? styles.markedtext : styles.text}>Product</Text>
+                <Text style={focused ? styles.markedtext : styles.text}>Products</Text>
               ),
               headerShown: false,
               tabBarIcon: ({ focused }) =>
@@ -123,7 +123,7 @@ export default function TrackingBottomTabNavigator() {
               tabBarLabel: ({ focused }) => (
                 <Text
                   style={focused ? styles.markedtext : styles.text}
-                >Setting</Text>
+                >Settings</Text>
               ),
               headerShown: false,
               tabBarIcon: ({ focused }) =>
