@@ -5,11 +5,12 @@ import { useRoute } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
-function HomeNavigator({  }) {
+function HomeNavigator({ }) {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+    >
       <Stack.Screen
-        name="HomeScreen"
+        name="Home"
         component={HomeScreen}
         options={{ headerShown: false }}
       />

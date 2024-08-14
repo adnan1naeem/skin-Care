@@ -3,6 +3,48 @@ import Typography from "@/constants/Typography";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  Support: {
+    fontSize: 14, // 字体大小
+    fontWeight: "500", // 字体粗细
+    lineHeight: 18.2, // 行高
+    textAlign: "left", // 文本对齐
+    flexWrap: "wrap",
+    width: "75%",
+  },
+  image: {
+    height: 15,
+    width: 18,
+    marginTop: 4,
+  },
+  Text: {
+    fontSize: 14, // 字体大小
+    fontWeight: "600", // 字体粗细
+    lineHeight: 19.6, // 行高
+    letterSpacing: 0.2, // 字间距
+    textAlign: "left", // 文本对齐
+  },
+  backButtonText: {
+    marginLeft: 4,
+    height: 40,
+    paddingTop: 2,
+    alignSelf: "center",
+    display: "flex",
+    color: "#708090",
+
+    ...Typography.SemiBold16_20,
+  },
+  emailTitle: {
+    fontSize: 14,
+    fontWeight: "500",
+    lineHeight: 18.2,
+  },
+  email: {
+    fontSize: 12,
+    fontWeight: "400",
+    lineHeight: 15.6,
+    color: "#708090",
+    marginBottom: 30,
+  },
   mainContainer: {
     flex: 1,
     backgroundColor: "#E6E6FA",
