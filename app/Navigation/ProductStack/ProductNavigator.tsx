@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ProfileTabParamList } from '../types';
-import  ProductScreen  from '../../screen/Product/ProductScreen';
+import ProductScreen from '../../screen/Product/ProductScreen';
 const ProductStack = createStackNavigator<ProfileTabParamList>();
 
 const ProductNavigator = () => {
 
   return (
-    <ProductStack.Navigator initialRouteName="ProductList">
+    <ProductStack.Navigator initialRouteName="EditProfile">
       <ProductStack.Screen
         name="ProductList"
         component={ProductScreen}
@@ -15,7 +15,7 @@ const ProductNavigator = () => {
           headerShown: false,
         }}
       />
-      
+
     </ProductStack.Navigator>
   );
 };

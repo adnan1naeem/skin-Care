@@ -8,7 +8,13 @@ const AnalysisStack = createStackNavigator<ProfileTabParamList>();
 const AnalysisNavigator = () => {
 
   return (
-    <AnalysisStack.Navigator initialRouteName="Analysis">
+    <AnalysisStack.Navigator initialRouteName="Analysis"
+      screenOptions={{
+        tabBarStyle: {
+          backgroundColor: "blue",
+
+        },
+      }}>
       <AnalysisStack.Screen
         name="Analysis"
         component={SkinAnalysis}
@@ -16,14 +22,14 @@ const AnalysisNavigator = () => {
           headerShown: false,
         }}
       />
-       <AnalysisStack.Screen
+      <AnalysisStack.Screen
         name="SkinTypeScreen"
         component={SkinDetail}
         options={{
           headerShown: false,
         }}
       />
-      
+
     </AnalysisStack.Navigator>
   );
 };
