@@ -11,7 +11,7 @@ const DailyButton = ({ image1, text, description, ButtonText, OnPress, horizonta
         <View style={{ flexDirection: 'column', width: horizontal?'54%':"62%" }}>
           <View style={{ flexDirection: 'row' }}>
             <Image source={image1} style={styles.image} />
-            <Text style={styles.text}>{text}</Text>
+            <Text style={horizontal?styles.text_2:styles.text}>{text}</Text>
           </View>
           <Text style={styles.desc} numberOfLines={2}>{description}</Text>
         </View>
@@ -30,25 +30,25 @@ const DailyButton = ({ image1, text, description, ButtonText, OnPress, horizonta
 
 const styles = StyleSheet.create({
   gridItem2:{
-    width: 217,
+    width: 220,
     height: 83,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     paddingVertical: 10,
-    paddingLeft: 15,
-    paddingRight:10,
+    paddingLeft: 10,
+    paddingRight:8,
   },
   gridItem: {
     width: '100%',
-    height: 72,
+    // height: 72,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 15,
   },
-  button_container: { flex: 1, justifyContent: 'center', alignItems: "flex-end" },
+  button_container: { flex: 1, justifyContent: 'center', alignItems: "flex-end",marginTop:2 },
   button_container2: {  justifyContent: 'center', alignItems: "flex-end" },
   completeButton: {
     paddingVertical: 5,
@@ -87,6 +87,11 @@ const styles = StyleSheet.create({
     height: 30,
     resizeMode: 'cover',
     marginBottom: 5,
+  },
+  text_2:{
+    ...Typography.Medium12_20,
+    marginTop: 5,
+    marginLeft: 5,
   },
   text: {
     ...Typography.Medium12_20,

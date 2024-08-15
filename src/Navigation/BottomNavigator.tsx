@@ -3,7 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import { Colors } from "../../constants/Colors";
-import Home from "../../assets/svg/home.svg";
+import Home from "../../assets/svg/Home.svg";
 import MarkedHome from "../../assets/svg/MarkedHome.svg";
 import Task from "../../assets/svg/task.svg";
 import MarkedTask from "../../assets/svg/MarkedTask.svg";
@@ -14,7 +14,7 @@ import HomeNavigator from "./HomeStack/HomeNavigator";
 import AnalysisNavigator from "./AnalysisStack/AnalysisNavigator";
 import ProductNavigator from "./ProductStack/ProductNavigator";
 import SmileIcon from '../../assets/svg/SimpleIcon.svg'
-import Setting from '../../assets/svg/MarkedSettings.svg'
+import Setting from '../../assets/svg/Markedsettings.svg'
 import Typography from "../../constants/Typography";
 import CustomModal from "../screen/Home/Component/CustomModal";
 import { useNavigation } from "@react-navigation/native";
@@ -98,7 +98,7 @@ export default function TrackingBottomTabNavigator({route}) {
           component={ProductNavigator}
           options={{
             tabBarLabel: ({ focused }) => (
-                <Text style={focused?styles.markedtext:styles.text}>Product</Text>
+                <Text style={focused?styles.markedtext:styles.text}>Products</Text>
               ),
               headerShown:false,
             tabBarIcon: ({ focused }) =>
@@ -112,7 +112,7 @@ export default function TrackingBottomTabNavigator({route}) {
             tabBarLabel: ({ focused }) => (
                 <Text
                   style={focused?styles.markedtext:styles.text}
-                >Setting</Text>
+                >Settings</Text>
               ),
               headerShown:false,
             tabBarIcon: ({ focused }) =>

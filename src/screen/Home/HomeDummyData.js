@@ -38,10 +38,10 @@ export const data = [
     {
       id: '1',
       image1: require('../../../assets/images/Analyzer.png'),
-      text: 'Skin Analyzer',
+      text: 'Analyze skin',
       buttonText:"Analyze Now",
       DailyRoutineTask:false,
-      desciption:'Great for dehydrated and oily skin types.'
+      desciption:'Understand what your skin is telling you today!'
     },
   ];
   export const DailyRoutine2= [
@@ -90,10 +90,10 @@ export const data = [
       {
         id: '1',
         image1: require('../../../assets/images/SkinDrop.png'),
-        text: 'Hydrate',
+        text: 'Hydrate skin',
         DailyRoutineTask:latestAnalysisData?.hydrate,
         buttonText:"Mark As Done",
-        description:'Great for dehydrated and oily skin types.'
+        description:'Quench your skin\'s thirst with a splash of hydration!'
       },
       {
         id: '2',
@@ -101,23 +101,23 @@ export const data = [
         text: 'Cleanse',
         buttonText:"Mark As Done",
         DailyRoutineTask:latestAnalysisData?.cleanse,
-        description:'Great for Cleanse and oily skin types.'
+        description:'Wash away impurities for a fresh start to your day!'
       },
       {
         id: '3',
         image1: require('../../../assets/images/SkinDrop.png'),
-        text: 'Skin',
+        text: 'Tone',
         buttonText:"Mark As Done",
         DailyRoutineTask:latestAnalysisData?.tone,
-        description:'Great for oily skin types.'
+        description:'Balance and prep your skin for the perfect skincare routine!'
       },
       {
         id: '4',
         image1: require('../../../assets/images/SkinDrop.png'),
-        text: 'Moisturize',
+        text: 'Moisturize skin',
         buttonText:"Mark As Done",
         DailyRoutineTask:latestAnalysisData?.moisturize,
-        description:'Great for dehydrated skin types.'
+        description:'Lock in moisture for soft, supple skin all day long!'
       },
       {
         id: '5',
@@ -125,7 +125,7 @@ export const data = [
         text: 'Protection',
         buttonText:"Mark As Done",
         DailyRoutineTask:latestAnalysisData?.protection,
-        description:'Great for Protect your types.'
+        description:'Shield your skin from the sun\'s harmful rays and environmental damage!'
       },
     ]
   return data;

@@ -47,8 +47,8 @@ const SkinAnalysis = () => {
     const renderProgressItem = ({ item }) => (
         <ProgressComponent
             data={item}
-            onPressOilness={() => handleSkinDetail(item?.descriptions?.oilness, item?.oilness, "oilness")}
-            onPressElastcity={() => handleSkinDetail(item?.descriptions?.elasticity, item?.elastcity, "elastcity")}
+            onPressOilness={() => handleSkinDetail(item?.descriptions?.oilness, item?.oilness, "oiliness")}
+            onPressElastcity={() => handleSkinDetail(item?.descriptions?.elasticity, item?.elastcity, "elasticity")}
             onPress={() => handleSkinDetail(item?.descriptions?.hydration, item?.hydration, "hydration")}
         />
     );

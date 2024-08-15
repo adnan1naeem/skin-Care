@@ -27,7 +27,7 @@ const ProductDetails = ({ product }) => {
     };
     const navigation = useNavigation()
     const imageUrl = product ? product?.productImage.startsWith('uploads/')
-        ? `http://152.42.225.202/${product?.productImage}`
+        ? `https://esthemate.com/${product?.productImage}`
         : product?.productImage
         : " "
     return (

@@ -23,7 +23,7 @@ function HomeNavigator({}) {
           headerTitleContainerStyle: styles.headerTitle,
           headerTitle: () => (
             <Header
-              title={"Hello,"}
+              title={"Hello, "}
               subtitle={userInfovalue}
             />
           ),

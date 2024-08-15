@@ -1,13 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import {EXPO_PUBLIC_API_URL} from '@env';
+import moment from 'moment-timezone';
+const getBaseUrl = () => 'https://esthemate.com'; 
 export const postRequest = async (endpoint, body) => {
   try {
     const connection=  await checkInternetConnection();
    if(!connection){
    return;
    }
-    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const postRequest = async (endpoint, body) => {
 export const getRequest = async (endpoint) => {
   try {
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const putRequest = async (endpoint, body) => {
       return;
     }
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -81,16 +81,18 @@ export const putRequest = async (endpoint, body) => {
 };
 export const postRequestToken = async (endpoint, body) => {
   try {
+    const timeZone = moment.tz.guess();
     const isConnected = await checkInternetConnection();
     if (!isConnected) {
       return;
     }
     const token = await AsyncStorage.getItem('token');
-    const response = await fetch(`${"http://152.42.225.202/"}${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
+        'Timezone': timeZone
       },
       body: JSON.stringify(body),
     });
