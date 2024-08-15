@@ -53,7 +53,7 @@ const GridItem = ({ image1, text, id, progress, year, onPress, level }) => {
                 backgroundColor="#d4dcdc">
                 {
                   (fill) => (
-                    <Text style={[styles.Year, { color: Colors.light.green }]}>
+                    <Text style={[styles.Year, { color: "#008080" }]}>
                       {`${fill} Y.O.`}
                     </Text>
                   )
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   text: {
+    color:Colors.light.green,
     ...Typography.Medium12_20,
     marginTop: 5
   },

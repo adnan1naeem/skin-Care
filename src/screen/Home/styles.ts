@@ -81,7 +81,6 @@ export const styles = StyleSheet.create({
   MainBanner: {
     height: 174,
     width:'100%',
-    backgroundColor:'red',
     marginBottom: 30,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

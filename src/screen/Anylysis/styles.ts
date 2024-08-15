@@ -109,6 +109,7 @@ export const styles = StyleSheet.create({
         marginRight: 8,
       },
       headerText: {
+        color:Colors.light.green,
         flex: 1,
         textTransform:'capitalize',
         ...Typography.Medium12_20,
