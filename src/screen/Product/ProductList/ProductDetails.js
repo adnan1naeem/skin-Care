@@ -31,7 +31,7 @@ const ProductDetails = ({ product }) => {
         : product?.productImage
         : " "
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
             <View style={{ flexDirection: 'row', alignContent: 'center', marginTop: 18, paddingHorizontal: 16, }}>
                 <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.backButton}>
                     <Icon name="arrow-back" size={20} color="#000" />
@@ -66,7 +66,7 @@ const ProductDetails = ({ product }) => {
                 saveCardChecked={saveCardChecked}
                 payAmount={product.price}
             /> */}
-        </ScrollView >
+        </View >
     );
 };
 
@@ -75,10 +75,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#E6E5FB',
-    },
-    backButton: {
-        marginTop: 16,
-        marginBottom: 8,
     },
     backButtonText: {
         fontSize: 16,
@@ -95,7 +91,7 @@ const styles = StyleSheet.create({
         width: 40,
         justifyContent: 'center',
         borderRadius: 27,
-        backgroundColor: Colors.light.background,
+        backgroundColor: Colors.light.white,
         borderWidth: 1,
         borderColor: '#E6E8FE'
     },

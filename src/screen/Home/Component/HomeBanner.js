@@ -8,8 +8,8 @@ const HomeBanner = ({ routines, OnPress }) => (
   <View style={styles.MainBanner}>
     <ImageBackground 
       source={require('../../../../assets/images/MainBanner.png')} 
-      resizeMode='center' 
-      style={{ height: 174, paddingVertical: 20 }}
+      resizeMode="stretch" 
+      style={{ height: 174, paddingVertical: 15 }}
     >
       <HomeHeading heading={"My Glow-up Routine"} />
         <DailyResetButtons OnPress={OnPress} routines={routines} horizontal={true}/>

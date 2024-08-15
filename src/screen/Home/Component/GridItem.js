@@ -16,7 +16,7 @@ const GridItem = ({ image1, text, id, progress, year, onPress, level }) => {
   const WrapperComponent = text === 'Skin Age' ? View : TouchableOpacity;
   return (
     <WrapperComponent style={[id == 4 ? styles.gridItem2 : styles.gridItem, { marginLeft: id == 2 || id == 4 ? 16 : 0 }]} onPress={onPress}>
-      <ImageBackground source={backgroundImage} borderRadius={10} style={styles.Bg} resizeMode="center">
+      <ImageBackground source={backgroundImage} borderRadius={10} style={styles.Bg} resizeMode="stretch">
         <View style={{ flexDirection: 'row' }}>
           <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
             <Image source={image1} style={styles.image} />
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     height: 82,
     marginBottom: 16,
     shadowColor: '#000',
+    borderRadius:10,
     backgroundColor: 'transparent',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
   gridItem2: {
     width: "45%",
     height: 82,
+    borderRadius:10,
     marginBottom: 20,
     backgroundColor: 'transparent',
     borderRadius: 10,

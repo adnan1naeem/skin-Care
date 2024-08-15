@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Colors } from "../../constants/Colors";
 import Home from "../../assets/svg/Home.svg";
 import MarkedHome from "../../assets/svg/MarkedHome.svg";
@@ -49,7 +49,7 @@ export default function TrackingBottomTabNavigator({route}) {
           lazy: false,
           tabBarStyle: {
             backgroundColor:Colors.light.white,
-            height: 62 + insets.bottom,
+            height: 64 + insets.bottom,
             borderTopWidth: 0.5,
             borderTopColor: "#3C3C432B",
             paddingBottom: insets.bottom > 4 ? insets.bottom - 5 : 5,
@@ -153,15 +153,15 @@ profileName: {
     color:"#673147"
   },
   SmileIcon:{
-    backgroundColor:'#FFFFFF',
-    height:42,
-    width:42,
+    backgroundColor:'transparent',
+    height:53,
+    width:53,
     alignItems:'center',
     justifyContent:'center',
     borderRadius:50,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 2, height: 2 },
     shadowRadius: 4,
     elevation: 5,
   },

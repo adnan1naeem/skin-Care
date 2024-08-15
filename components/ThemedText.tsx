@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 19.6,
     letterSpacing:0.2,
-    fontFamily:'Poppins-Medium'
+    fontFamily:'Poppins-Light'
   },
   defaultSemiBold: {
     fontSize: 16,

@@ -65,7 +65,7 @@ export default function App() {
       </View> :
       <RecoilRoot>
         <NavigationContainer>
-          <StatusBar backgroundColor="#f5fafa" barStyle="dark-content" />
+          <StatusBar backgroundColor="#E6E5FB" barStyle="dark-content" />
           <MainNavigator isLoggedIn={isLoggedIn} userInfo={userInfo} />
         </NavigationContainer>
       </RecoilRoot>)

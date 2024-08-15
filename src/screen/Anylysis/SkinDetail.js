@@ -49,7 +49,7 @@ const SkinDetail = ({ navigation, route }) => {
           </TouchableOpacity>
           <Text style={styles.backButtonText}>Back</Text>
         </View>
-        <ImageBackground source={data?.background} resizeMode='center' borderRadius={5} style={styles.analysisContainer}>
+        <ImageBackground source={data?.background} resizeMode='stretch' borderRadius={5} style={styles.analysisContainer}>
           <View style={styles.header}>
             {!value2?.item?.image1 ? <Image source={data?.icon} style={styles.icon} />
               : <Image source={value2?.item?.image1} style={styles.icon} />}
@@ -57,7 +57,7 @@ const SkinDetail = ({ navigation, route }) => {
             <Text style={[styles.percentageText, { color: getColorCode(value2?.item?.level) }]}>{value2?.item?.progress || progress}%</Text>
           </View>
           <ProgressBar progress={progressvalueInPercentage || progressvalueInPercentage1} fillStyle={{ borderRadius: 20 }} color={getColorCode(value2?.item?.level)} style={styles.progressBar} />
-          <Text style={styles.description}>
+          <Text style={styles.description} numberOfLines={4}>
             {value2?.item?.Desciption || value2?.item?.description}
           </Text>
         </ImageBackground>

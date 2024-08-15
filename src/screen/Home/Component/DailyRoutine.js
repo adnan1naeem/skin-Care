@@ -17,14 +17,14 @@ const DailyResetButtons = ({ routines, OnPress, horizontal }) => {
     />
   );
   return (
-    <View style={horizontal?{ paddingVertical: 16, marginBottom: 20 }:{paddingHorizontal: 16, marginBottom: 20}}>
+    <View style={horizontal?{ marginBottom: 20 }:{marginTop:13, marginBottom: 20}}>
       <FlatList
         data={routines}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         horizontal={horizontal}
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ flexGrow: 1 ,paddingLeft:horizontal?16:0}}
+        contentContainerStyle={{ flexGrow: 1 ,paddingLeft:16,paddingRight:horizontal?0:16,marginVertical:horizontal&&16}}
       />
     </View>
   );

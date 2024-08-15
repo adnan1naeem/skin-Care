@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, ScrollView, FlatList, Alert } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, ScrollView, FlatList, Alert, Text, TouchableOpacity, Platform } from 'react-native';
 import HomeHeading from './Component/HomeHeadingComponent';
 import { styles } from './styles';
 import GridItem from './Component/GridItem';
-import { DailyRoutine, DailyRoutineData } from './HomeDummyData';
+import { DailyRoutineData } from './HomeDummyData';
 import DailyRecommand from './Component/DailyRecommand';
 import CustomModal from './Component/CustomModal';
 import { useNavigation } from "@react-navigation/native";
@@ -17,6 +17,7 @@ import { dataFunction, EmyptyStatedata } from '../../../hooks/SkinAnalysis';
 import DailyResetButton from './Component/DailyRoutine';
 import HomeBanner from './Component/HomeBanner';
 import RecommendedProducts from './Component/Products/RecommandedProducts';
+import { Btn, Title } from './Component/NewHeading';
 const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(true);
   const [releventData, setReleventData] = useState(null)
   const [dailyRoutine, setDailyRoutine] = useState(null);
-
+  const [date, setDate] = useState(null)
   const checkUserInfo = async () => {
     try {
       const userInfoData = await AsyncStorage.getItem('userInfo');
@@ -39,6 +40,13 @@ const HomeScreen = () => {
         const sortedData = AnalysisData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         const SkinAnalysisData = dataFunction(sortedData[0]);
         setAnalysisData(SkinAnalysisData)
+        const localDate = new Date(sortedData[0]?.updatedAt?.toLocaleString());
+        const day = localDate.getDate();
+        const month = localDate.toLocaleString('default', { month: 'long' });
+        const year = localDate.getFullYear();
+        setDate(localDate.toString())
+        const formatted = `${day} ${month} ${year}`;
+        setDate(formatted);
       }
       else {
         setAnalysisData(EmyptyStatedata)
@@ -117,43 +125,29 @@ const HomeScreen = () => {
     setModalVisible(false);
     navigation.navigate("Analysis")
   }
-  const handleDailyRoutine = async (item) => {
+  const handleDailyRoutine = useCallback(async (item) => {
     try {
       setLoading(true);
-      let data = {};
-      switch (item?.id) {
-        case '1':
-          data = { hydrate: true };
-          break;
-        case '2':
-          data = { cleanse: true };
-          break;
-        case '3':
-          data = { tone: true };
-          break;
-        case '4':
-          data = { moisturize: true };
-          break;
-        case '5':
-          data = { protection: true };
-          break;
-        default:
-          throw new Error('Invalid routine item');
-      }
-      const response = await putRequest('api/user/dailyroutine/update', data);
-      if (response?.routine) {
-        const updatedRoutineData = DailyRoutineData(response.routine);
-        setDailyRoutine(updatedRoutineData);
-      } else {
-        throw new Error('Failed to update routine');
-      }
+
+      const routineDataMap = {
+        '1': { hydrate: true },
+        '2': { cleanse: true },
+        '3': { tone: true },
+        '4': { moisturize: true },
+        '5': { protection: true },
+      };
+
+      const response = await putRequest('api/user/dailyroutine/update', routineDataMap[item?.id] || {});
+      const updatedRoutineData = DailyRoutineData(response?.routine || {});
+      setDailyRoutine(updatedRoutineData);
+
     } catch (error) {
       console.error('Error in handleDailyRoutine:', error);
     } finally {
       setLoading(false);
     }
-  };
-  
+  }, []);
+
   return (
     <View style={styles.main_container}>
       {
@@ -164,8 +158,20 @@ const HomeScreen = () => {
             style={{ flex: 1 }}
           />) : (
             <ScrollView style={{ flex: 1, paddingTop: 25 }} showsVerticalScrollIndicator={false}>
-              <HomeBanner routines={dailyRoutine} OnPress={handleDailyRoutine}/>
-              <HomeHeading heading={"Facial Skin Analysis"} Text2={"View Analysis"} onPressView={() => navigation.navigate('Analysis')} />
+              <HomeBanner routines={dailyRoutine} OnPress={handleDailyRoutine} />
+              <HomeHeading
+                heading={
+                  <Title
+                    mainTitleText={"Step 1: "}
+                    mainTitleTextsub={"My skin score"}
+                    subTitleText={"Last tracked:"}
+                    TimeText={date}
+
+                  />
+                }
+                Text2={<Btn content={"Track Now"} OnPress={handleRoutine} />}
+                onPressView={() => navigation.navigate("Analysis")}
+              />
               <FlatList
                 data={AnalysisData}
                 renderItem={renderItem}
@@ -173,17 +179,31 @@ const HomeScreen = () => {
                 contentContainerStyle={{ paddingTop: 20, flex: 1, paddingLeft: 19 }}
                 numColumns={2}
               />
-              {releventData?.length > 0 && <><HomeHeading heading={"Recommend For You"} Text2={"View All"} onPressView={() => navigation.navigate('Product')} />
-              <RecommendedProducts releventData={releventData} handleProductDeatil={handleProductDeatil}/></>
+              {releventData?.length > 0 && <View style={{marginTop:Platform?.OS==="android"?20:0}}>
+              <HomeHeading
+                heading={
+                  <Title
+                    mainTitleText={"Step 2: "}
+                    mainTitleTextsub={"Star Buys For Me!"}
+                    subTitleText={"Products your skin is yearning for!"}
+                  />
                 }
-              <HomeHeading heading={"Daily Routines"} />
-              <FlatList
-                data={DailyRoutine}
-                renderItem={renderItem3}
-                keyExtractor={item => item.id}
-                contentContainerStyle={{ marginTop: 20, flex: 1, paddingHorizontal: 16, }}
+                Text2={"View All"}
+                onPressView={() => navigation.navigate("Product")}
               />
-              <DailyResetButton routines={dailyRoutine} OnPress={handleDailyRoutine}/>
+                <RecommendedProducts releventData={releventData} handleProductDeatil={handleProductDeatil} /></View>
+              }
+               <View style={{marginTop:Platform?.OS==="android"?20:0}}></View>
+              <HomeHeading
+                heading={
+                  <Title
+                    mainTitleText={"Step 3: "}
+                    mainTitleTextsub={"Glow-Up!"}
+                    subTitleText={"Your daily Glow-Up Routine Tracker"}
+                  />
+                }
+              />
+              <DailyResetButton routines={dailyRoutine} OnPress={handleDailyRoutine} />
             </ScrollView>
           )
       }
@@ -191,5 +211,4 @@ const HomeScreen = () => {
     </View>
   );
 };
-
 export default HomeScreen;

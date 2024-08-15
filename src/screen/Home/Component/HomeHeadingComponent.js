@@ -6,7 +6,7 @@ const HomeHeading = ({ heading, onPressView,Text2 }) => {
   return (
     <View style={styles.HeadingContainer}>
       <Text style={styles.HomeHeading}>{heading}</Text>
-      <TouchableOpacity onPress={onPressView}>
+      <TouchableOpacity onPress={onPressView} style={{alignSelf:'center'}}>
         <Text style={styles.View_analysis}>{Text2}</Text>
       </TouchableOpacity>
     </View>

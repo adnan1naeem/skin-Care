@@ -14,6 +14,11 @@ export default {
     fontSize: 12,
     lineHeight: 14,
   },
+  SemiBold18_20:{
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 12,
+    lineHeight: 14,
+  },
   SemiBold10_15:{
     fontFamily: 'Poppins-SemiBold',
     fontSize: 10,
@@ -28,6 +33,11 @@ export default {
     fontFamily: 'Poppins-Medium',
     fontSize: 10,
     lineHeight: 20,
+  },
+  Medium10_14:{
+    fontFamily: 'Poppins-Medium',
+    fontSize: 10,
+    lineHeight: 14,
   },
   Regular12_20:{
     fontFamily: 'Poppins-Regular',

@@ -2,22 +2,27 @@ import { Colors } from '../../../../constants/Colors';
 import Typography from '../../../../constants/Typography';
 import React from 'react';
 import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-
+import AntDesign from '@expo/vector-icons/AntDesign';
 const DailyButton = ({ image1, text, description, ButtonText, OnPress, horizontal, disabled }) => {
 
   return (
-    <View style={[horizontal?styles.gridItem2:styles.gridItem, { marginRight: 15 }]}>
+    <View style={[horizontal ? styles.gridItem2 : styles.gridItem, { backgroundColor: disabled ? "#FFE4E1" : Colors.light.white, marginRight: 15 }]}>
       <View style={{ flex: 1, flexDirection: 'row' }}>
-        <View style={{ flexDirection: 'column', width: horizontal?'54%':"62%" }}>
+        <View style={{ flexDirection: 'column', width: horizontal ? '54%' : "62%" }}>
           <View style={{ flexDirection: 'row' }}>
             <Image source={image1} style={styles.image} />
-            <Text style={horizontal?styles.text_2:styles.text}>{text}</Text>
+            <Text style={horizontal ? styles.text_2 : styles.text}>{text}</Text>
           </View>
           <Text style={styles.desc} numberOfLines={2}>{description}</Text>
         </View>
-        <View style={horizontal?styles.button_container:styles.button_container}>
-          {disabled ? <Text style={[styles.completeText,{marginRight:horizontal?0:25}]} numberOfLines={1}>Done</Text> :
-            <TouchableOpacity style={horizontal?styles.button2:styles.button} onPress={OnPress}>
+        <View style={horizontal ? styles.button_container : styles.button_container}>
+          {disabled ? <View style={[styles.completeContainer, { marginRight: horizontal ? 0 : 15 }]}>
+          <AntDesign name="checkcircle" size={18} color="#008080" style={{marginRight:5}}/>
+            <Text style={styles.completeText} numberOfLines={1}>
+              Done
+            </Text>
+          </View> :
+            <TouchableOpacity style={horizontal ? styles.button2 : styles.button} onPress={OnPress}>
               <Text style={disabled ? styles.completeText : styles.buttontext} numberOfLines={2}>{ButtonText}</Text>
             </TouchableOpacity>
           }
@@ -29,7 +34,11 @@ const DailyButton = ({ image1, text, description, ButtonText, OnPress, horizonta
 };
 
 const styles = StyleSheet.create({
-  gridItem2:{
+  completeContainer:{
+    flexDirection:'row',
+    alignItems:'center'
+  },
+  gridItem2: {
     width: 220,
     height: 83,
     marginBottom: 20,
@@ -37,26 +46,35 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     paddingLeft: 10,
-    paddingRight:8,
+    paddingRight: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 1, height: 2 },
+    shadowRadius: 4,
+    elevation: 5,
   },
   gridItem: {
     width: '100%',
-    // height: 72,
     marginBottom: 20,
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 15,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 1, height: 2 },
+    shadowRadius: 4,
+    elevation: 5,
   },
-  button_container: { flex: 1, justifyContent: 'center', alignItems: "flex-end",marginTop:2 },
-  button_container2: {  justifyContent: 'center', alignItems: "flex-end" },
+  button_container: { flex: 1, justifyContent: 'center', alignItems: "flex-end", marginTop: 2 },
+  button_container2: { justifyContent: 'center', alignItems: "flex-end" },
   completeButton: {
     paddingVertical: 5,
     paddingHorizontal: 10,
   },
   completeText: {
     ...Typography.SemiBold14_21,
-    color: Colors.light.green,
+    color: "#008080",
   },
   button: {
     backgroundColor: Colors.light.green,
@@ -70,8 +88,8 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button2: {
-    width:90,
-    height:25,
+    width: 90,
+    height: 25,
     backgroundColor: Colors.light.green,
     paddingVertical: 5,
     paddingHorizontal: 10,
@@ -88,7 +106,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     marginBottom: 5,
   },
-  text_2:{
+  text_2: {
     ...Typography.Medium12_20,
     marginTop: 5,
     marginLeft: 5,
