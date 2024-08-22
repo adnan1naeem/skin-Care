@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from "@react-navigation/native";
 import { userInfo } from '../../../utils/State';
 import { useRecoilValue } from 'recoil';
+import AntDesign from '@expo/vector-icons/AntDesign';
 const ProfileSettings = () => {
     const userInfoData = useRecoilValue(userInfo);
     const userName = userInfoData?.firstName;
@@ -44,6 +45,14 @@ const ProfileSettings = () => {
                         <Text style={styles.optionText}>Support</Text>
                         <Icon name="chevron-forward" size={20} color={Colors.light.green} />
                     </TouchableOpacity>
+                    <TouchableOpacity style={styles.option} onPress={() => { navigation.navigate("DeleteAccount"),{email:userInfoData?.email} }}>
+                        <View style={styles.deleteIcon}>
+                            <AntDesign name="delete" size={20} color="white" />
+                        </View>
+                        <Text style={styles.optionText}>Delete Account</Text>
+                        <Icon name="chevron-forward" size={20} color={Colors.light.green} />
+                    </TouchableOpacity>
+
                 </View>
             </ScrollView>
         </View>
@@ -103,7 +112,7 @@ const styles = StyleSheet.create({
     },
     profileContainer: {
         marginTop: Platform?.OS === "ios" ? "20%" : 60,
-        paddingHorizontal:16,
+        paddingHorizontal: 16,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -121,7 +130,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 16,
         height: 70,
-        marginHorizontal:2,
+        marginHorizontal: 2,
         borderRadius: 8,
         shadowColor: '#000',
         shadowOpacity: 0.3,
@@ -139,6 +148,14 @@ const styles = StyleSheet.create({
         color: '#1A1E25'
 
     },
+    deleteIcon: {
+        height: 40,
+        width: 40,
+        backgroundColor: Colors.light.green,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    }
 });
 
 export default ProfileSettings;

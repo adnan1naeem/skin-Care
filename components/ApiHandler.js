@@ -123,3 +123,30 @@ const checkInternetConnection = async () => {
     alert("Please check your internet connection")
   }
 };
+export const deleteRequestToken = async (endpoint) => {
+  try {
+    const isConnected = await checkInternetConnection();
+    if (!isConnected) {
+      return;
+    }
+    const token = await AsyncStorage.getItem('token');
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    const jsonResponse = await response.json();
+
+    if (response.ok) {
+      return jsonResponse;
+    } else {
+      throw new Error(jsonResponse.message || 'Request failed');
+    }
+  } catch (error) {
+    alert(error);
+    throw new Error(error);
+  }
+};

@@ -11,6 +11,7 @@ import EditProfile from '../../screen/Setting/EditProfile';
 import Support from '../../screen/Setting/Support';
 import { useRecoilValue } from 'recoil';
 import { userInfo } from '../../../utils/State';
+import DeleteAccount from '../../screen/Setting/DeleteAccount';
 const SettingStack = createStackNavigator<ProfileTabParamList>();
 
 const SettingNavigator = () => {
@@ -32,6 +33,14 @@ const SettingNavigator = () => {
       <SettingStack.Screen
         name="Logout"
         component={Logout}
+        options={{
+          headerShown: false,
+        }}
+        initialParams={{ userInfoData }}
+      />
+      <SettingStack.Screen
+        name="DeleteAccount"
+        component={DeleteAccount}
         options={{
           headerShown: false,
         }}
