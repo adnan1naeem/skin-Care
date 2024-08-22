@@ -53,7 +53,7 @@ const DeleteAccount = ({ route }) => {
             <TextWithLabel heading="Email" data={route?.params?.userInfoData?.email} email={true} />
           </View>
           <View style={styles.button}>
-            <PrimaryButton text={"Delete Account"} onPress={handleNavigation} loading={loading} />
+            <PrimaryButton text={"Confirm Deletion"} onPress={handleNavigation} loading={loading} />
           </View>
           <BackButton text="Back" onPress={() => { navigation.goBack() }} />
         </ScrollView>
