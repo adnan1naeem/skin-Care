@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
     height: 82,
     marginBottom: 16,
     shadowColor: '#000',
-    borderRadius:10,
     backgroundColor: 'transparent',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
@@ -83,9 +82,7 @@ const styles = StyleSheet.create({
   gridItem2: {
     width: "45%",
     height: 82,
-    borderRadius:10,
     marginBottom: 20,
-    backgroundColor: 'transparent',
     borderRadius: 10,
   },
   Bg: {

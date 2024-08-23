@@ -46,7 +46,7 @@
     "ios": {
       "foregroundImage": "./assets/adaptive-icon.png",
       "backgroundColor": "#f5fafa",
-      "buildNumber": "16",
+      "buildNumber": "17",
       "supportsTablet": true,
       "googleServicesFile": "./GoogleService-Info.plist",
       "bundleIdentifier": "com.skincare.EstheMate",

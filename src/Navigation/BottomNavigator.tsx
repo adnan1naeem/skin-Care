@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Colors } from "../../constants/Colors";
 import Home from "../../assets/svg/Home.svg";
 import MarkedHome from "../../assets/svg/MarkedHome.svg";
@@ -29,12 +29,12 @@ type BottomTabParamList = {
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function TrackingBottomTabNavigator({route}) {
-  const navigation=useNavigation();
+export default function TrackingBottomTabNavigator({ route }) {
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(false);
-  const handleModalNavgation =()=>{
-    global.DailyRoutine=true;
+  const handleModalNavgation = () => {
+    global.DailyRoutine = true;
     setModalVisible(false);
     navigation.reset({
       index: 0,
@@ -48,7 +48,7 @@ export default function TrackingBottomTabNavigator({route}) {
         screenOptions={{
           lazy: false,
           tabBarStyle: {
-            backgroundColor:Colors.light.white,
+            backgroundColor: Colors.light.white,
             height: 64 + insets.bottom,
             borderTopWidth: 0.5,
             borderTopColor: "#3C3C432B",
@@ -60,13 +60,16 @@ export default function TrackingBottomTabNavigator({route}) {
         <BottomTab.Screen
           name="Home"
           component={HomeNavigator}
+
           options={{
             tabBarLabel: ({ focused }) => (
-              <Text style={focused?styles.markedtext:styles.text}>Home</Text>
-              ),
-             headerShown:false,
-            tabBarIcon: ({ focused }) =>
-              focused ? <MarkedHome /> : <Home />,
+              <View style={{ alignItems: 'center' }}>
+                {focused ? <MarkedHome /> : <Home />}
+                <Text style={focused ? styles.markedtext : styles.text}>Home</Text>
+              </View>
+            ),
+            headerShown: false,
+            tabBarIcon: () => null,
           }}
         />
         <BottomTab.Screen
@@ -74,14 +77,16 @@ export default function TrackingBottomTabNavigator({route}) {
           component={AnalysisNavigator}
           options={{
             tabBarLabel: ({ focused }) => (
-              <Text style={focused?styles.markedtext:styles.text}>Analysis</Text>
-              ),
-              headerShown:false,
-            tabBarIcon: ({ focused }) =>
-              focused ? <MarkedTask /> : <Task />,
+              <View style={{ alignItems: 'center' }}>
+                {focused ? <MarkedTask /> : <Task />}
+                <Text style={focused ? styles.markedtext : styles.text}>Analysis</Text>
+              </View>
+            ),
+            headerShown: false,
+            tabBarIcon: () => null,
           }}
         />
-       <BottomTab.Screen
+        <BottomTab.Screen
           name=" "
           component={AnalysisNavigator}
           options={{
@@ -93,16 +98,19 @@ export default function TrackingBottomTabNavigator({route}) {
             ),
           }}
         />
-                <BottomTab.Screen
+        <BottomTab.Screen
           name="Product"
           component={ProductNavigator}
           options={{
             tabBarLabel: ({ focused }) => (
-                <Text style={focused?styles.markedtext:styles.text}>Products</Text>
-              ),
-              headerShown:false,
-            tabBarIcon: ({ focused }) =>
-              focused ? < MarkedBox/> : < Box/>,
+              <View style={{ alignItems: 'center' }}>
+                {focused ? < MarkedBox /> : < Box />}
+                <Text style={focused ? styles.markedtext : styles.text}>Products</Text>
+              </View>
+
+            ),
+            headerShown: false,
+            tabBarIcon: () => null,
           }}
         />
         <BottomTab.Screen
@@ -110,69 +118,71 @@ export default function TrackingBottomTabNavigator({route}) {
           component={SettingNavigator}
           options={{
             tabBarLabel: ({ focused }) => (
-                <Text
-                  style={focused?styles.markedtext:styles.text}
-                >Settings</Text>
-              ),
-              headerShown:false,
-            tabBarIcon: ({ focused }) =>
-                focused ? <MarkedSetting /> : <Setting />,
-            }}
+              <View style={{ alignItems: 'center' }}>
+                {focused ? <MarkedSetting /> : <Setting />}
+                <Text style={focused ? styles.markedtext : styles.text}>Settings</Text>
+              </View>
+            ),
+            headerShown: false,
+            tabBarIcon: () => null,
+          }}
         />
       </BottomTab.Navigator>
-      <CustomModal visible={modalVisible} onClose={() => setModalVisible(false)} onAnalyze={handleModalNavgation}/>
-      </>
+      <CustomModal visible={modalVisible} onClose={() => setModalVisible(false)} onAnalyze={handleModalNavgation} />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   profileEmail: {
     ...Typography.Regular10_20
-},
+  },
   profileContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-},
-profileImage: {
+  },
+  profileImage: {
     width: 50,
     height: 50,
     borderRadius: 50,
-},
-profileDetails: {
+  },
+  profileDetails: {
     marginLeft: 16,
-},
-profileName: {
+  },
+  profileName: {
     ...Typography.SemiBold16_20,
-},
-  text:{
-    ...Typography.SemiBold10_15,
-    color:"#DCAE96"
   },
-  markedtext:{
+  text: {
+    marginTop: 7,
     ...Typography.SemiBold10_15,
-    color:"#673147"
+    color: "#DCAE96"
   },
-  SmileIcon:{
-    backgroundColor:'transparent',
-    height:53,
-    width:53,
-    alignItems:'center',
-    justifyContent:'center',
-    borderRadius:50,
+  markedtext: {
+    marginTop: 7,
+    ...Typography.SemiBold10_15,
+    color: "#673147",
+  },
+  SmileIcon: {
+    backgroundColor: 'transparent',
+    height: 53,
+    width: 53,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50,
     shadowColor: '#000',
     shadowOpacity: 0.25,
     shadowOffset: { width: 2, height: 2 },
     shadowRadius: 4,
     elevation: 5,
   },
-    headerBackground: { flex: 1, backgroundColor: Colors.light.background },
-    headerTitle: {
-      width: "100%",
-      backgroundColor: Colors.light.background ,
-    },
-    title: {
-      ...Typography.SemiBold24_47,
-       textAlign: 'center',
-       color:Colors.light.green,
-   },
+  headerBackground: { flex: 1, backgroundColor: Colors.light.background },
+  headerTitle: {
+    width: "100%",
+    backgroundColor: Colors.light.background,
+  },
+  title: {
+    ...Typography.SemiBold24_47,
+    textAlign: 'center',
+    color: Colors.light.green,
+  },
 });
